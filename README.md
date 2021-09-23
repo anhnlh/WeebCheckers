@@ -7,7 +7,7 @@ a web micro-framework.
 ## Team
 
 - Phil Ganem
-- MEMBER2
+- Anh Nguyen
 - MEMBER3
 - Sierra Tran
 
