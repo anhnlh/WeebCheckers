@@ -9,7 +9,7 @@ a web micro-framework.
 - Phil Ganem
 - MEMBER2
 - MEMBER3
-- MEMBER4
+- Sierra Tran
 
 
 ## Prerequisites
