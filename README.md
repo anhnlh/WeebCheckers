@@ -6,9 +6,9 @@ a web micro-framework.
 
 ## Team
 
+- Rhamsez Thevenin
 - Phil Ganem
 - Anh Nguyen
-- MEMBER3
 - Sierra Tran
 
 
