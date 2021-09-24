@@ -6,10 +6,10 @@ a web micro-framework.
 
 ## Team
 
-- Rhamsez Thevenin
 - Phil Ganem
-- Anh Nguyen
-- Sierra Tran
+- Mohammed Alam
+- MEMBER3
+- MEMBER4
 
 
 ## Prerequisites
