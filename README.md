@@ -8,8 +8,9 @@ a web micro-framework.
 
 - Phil Ganem
 - Mohammed Alam
-- MEMBER3
-- MEMBER4
+- Anh Nguyen
+- Sierra Tran
+- Rhamsez Thevenin
 
 
 ## Prerequisites
