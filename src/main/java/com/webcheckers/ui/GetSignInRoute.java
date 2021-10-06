@@ -4,13 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.TemplateEngine;
-
 import com.webcheckers.util.Message;
 
 /**
@@ -24,6 +22,8 @@ public class GetSignInRoute implements Route {
     private static final Message SIGNIN_MSG = Message.info("Sign-in into the world of Web Checkers!");
 
     private final TemplateEngine templateEngine;
+    static final String VIEW_NAME = "signin.ftl";
+
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
