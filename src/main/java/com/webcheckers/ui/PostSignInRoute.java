@@ -1,34 +1,22 @@
 package com.webcheckers.ui;
-
 import com.webcheckers.app.PlayerLobby;
 import spark.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
 import static spark.Spark.halt;
 
 public class PostSignInRoute implements Route {
-    //
-    // Constants
-    //
-
+  
     private final String SIGN_IN = "signIn";
     private final String TAKEN = "nameTaken";
     private final String TITLE = "title";
 
     static final String SESSION_ATTR = "id";
-    //
-    // Attributes
-    //
 
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
 
-    //
-    // Constructor
-    //
 
     /**
      * The constructor for the {@code POST /guess} route handler.

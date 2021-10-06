@@ -11,6 +11,7 @@ import spark.Response;
 import spark.Route;
 import spark.TemplateEngine;
 
+import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.util.Message;
 
 /**
@@ -20,21 +21,29 @@ import com.webcheckers.util.Message;
  */
 public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
-
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  private TemplateEngine templateEngine;
+  private PlayerLobby playerLobby;
 
-  private final TemplateEngine templateEngine;
-
+  public static final String SIGNED_IN = "signedIn";
+  public static final String PLAYER_NAME = "playerName";
+  public static final String ACTIVE_PLAYERS = "activePlayers";
+  public static final String ACTIVE_PLAYER_COUNT = "activePlayerCount";
+  public static final String MESSAGE = "message";
+  public static final String REPLAY_GAME_LIST = "replayGameList";
   /**
    * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
    *
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final TemplateEngine templateEngine) {
+  public GetHomeRoute(PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+    Objects.requireNonNull(playerLobby, "playerLobby must not be null");
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     //
     LOG.config("GetHomeRoute is initialized.");
+    this.playerLobby = playerLobby;
+    this.templateEngine = templateEngine;
   }
 
   /**
