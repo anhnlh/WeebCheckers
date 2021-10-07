@@ -11,6 +11,7 @@ public class PostSignInRoute implements Route {
     private final String SIGN_IN = "signIn";
     private final String TAKEN = "nameTaken";
     private final String TITLE = "title";
+    private final String NAME = "userID";
 
     static final String SESSION_ATTR = "id";
 
@@ -49,7 +50,7 @@ public class PostSignInRoute implements Route {
         // start building the View-Model
         final Map<String, Object> vm = new HashMap<>();
         final String name = request.queryParams(SIGN_IN);
-        if(playerLobby.addPlayer(name)) {
+        if(playerLobby.addPlayer(NAME)) { 
             vm.put(TAKEN, false);
             vm.put("title", "Signed in!");
             // retrieve the HTTP session
