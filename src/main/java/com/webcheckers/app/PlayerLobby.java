@@ -95,6 +95,24 @@ public class PlayerLobby {
     }
 
     /**
+     * Returns a message that tells how many players are in the Collection of active players
+     * 
+     * @return
+     *  String: A message of how many active players there are
+     */
+    public String activePlayersMessage() {
+        int activePlayers = getActivePlayers().size();
+
+        if(activePlayers == 0) {
+            return "There are currently no players online.";
+        } else if(activePlayers == 1) {
+            return "There is 1 player online.";
+        }
+
+        return String.format("There are %d players online.", activePlayers);
+    }
+
+    /**
      * Gets all players excluding a singulair one (the viewer)
      *
      * @param exclude
