@@ -26,6 +26,7 @@ public class GetHomeRoute implements Route {
   public static final String MESSAGE = "message";
   public static final String ACTIVE_PLAYERS = "activePlayers";
   public static final String ACTIVE_PLAYER_COUNT = "activePlayerCount";
+  // public static final String NUM_OF_PLAYERS_MSG = "numOfPlayers";
 
   // message
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
@@ -89,8 +90,11 @@ public class GetHomeRoute implements Route {
     // displays other active players
     vm.put(ACTIVE_PLAYERS, activePlayers);
 
+    // // displays nunmber of players
+    // vm.put(ACTIVE_PLAYER_COUNT, activePlayersCount);
+
     // displays nunmber of players
-    vm.put(ACTIVE_PLAYER_COUNT, activePlayersCount);
+    vm.put(ACTIVE_PLAYER_COUNT, playerLobby.activePlayersMessage());
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));
