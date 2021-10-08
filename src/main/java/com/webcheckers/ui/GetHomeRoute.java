@@ -75,7 +75,7 @@ public class GetHomeRoute implements Route {
     final Map<String, Object> vm = new HashMap<>();
 
     Collection<Player> activePlayers = playerLobby.getOtherActivePlayers(currentUser);
-    int activePlayersCount = playerLobby.size();
+    String activePlayersCount = playerLobby.activePlayersMessage();
 
     // display welcome title
     vm.put(TITLE, "Welcome!");
@@ -90,7 +90,7 @@ public class GetHomeRoute implements Route {
     vm.put(ACTIVE_PLAYERS, activePlayers);
 
     // displays number of players
-    vm.put(ACTIVE_PLAYER_COUNT, playerLobby.activePlayersMessage());
+    vm.put(ACTIVE_PLAYER_COUNT, activePlayersCount);
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));

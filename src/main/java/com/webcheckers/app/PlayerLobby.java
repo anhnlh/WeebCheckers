@@ -101,7 +101,7 @@ public class PlayerLobby {
      *  String: A message of how many active players there are
      */
     public String activePlayersMessage() {
-        int activePlayers = getActivePlayers().size();
+        int activePlayers = this.size();
 
         if(activePlayers == 0) {
             return "There are currently no players online.";

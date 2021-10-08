@@ -46,7 +46,7 @@ public class PostSignOutRoute implements Route{
 
         // variables for home.ftl set
         vm.put(GetHomeRoute.TITLE, "Welcome!");
-        vm.put(GetHomeRoute.ACTIVE_PLAYER_COUNT, playerLobby.size());
+        vm.put(GetHomeRoute.ACTIVE_PLAYER_COUNT, playerLobby.activePlayersMessage());
         
         // render
         return templateEngine.render(new ModelAndView(vm, GetHomeRoute.VIEW_NAME));
