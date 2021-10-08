@@ -100,10 +100,10 @@ public class PlayerLobby {
      * @return
      *  Collection<str>: collection of all players but excluded 
      */
-    public Collection<String> getOtherActivePlayers(Player exclude) {
-        Collection<String> temp = new ArrayList<>();
-        lobby.values().forEach(player -> temp.add(player.getName()));
-        temp.remove(exclude.getName());
+    public Collection<Player> getOtherActivePlayers(Player exclude) {
+        Collection<Player> temp = new ArrayList<>();
+        lobby.values().forEach(player -> temp.add(player));
+        temp.remove(exclude);
         return temp;
     }
 

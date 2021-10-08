@@ -57,7 +57,7 @@ public class GetSignInRoute implements Route {
 
         // display a user message in the Sign In page
         vm.put("message", SIGNIN_MSG);
-
+        
         // render the View
         return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
     }

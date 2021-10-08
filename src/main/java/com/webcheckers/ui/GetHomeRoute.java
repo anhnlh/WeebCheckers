@@ -1,5 +1,7 @@
 package com.webcheckers.ui;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -9,9 +11,11 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import spark.Session;
 import spark.TemplateEngine;
 
 import com.webcheckers.app.PlayerLobby;
+import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 
 /**
@@ -26,11 +30,13 @@ public class GetHomeRoute implements Route {
   private PlayerLobby playerLobby;
 
   public static final String SIGNED_IN = "signedIn";
-  public static final String PLAYER_NAME = "playerName";
+  // public static final String PLAYER_NAME = "playerName";
   public static final String ACTIVE_PLAYERS = "activePlayers";
   public static final String ACTIVE_PLAYER_COUNT = "activePlayerCount";
   public static final String MESSAGE = "message";
   public static final String REPLAY_GAME_LIST = "replayGameList";
+  public static final String CURRENT_USER = "currentUser";
+
   /**
    * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
    *
@@ -59,13 +65,26 @@ public class GetHomeRoute implements Route {
    */
   @Override
   public Object handle(Request request, Response response) {
+
+    final Session httpSession = request.session();
+
+    Player currentUser = httpSession.attribute("currentUser");
+
     LOG.finer("GetHomeRoute is invoked.");
     //
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
 
+    vm.put(CURRENT_USER, currentUser);
+
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
+
+    // displays other active players
+    vm.put("players", playerLobby.getOtherActivePlayers(currentUser));
+
+    // displays nunmber of players
+    vm.put("numOfPlayers", playerLobby.getActivePlayers().size());
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));
