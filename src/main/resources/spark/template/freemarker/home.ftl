@@ -30,7 +30,7 @@
         <p>${player.name}</p>
       </#list>
     <#else>
-      <p>There is ${activePlayerCount} player(s) online.</p>
+      <p>${activePlayerCount}</p>
     </#if>
 
 
