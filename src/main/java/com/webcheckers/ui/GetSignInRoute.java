@@ -1,14 +1,10 @@
 package com.webcheckers.ui;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.logging.Logger;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import java.util.*;
+import java.util.logging.*;
+
+import spark.*;
+
 import com.webcheckers.util.Message;
 
 /**
@@ -19,11 +15,19 @@ import com.webcheckers.util.Message;
 public class GetSignInRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
+    //freemarker file
+    public static final String VIEW_NAME = "signin.ftl";
+
+    //freemarker variables
+    private static final String TITLE = "title";
+    private static final String MESSAGE = "message";
+
+
+    //message
     private static final Message SIGNIN_MSG = Message.info("Sign-in into the world of Web Checkers!");
 
-    private final TemplateEngine templateEngine;
-    static final String VIEW_NAME = "signin.ftl";
-
+    //parameter initializations
+    private TemplateEngine templateEngine;
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -32,8 +36,10 @@ public class GetSignInRoute implements Route {
      *   the HTML template rendering engine
      */
     public GetSignInRoute(final TemplateEngine templateEngine) {
-        this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-        //
+        Objects.requireNonNull(templateEngine, "templateEngine is required");
+        
+        this.templateEngine = templateEngine;
+
         LOG.config("GetSignInRoute is initialized.");
     }
 
@@ -50,13 +56,17 @@ public class GetSignInRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
+
         LOG.finer("GetSignInRoute is invoked.");
-        //
-        Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Welcome!");
+
+        // start building the View-Model
+        final Map<String, Object> vm = new HashMap<>();
+
+        // display welcome title for sign in
+        vm.put(TITLE, "Welcome!");
 
         // display a user message in the Sign In page
-        vm.put("message", SIGNIN_MSG);
+        vm.put(MESSAGE, SIGNIN_MSG);
         
         // render the View
         return templateEngine.render(new ModelAndView(vm , "signin.ftl"));

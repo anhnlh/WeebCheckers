@@ -14,10 +14,12 @@ import java.util.HashMap;
 public class PlayerLobby {
     
     //Hashmap representation of a lobby
-        // name (str) connects to Player object
+    // name (str) connects to Player object
     private HashMap<String, Player> lobby;
+
     //Lobby ID
     private final int lobbyID;
+
     //Static int for ID creation
     public static int lobbyNum = 0;
 
@@ -123,5 +125,9 @@ public class PlayerLobby {
 
     public static int getLobbyNum() {
         return lobbyNum;
+    }
+
+    public int size() {
+        return lobby.size();
     }
 }
