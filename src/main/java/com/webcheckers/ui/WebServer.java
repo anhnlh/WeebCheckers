@@ -4,8 +4,9 @@ import static spark.Spark.*;
 
 import java.util.Objects;
 import java.util.logging.Logger;
-
+import com.webcheckers.app.PlayerLobby;
 import com.google.gson.Gson;
+import com.webcheckers.app.PlayerLobby;
 
 import spark.TemplateEngine;
 
@@ -42,6 +43,9 @@ import spark.TemplateEngine;
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
+
+
+ 
 public class WebServer {
   private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
 
@@ -54,11 +58,22 @@ public class WebServer {
    */
   public static final String HOME_URL = "/";
 
+  /**
+   * The URL pattern to request the Sign in page.
+   */
+  public static final String SIGNIN_URL = "/signin";
+
+  /**
+   * The URL pattern to request the Sign in page.
+   */
+  public static final String SIGNOUT_URL = "/signout";
+
   //
   // Attributes
   //
 
   private final TemplateEngine templateEngine;
+  private final PlayerLobby playerLobby;
   private final Gson gson;
 
   //
@@ -76,12 +91,14 @@ public class WebServer {
    * @throws NullPointerException
    *    If any of the parameters are {@code null}.
    */
-  public WebServer(final TemplateEngine templateEngine, final Gson gson) {
+  public WebServer(final TemplateEngine templateEngine, final Gson gson, PlayerLobby playerLobby) {
     // validation
     Objects.requireNonNull(templateEngine, "templateEngine must not be null");
     Objects.requireNonNull(gson, "gson must not be null");
+    Objects.requireNonNull(playerLobby, "playerLobby must not be null");
     //
     this.templateEngine = templateEngine;
+    this.playerLobby = playerLobby;
     this.gson = gson;
   }
 
@@ -137,10 +154,13 @@ public class WebServer {
     //// code clean; using small classes.
 
     // Shows the Checkers game Home page.
-    get(HOME_URL, new GetHomeRoute(templateEngine));
-
+    get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
+    get(SIGNIN_URL, new GetSignInRoute(templateEngine));
+    post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
+    post(SIGNOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
     //
     LOG.config("WebServer is initialized.");
+
   }
 
 }

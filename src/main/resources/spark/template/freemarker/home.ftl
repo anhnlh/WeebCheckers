@@ -25,6 +25,14 @@
             spectating active games,
             or replay archived games
     -->
+    <#if currentUser??>
+      <#list activePlayers as player>
+        <p>${player.name}</p>
+      </#list>
+    <#else>
+      <p>${activePlayerCount}</p>
+    </#if>
+
 
   </div>
 
