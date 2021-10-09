@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import spark.*;
 
-public class GetGameRoute {
+public class GetGameRoute implements Route {
     // Values used in the view-model map for rendering the game view.
     static final String TITLE = "title";
     static final String VIEW_NAME = "game.ftl";
@@ -21,5 +21,10 @@ public class GetGameRoute {
         Objects.requireNonNull(templateEngine, "templateEngine is required");
 
         this.templateEngine = templateEngine;
+    }
+
+    @Override
+    public Object handle(Request request, Response response) {
+        return null;
     }
 }
