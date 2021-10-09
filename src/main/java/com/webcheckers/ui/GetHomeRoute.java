@@ -68,7 +68,7 @@ public class GetHomeRoute implements Route {
 
     // retrieve session
     final Session httpSession = request.session();
-    Player currentUser = httpSession.attribute("currentUser");
+    Player currentUser = httpSession.attribute(CURRENT_USER);
 
     
     // start building the View-Model
@@ -93,6 +93,6 @@ public class GetHomeRoute implements Route {
     vm.put(ACTIVE_PLAYER_COUNT, activePlayersCount);
 
     // render the View
-    return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+    return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
   }
 }
