@@ -10,7 +10,7 @@ public class Row implements Iterable<Space> {
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<Space> iterator() {
         return null;
     }
 }
