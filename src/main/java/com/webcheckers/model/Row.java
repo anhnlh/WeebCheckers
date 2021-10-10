@@ -1,5 +1,16 @@
 package com.webcheckers.model;
 
-public class Row {
-    
+import java.util.Iterator;
+
+public class Row implements Iterable<Space> {
+    private int index;
+
+    public int getIndex() {
+        return index;
+    }
+
+    @Override
+    public Iterator iterator() {
+        return null;
+    }
 }
