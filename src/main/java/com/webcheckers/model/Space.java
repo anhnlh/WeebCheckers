@@ -39,7 +39,7 @@ public class Space {
         return true;
     }
 
-// ------ Getters and Setters -------
+//------- Getters and Setters -------
 
     /**
      * Gets the piece on a space
