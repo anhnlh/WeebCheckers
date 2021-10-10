@@ -12,6 +12,9 @@ public class Space {
     }
 
     public Piece getPiece() {
+        // if there is a piece on the space
+            // return the piece
+        // else
         return null;
     }
 }
