@@ -8,6 +8,9 @@ public class Space {
     }
 
     public boolean isValid() {
+        // if the space is a valid location (dark square) AND there is no piece on it
+            // return true
+        // else 
         return false;
     }
 
