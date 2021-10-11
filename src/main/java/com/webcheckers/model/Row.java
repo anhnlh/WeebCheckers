@@ -7,33 +7,30 @@ import java.util.List;
 /**
  * Model class for a checker board row
  * 
- * @Author Phil Ganem, Sierra Tran and Mohammed Alam
+ * @Author Phil Ganem, Sierra Tran, and Mohammed Alam
  */
 public class Row implements Iterable<Space> {
 
     // Possible colors of a space
-    private enum SPACECOLOR {
-        Black, Red
-    }
-
+    private enum SPACECOLOR {Black, Red}
     // Index of a given row
     private final int index;
     // Spaces within a given row
     private final ArrayList<Space> spaces;
-    // If the row starts with a blank space or not
-    private boolean startsBlackSpace;
 
     /**
      * Constructor for a populated row
      * 
      * @param index
+     *  int: Index of a row
      * @param color
+     *  COLOR: starting color
      * @param blackSpace
-     */
+     */ 
+ 
     public Row(int index, SPACECOLOR color, boolean blackSpace) {
         this.spaces = new ArrayList<Space>();
         this.index = index;
-        this.startsBlackSpace = blackSpace;
     }
 
     /**
