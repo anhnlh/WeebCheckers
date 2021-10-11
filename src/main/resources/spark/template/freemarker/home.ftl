@@ -25,30 +25,14 @@
             spectating active games,
             or replay archived games
     -->
-<#--    <#if currentUser??>-->
-<#--      <#list activePlayers as player>-->
-<#--        <p>${player.name}</p>-->
-<#--      </#list>-->
-<#--    <#else>-->
-<#--      <p>${activePlayerCount}</p>-->
-<#--    </#if>-->
-
-  <div class="activePlayers">
-      <#if currentUser??>
-      <#if playerList??>
-      <h2>Online Player</h2>
+    <#if currentUser??>
       <#list activePlayers as player>
-          <#if player.name != currentUser.name>
-          <form action="/game" method="GET">
-              <input type="submit" name="player" value=${player.name}>
-              </#if>
-              </#list>
-              </#if>
-              <#else>
-                  ${activePlayerCount}
-              </#if>
-  </div>
-
+      <form action="/game" method="GET">
+          <input type="submit" name="opponent" value=${player.name}>
+      </#list>
+    <#else>
+      <p>${activePlayerCount}</p>
+    </#if>
 
   </div>
 

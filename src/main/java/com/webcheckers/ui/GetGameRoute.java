@@ -5,8 +5,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.BoardView;
+import com.webcheckers.model.Player;
 import spark.*;
+
+import static spark.Spark.halt;
 
 
 /**
@@ -23,7 +27,18 @@ public class GetGameRoute implements Route {
     static final String MODE_OPTIONS = "modeOptions";
     static final String RED_PLAYER = "redPlayer";
     static final String WHITE_PLAYER = "whitePlayer";
-    static final String ACTIVE_COLOR = "activeColor";
+    static final String ACTIVE_COLOR_ATTR = "activeColor";
+    static final String OPPONENT = "opponent";
+
+    private PlayerLobby playerLobby;
+
+    private enum MODE {
+        PLAY
+    }
+
+    private enum ACTIVE_COLOR {
+        RED
+    }
 
 
     private final TemplateEngine templateEngine;
@@ -34,9 +49,10 @@ public class GetGameRoute implements Route {
     * @param templateEngine
     *    The {@link TemplateEngine} used for rendering page HTML.
     */
-    GetGameRoute(final TemplateEngine templateEngine) {
+    GetGameRoute(PlayerLobby playerLobby, final TemplateEngine templateEngine) {
         Objects.requireNonNull(templateEngine, "templateEngine is required");
 
+        this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
     }
 
@@ -86,13 +102,21 @@ public class GetGameRoute implements Route {
         }
         vm.put(BOARD, httpSession.attribute(BOARD));
 
+        httpSession.attribute(VIEW_MODE, MODE.PLAY);
         vm.put(VIEW_MODE, httpSession.attribute(VIEW_MODE));
 
+        httpSession.attribute(RED_PLAYER, httpSession.attribute(GetHomeRoute.CURRENT_USER));
         vm.put(RED_PLAYER, httpSession.attribute(RED_PLAYER));
 
+        httpSession.attribute(RED_PLAYER, httpSession.attribute(GetHomeRoute.CURRENT_USER));
         vm.put(WHITE_PLAYER, httpSession.attribute(WHITE_PLAYER));
 
-        vm.put(ACTIVE_COLOR, httpSession.attribute(ACTIVE_COLOR));
+        Player opponent = playerLobby.getPlayer(request.queryParams(OPPONENT));
+        httpSession.attribute(WHITE_PLAYER, opponent);
+        vm.put(WHITE_PLAYER, httpSession.attribute(WHITE_PLAYER));
+
+        httpSession.attribute(ACTIVE_COLOR_ATTR, ACTIVE_COLOR.RED);
+        vm.put(ACTIVE_COLOR_ATTR, httpSession.attribute(ACTIVE_COLOR_ATTR));
 
         LOG.finer("GetGameRoute is invoked.");
         //

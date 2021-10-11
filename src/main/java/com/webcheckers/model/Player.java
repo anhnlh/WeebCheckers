@@ -7,7 +7,7 @@ package com.webcheckers.model;
 public class Player {
 
     //Player name
-    private String playerName;
+    private String name;
 
     /**
      * Constructor for a player 
@@ -15,7 +15,7 @@ public class Player {
      *  Name of the player 
      */
     public Player(String playerName) {
-        this.playerName = playerName;
+        this.name = playerName;
     }
 
     /**
@@ -24,7 +24,7 @@ public class Player {
      *  Str: Name of the player
      */
     public String getName() {
-        return playerName;
+        return name;
     }
 
     /**
@@ -35,7 +35,7 @@ public class Player {
      *  Bool: result of assert
      */
     public boolean equals(Player player) {
-        return this.playerName.equals(player.playerName);
+        return this.name.equals(player.name);
     }
 
     /**
@@ -44,6 +44,6 @@ public class Player {
      *  str: String rep of player
      */
     public String toString() {
-        return this.playerName;
+        return this.name;
     }
 }
