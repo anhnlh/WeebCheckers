@@ -2,11 +2,13 @@ package com.webcheckers.ui;
 
 import static spark.Spark.*;
 
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.logging.Logger;
+
+import com.webcheckers.app.Game;
 import com.webcheckers.app.PlayerLobby;
 import com.google.gson.Gson;
-import com.webcheckers.app.PlayerLobby;
 
 import spark.TemplateEngine;
 
@@ -76,6 +78,7 @@ public class WebServer {
 
   private final TemplateEngine templateEngine;
   private final PlayerLobby playerLobby;
+  private final HashMap<String, Game> gameMap; // change to gameCenter in future
   private final Gson gson;
 
   //
@@ -101,6 +104,7 @@ public class WebServer {
     //
     this.templateEngine = templateEngine;
     this.playerLobby = playerLobby;
+    this.gameMap = new HashMap<>(); // change to gameCenter in future
     this.gson = gson;
   }
 
@@ -156,9 +160,9 @@ public class WebServer {
     //// code clean; using small classes.
 
     // Shows the Checkers game Home page.
-    get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
+    get(HOME_URL, new GetHomeRoute(gameMap, playerLobby, templateEngine));
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
-    get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
+    get(GAME_URL, new GetGameRoute(gameMap, playerLobby, templateEngine));
     post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
     post(SIGNOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
     //

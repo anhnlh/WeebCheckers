@@ -1,12 +1,13 @@
 package com.webcheckers.ui;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.app.Game;
 import com.webcheckers.app.PlayerLobby;
-import com.webcheckers.model.BoardView;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -20,104 +21,98 @@ public class GetGameRoute implements Route {
     // Values used in the view-model map for rendering the game view.
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
     static final String VIEW_NAME = "game.ftl";
-    static final String TITLE = "title";
-    static final String BOARD = "board";
-    static final String CURRENT_USER = "currentUser";
-    static final String VIEW_MODE = "viewMode";
-    static final String MODE_OPTIONS = "modeOptions";
-    static final String RED_PLAYER = "redPlayer";
-    static final String WHITE_PLAYER = "whitePlayer";
+    static final String TITLE_ATTR = "title";
+    static final String BOARD_ATTR = "board";
+    static final String VIEW_MODE_ATTR = "viewMode";
+    static final String MODE_OPTIONS_ATTR = "modeOptions";
+    static final String RED_PLAYER_ATTR = "redPlayer";
+    static final String WHITE_PLAYER_ATTR = "whitePlayer";
     static final String ACTIVE_COLOR_ATTR = "activeColor";
-    static final String OPPONENT = "opponent";
+    static final String OPPONENT_ATTR = "opponent";
+    static final String GAME_ID_PARAM = "gameID";
 
-    private PlayerLobby playerLobby;
+    private final PlayerLobby playerLobby;
+    private HashMap<String, Game> gameMap;
 
     private enum MODE {
         PLAY
     }
 
     private enum ACTIVE_COLOR {
-        RED
+        RED, WHITE
     }
 
 
     private final TemplateEngine templateEngine;
 
     /**
-    * The constructor for the {@code GET /game} route handler.
-    *
-    * @param templateEngine
-    *    The {@link TemplateEngine} used for rendering page HTML.
-    */
-    GetGameRoute(PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+     * The constructor for the {@code GET /game} route handler.
+     *
+     * @param templateEngine The {@link TemplateEngine} used for rendering page HTML.
+     */
+    GetGameRoute(HashMap<String, Game> gameMap, PlayerLobby playerLobby, final TemplateEngine templateEngine) {
         Objects.requireNonNull(templateEngine, "templateEngine is required");
 
+        this.gameMap = gameMap;
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
     }
 
     /**
      * Renders the WebCheckers Game page.
-     * 
-     * @param request
-     *  the HTTP request
-     * 
-     * @param response
-     *  the HTTP response
-     * 
-     * @return 
-     *  the rendered HTML for the Game page
+     *
+     * @param request  the HTTP request
+     * @param response the HTTP response
+     * @return the rendered HTML for the Game page
      */
     @Override
     public Object handle(Request request, Response response) {
-//        LOG.finer("GetGameRoute is invoked.");
-//        final Session httpSession = request.session();
-//        Map<String,Object> vm = new HashMap<>();
-//        final Map<String, Object> modeOptions = new HashMap<>(2);
-//        vm.put(TITLE_ATTR, DESCRIPTION);
-//        final Player player = httpSession.attribute(GetHomeRoute.CURRENT_USER);
-//
-//        // if game object is not null
-//            // build the View-Model
-//            final Map<String, Object> vm = new HashMap<>();
-//            vm.put(GetHomeRoute.TITLE, TITLE);
-//            // render the Game view
-//            return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
-//        // else
-//            // response.redirect(WebServer.HOME_URL);
-//            // halt();
-//            // return null;
         final Session httpSession = request.session();
+        Player player = httpSession.attribute(GetHomeRoute.CURRENT_USER);
 
         Map<String, Object> vm = new HashMap<>();
-        vm.put(TITLE, "Welcome!");
+        vm.put(TITLE_ATTR, "Welcome!");
 
-        vm.put(GetHomeRoute.CURRENT_USER, httpSession.attribute(GetHomeRoute.CURRENT_USER));
-
-//        httpSession.attribute(GetHomeRoute.PLAYER_LOBBY_KEY, playerLobby);
-//        vm.put(GetHomeRoute.PLAYER_LOBBY_KEY, httpSession.attribute(GetHomeRoute.PLAYER_LOBBY_KEY));
-
-        if(httpSession.attribute(BOARD)==null) {
-            httpSession.attribute(BOARD, new BoardView());
+        if (player != null) {
+            String gameID = request.queryParams(GAME_ID_PARAM);
+            vm.put(GetHomeRoute.CURRENT_USER, player);
+            if (gameID == null) {
+                if (!player.isPlaying()) {
+                    Player opponent = playerLobby.getPlayer(request.queryParams(OPPONENT_ATTR));
+                    if (!opponent.isPlaying()) {
+                        Game game = new Game(player, opponent);
+                        player.setPlaying(true);
+                        opponent.setPlaying(true);
+                        gameID = String.valueOf(game.getID());
+                        gameMap.put(gameID, game);
+                        response.redirect(WebServer.GAME_URL + "?gameID=" + gameID);
+                    }
+                }
+            } else {
+                Game game = gameMap.get(gameID);
+                vm.put(VIEW_MODE_ATTR, MODE.PLAY);
+                vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
+                vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
+                if (game.isRedPlayer(player)) {
+                    System.out.println("Red Player:" + player);
+                    vm.put(BOARD_ATTR, game.redPlayerBoard());
+                } else {
+                    System.out.println("White Player:" + player);
+                    vm.put(BOARD_ATTR, game.whitePlayerBoard());
+                }
+                vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR.RED);
+            }
+        } else {
+            response.redirect(WebServer.HOME_URL);
+            halt();
+            return null;
         }
-        vm.put(BOARD, httpSession.attribute(BOARD));
 
-        httpSession.attribute(VIEW_MODE, MODE.PLAY);
-        vm.put(VIEW_MODE, httpSession.attribute(VIEW_MODE));
 
-        httpSession.attribute(RED_PLAYER, httpSession.attribute(GetHomeRoute.CURRENT_USER));
-        vm.put(RED_PLAYER, httpSession.attribute(RED_PLAYER));
-
-        Player opponent = playerLobby.getPlayer(request.queryParams(OPPONENT));
-        httpSession.attribute(WHITE_PLAYER, opponent);
-        vm.put(WHITE_PLAYER, httpSession.attribute(WHITE_PLAYER));
-
-        httpSession.attribute(ACTIVE_COLOR_ATTR, ACTIVE_COLOR.RED);
-        vm.put(ACTIVE_COLOR_ATTR, httpSession.attribute(ACTIVE_COLOR_ATTR));
 
         LOG.finer("GetGameRoute is invoked.");
         //
 
-        return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
+        return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
 }

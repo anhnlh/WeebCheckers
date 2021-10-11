@@ -35,8 +35,7 @@ public class Space {
      *  bool: is valid?
      */
     public boolean isValid() {
-        if(this.piece == null || this.isValid == false){return false;}
-        return true;
+        return this.piece != null && this.isValid; // looks better
     }
 
 //------- Getters and Setters -------

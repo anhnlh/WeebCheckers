@@ -16,7 +16,7 @@ public class Row implements Iterable<Space> {
     // Index of a given row
     private final int index;
     // Spaces within a given row
-    private final ArrayList<Space> spaces;
+    private final List<Space> spaces;
 
     /**
      * Constructor for a populated row
@@ -50,16 +50,6 @@ public class Row implements Iterable<Space> {
      * @param isBlackSpace 
      *  True puts a checker piece on the tile, and tile is empty if false
      */
-//    public void initialize(PIECECOLOR color, boolean isBlackSpace) {
-//        for (int col = 0; col < BoardView.BOARD_LENGTH; col++) {
-//            if (isBlackSpace && color != PIECECOLOR.NONE) {
-//                spaces.add(new Space(col, true, new Piece(Piece.TYPE.SINGLE, color)));
-//            } else {
-//                spaces.add(new Space(col, isBlackSpace, null));
-//            }
-//            isBlackSpace = !isBlackSpace;
-//        }
-//    }
     public void initialize(PIECECOLOR color, boolean isBlackSpace) {
         for (int col = 0; col < BoardView.BOARD_LENGTH; col++) {
             if (isBlackSpace && color != PIECECOLOR.NONE) {
@@ -71,6 +61,10 @@ public class Row implements Iterable<Space> {
         }
     }
 
+    public void addSpace(Space space) {
+        spaces.add(space);
+    }
+
 // ------- Getters and Setters -------
 
     /**
@@ -80,6 +74,16 @@ public class Row implements Iterable<Space> {
      */
     public int getIndex() {
         return this.index;
+    }
+
+    public Space getSpace(int cellIdx) {
+        Space space = null;
+        for (Space s : spaces) {
+            if (s.getCellIdx() == cellIdx) {
+                space = s;
+            }
+        }
+        return space;
     }
 
     /**

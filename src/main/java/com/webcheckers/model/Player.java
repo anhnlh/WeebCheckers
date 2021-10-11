@@ -9,13 +9,16 @@ public class Player {
     //Player name
     private String name;
 
+    private boolean isPlaying;
+
     /**
-     * Constructor for a player 
+     * Constructor for a player
      * @param playerName
-     *  Name of the player 
+     *  Name of the player
      */
     public Player(String playerName) {
         this.name = playerName;
+        this.isPlaying = false;
     }
 
     /**
@@ -25,6 +28,14 @@ public class Player {
      */
     public String getName() {
         return name;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
+    }
+
+    public void setPlaying(boolean playing) {
+        isPlaying = playing;
     }
 
     /**

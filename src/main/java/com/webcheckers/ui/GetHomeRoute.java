@@ -3,11 +3,14 @@ package com.webcheckers.ui;
 import java.util.*;
 import java.util.logging.*;
 
+import com.webcheckers.app.Game;
 import spark.*;
 
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
+
+import static spark.Spark.halt;
 
 /**
  * The UI Controller to GET the Home page.
@@ -15,84 +18,96 @@ import com.webcheckers.util.Message;
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
 public class GetHomeRoute implements Route {
-  private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
-  
-  // freemarker file
-  public static final String VIEW_NAME = "home.ftl";
+    private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-  // freemarker variables
-  public static final String TITLE = "title";
-  public static final String CURRENT_USER = "currentUser";
-  public static final String MESSAGE = "message";
-  public static final String ACTIVE_PLAYERS = "activePlayers";
-  public static final String ACTIVE_PLAYER_COUNT = "activePlayerCount";
+    // freemarker file
+    public static final String VIEW_NAME = "home.ftl";
 
-  // message
-  private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
-  
-  // parameter initalizations
-  private TemplateEngine templateEngine;
-  private PlayerLobby playerLobby;
+    // freemarker variables
+    public static final String TITLE = "title";
+    public static final String CURRENT_USER = "currentUser";
+    public static final String MESSAGE = "message";
+    public static final String ACTIVE_PLAYERS = "activePlayers";
+    public static final String ACTIVE_PLAYER_COUNT = "activePlayerCount";
 
-  /**
-   * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
-   *
-   * @param templateEngine
-   *   the HTML template rendering engine
-   */
-  public GetHomeRoute(PlayerLobby playerLobby, final TemplateEngine templateEngine) {
-    Objects.requireNonNull(playerLobby, "playerLobby must not be null");
-    Objects.requireNonNull(templateEngine, "templateEngine is required");
+    // message
+    private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
-    this.playerLobby = playerLobby;
-    this.templateEngine = templateEngine;
+    // parameter initalizations
+    private TemplateEngine templateEngine;
+    private PlayerLobby playerLobby;
+    private HashMap<String, Game> gameMap;
 
-    LOG.config("GetHomeRoute is initialized.");
-  }
+    /**
+     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+     *
+     * @param templateEngine the HTML template rendering engine
+     */
+    public GetHomeRoute(HashMap<String, Game> gameMap, PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+        Objects.requireNonNull(playerLobby, "playerLobby must not be null");
+        Objects.requireNonNull(templateEngine, "templateEngine is required");
 
-  /**
-   * Render the WebCheckers Home page.
-   *
-   * @param request
-   *   the HTTP request
-   * @param response
-   *   the HTTP response
-   *
-   * @return
-   *   the rendered HTML for the Home page
-   */
-  @Override
-  public Object handle(Request request, Response response) {
+        this.gameMap = gameMap;
+        this.playerLobby = playerLobby;
+        this.templateEngine = templateEngine;
 
-    LOG.finer("GetHomeRoute is invoked.");
+        LOG.config("GetHomeRoute is initialized.");
+    }
 
-    // retrieve session
-    final Session httpSession = request.session();
-    Player currentUser = httpSession.attribute(CURRENT_USER);
+    /**
+     * Render the WebCheckers Home page.
+     *
+     * @param request  the HTTP request
+     * @param response the HTTP response
+     * @return the rendered HTML for the Home page
+     */
+    @Override
+    public Object handle(Request request, Response response) {
 
-    
-    // start building the View-Model
-    final Map<String, Object> vm = new HashMap<>();
+        LOG.finer("GetHomeRoute is invoked.");
 
-    Collection<Player> activePlayers = playerLobby.getOtherActivePlayers(currentUser);
-    String activePlayersCount = playerLobby.activePlayersMessage();
+        // retrieve session
+        final Session httpSession = request.session();
+        Player player = httpSession.attribute(CURRENT_USER);
 
-    // display welcome title
-    vm.put(TITLE, "Welcome!");
 
-    // store current user
-    vm.put(CURRENT_USER, currentUser);
+        // start building the View-Model
+        final Map<String, Object> vm = new HashMap<>();
 
-    // display a user message in the Home page
-    vm.put(MESSAGE, WELCOME_MSG);
+        Collection<Player> activePlayers = playerLobby.getOtherActivePlayers(player);
+        String activePlayersCount = playerLobby.activePlayersMessage();
 
-    // displays other active players
-    vm.put(ACTIVE_PLAYERS, activePlayers);
+        // display welcome title
+        vm.put(TITLE, "Welcome!");
 
-    // displays number of players
-    vm.put(ACTIVE_PLAYER_COUNT, activePlayersCount);
+        if (player != null) {
+            if (player.isPlaying()) {
+                int gameID = 0;
+                for (Game game : gameMap.values()) {
+                    if (player.equals(game.getWhitePlayer())) {
+                        gameID = game.getID();
+                        break;
+                    }
+                }
+                response.redirect(WebServer.GAME_URL + "?gameID=" + gameID);
+                halt();
+                return null;
+            }
+        }
 
-    // render the View
-    return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
-  }
+        // store current user
+        vm.put(CURRENT_USER, player);
+
+        // display a user message in the Home page
+        vm.put(MESSAGE, WELCOME_MSG);
+
+        // displays other active players
+        vm.put(ACTIVE_PLAYERS, activePlayers);
+
+        // displays number of players
+        vm.put(ACTIVE_PLAYER_COUNT, activePlayersCount);
+
+        // render the View
+        return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
+    }
 }
