@@ -47,7 +47,7 @@ public class PlayerLobby {
         }
         
         //return false if name invalid
-        Pattern invalid = Pattern.compile("[^A-Za-z0-9 ]");
+        Pattern invalid = Pattern.compile("[^A-Za-z0-9, ]");
         Matcher find = invalid.matcher(playerName);
         if(find.find()) {
              return false; 

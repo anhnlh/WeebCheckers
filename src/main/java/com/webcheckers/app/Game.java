@@ -28,9 +28,9 @@ public class Game {
 
     public BoardView whitePlayerBoard() {
         List<Row> whiteBoard = new ArrayList<>();
-        for (int r = 0; r < BoardView.BOARD_LENGTH; r++) {
+        // iterate backward to build board backward for orientation
+        for (int r = BoardView.BOARD_LENGTH - 1; r >= 0; r--) {
             Row row = new Row(board.getRow(r).getIndex());
-            // iterate backward to build board backward for orientation
             for (int c = BoardView.BOARD_LENGTH - 1; c >= 0; c--) {
                 Space space = board.getRow(r).getSpace(c);
                 row.addSpace(space);
