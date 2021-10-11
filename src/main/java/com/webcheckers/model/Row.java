@@ -13,16 +13,12 @@ import com.webcheckers.model.Piece.PIECECOLOR;
  */
 public class Row implements Iterable<Space> {
 
-<<<<<<< HEAD
-    // Possible colors of a space
-    private enum SPACECOLOR {Black, Red}
-=======
+
     // // Possible colors of a space
     // private enum SPACECOLOR {
     // Black, Red, None
     // }
 
->>>>>>> f5d9ef6b36291fe62e4c223f596224523d46a007
     // Index of a given row
     private final int index;
     // Spaces within a given row
@@ -36,19 +32,11 @@ public class Row implements Iterable<Space> {
      * @param color
      *  COLOR: starting color
      * @param blackSpace
-<<<<<<< HEAD
-     */ 
- 
-    public Row(int index, SPACECOLOR color, boolean blackSpace) {
-        this.spaces = new ArrayList<Space>();
-        this.index = index;
-=======
      */
     public Row(int index, PIECECOLOR color, boolean blackSpace) {
         this.spaces = new ArrayList<Space>();
         this.index = index;
         initialize(color, blackSpace);
->>>>>>> f5d9ef6b36291fe62e4c223f596224523d46a007
     }
 
     /**

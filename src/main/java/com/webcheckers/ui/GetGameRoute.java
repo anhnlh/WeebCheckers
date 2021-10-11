@@ -3,16 +3,28 @@ package com.webcheckers.ui;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Logger;
 
+import com.webcheckers.model.BoardView;
 import spark.*;
+
 
 /**
  * The {@code GET /game} route handler.
  */
 public class GetGameRoute implements Route {
     // Values used in the view-model map for rendering the game view.
-    static final String TITLE = "title";
+    private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
     static final String VIEW_NAME = "game.ftl";
+    static final String TITLE = "title";
+    static final String BOARD = "board";
+    static final String CURRENT_USER = "currentUser";
+    static final String VIEW_MODE = "viewMode";
+    static final String MODE_OPTIONS = "modeOptions";
+    static final String RED_PLAYER = "redPlayer";
+    static final String WHITE_PLAYER = "whitePlayer";
+    static final String ACTIVE_COLOR = "activeColor";
+
 
     private final TemplateEngine templateEngine;
 
@@ -42,17 +54,49 @@ public class GetGameRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        // retrieve game object and start one if no game is in progress
+//        LOG.finer("GetGameRoute is invoked.");
+//        final Session httpSession = request.session();
+//        Map<String,Object> vm = new HashMap<>();
+//        final Map<String, Object> modeOptions = new HashMap<>(2);
+//        vm.put(TITLE_ATTR, DESCRIPTION);
+//        final Player player = httpSession.attribute(GetHomeRoute.CURRENT_USER);
+//
+//        // if game object is not null
+//            // build the View-Model
+//            final Map<String, Object> vm = new HashMap<>();
+//            vm.put(GetHomeRoute.TITLE, TITLE);
+//            // render the Game view
+//            return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
+//        // else
+//            // response.redirect(WebServer.HOME_URL);
+//            // halt();
+//            // return null;
+        final Session httpSession = request.session();
 
-        // if game object is not null
-            // build the View-Model
-            final Map<String, Object> vm = new HashMap<>();
-            vm.put(GetHomeRoute.TITLE, TITLE);
-            // render the Game view
-            return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
-        // else
-            // response.redirect(WebServer.HOME_URL);
-            // halt();
-            // return null;
+        Map<String, Object> vm = new HashMap<>();
+        vm.put(TITLE, "Welcome!");
+
+        vm.put(GetHomeRoute.CURRENT_USER, httpSession.attribute(GetHomeRoute.CURRENT_USER));
+
+//        httpSession.attribute(GetHomeRoute.PLAYER_LOBBY_KEY, playerLobby);
+//        vm.put(GetHomeRoute.PLAYER_LOBBY_KEY, httpSession.attribute(GetHomeRoute.PLAYER_LOBBY_KEY));
+
+        if(httpSession.attribute(BOARD)==null) {
+            httpSession.attribute(BOARD, new BoardView());
+        }
+        vm.put(BOARD, httpSession.attribute(BOARD));
+
+        vm.put(VIEW_MODE, httpSession.attribute(VIEW_MODE));
+
+        vm.put(RED_PLAYER, httpSession.attribute(RED_PLAYER));
+
+        vm.put(WHITE_PLAYER, httpSession.attribute(WHITE_PLAYER));
+
+        vm.put(ACTIVE_COLOR, httpSession.attribute(ACTIVE_COLOR));
+
+        LOG.finer("GetGameRoute is invoked.");
+        //
+
+        return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
     }
 }
