@@ -40,7 +40,8 @@ public class Piece {
     public boolean isKing() {
         return this.getType() == TYPE.KING;
     }
-    // ------- Getters and Setters -------
+    
+// ------- Getters and Setters -------
 
     /**
      * Sets the type of a piece. Allowing a piece to become a king

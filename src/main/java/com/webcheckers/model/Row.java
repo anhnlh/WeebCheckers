@@ -13,15 +13,6 @@ import com.webcheckers.model.Piece.PIECECOLOR;
  */
 public class Row implements Iterable<Space> {
 
-<<<<<<< HEAD
-=======
-
->>>>>>> a8b859794a9987c130295556f238ecc30ff8a266
-    // // Possible colors of a space
-    // private enum SPACECOLOR {
-    // Black, Red, None
-    // }
-
     // Index of a given row
     private final int index;
     // Spaces within a given row
@@ -54,10 +45,10 @@ public class Row implements Iterable<Space> {
 
     /**
      * Initializes a board based on the color of the spaces.
-     *
-     * @param color        The player's color
-     * @param isBlackSpace True puts a checker piece on the tile, and tile is empty
-     *                     if false
+     * @param color
+     *  The player's color
+     * @param isBlackSpace 
+     *  True puts a checker piece on the tile, and tile is empty if false
      */
     public void initialize(PIECECOLOR color, boolean isBlackSpace) {
         for (int col = 0; col < BoardView.BOARD_LENGTH; col++) {
@@ -70,17 +61,21 @@ public class Row implements Iterable<Space> {
         }
     }
 
+// ------- Getters and Setters -------
+
     /**
-     * Getters & Setters
+     * Gets the index of a row
+     * @return
+     *  int: Index of a row
      */
-    public int getIndex(int index) {
-        return index;
+    public int getIndex() {
+        return this.index;
     }
 
     /**
      * Iterator for the row
-     *
-     * @return Iterator of the row
+     * @return 
+     * Iterator: Iterator of the row
      */
     @Override
     public Iterator<Space> iterator() {

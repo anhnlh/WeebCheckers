@@ -12,10 +12,8 @@ import java.util.List;
 
 public class BoardView implements Iterable<Row> {
 
-    public enum UserColor {
-        RED, WHITE
-    }
-
+    //Possible colors of a user
+    public enum UserColor {RED, WHITE}
     // board length
     static final int BOARD_LENGTH = 8;
     // Array list for board made up of Rows
@@ -34,23 +32,29 @@ public class BoardView implements Iterable<Row> {
         this.board = board;
     }
 
+    @Override
+    public Iterator<Row> iterator() {
+        return this.board.iterator();
+    }
+
+// ------- Getters and Setters -------
+
     /**
-     * Getters & Setters
+     * Gets the board
+     * @return
+     *  list: board
      */
     public List<Row> getBoard() {
         return board;
     }
 
+    /**
+     * Gets the board length
+     * @return
+     *  int: Board length
+     */
     public static int getBoardLength() {
         return BOARD_LENGTH;
     }
 
-    private List<Row> rows;
-    public static final int DIM = 8;
-
-
-    @Override
-    public Iterator<Row> iterator() {
-        return this.board.iterator();
-    }
 }

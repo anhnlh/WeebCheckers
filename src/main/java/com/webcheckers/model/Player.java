@@ -14,7 +14,6 @@ public class Player {
      * @param playerName
      *  Name of the player 
      */
-    
     public Player(String playerName) {
         this.playerName = playerName;
     }
