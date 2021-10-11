@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ *
+ * @author Anh Nguyen
+ */
 public class Game {
     private final Player redPlayer;
     private final Player whitePlayer;

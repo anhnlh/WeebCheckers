@@ -15,7 +15,7 @@ import static spark.Spark.halt;
 /**
  * The UI Controller to GET the Home page.
  *
- * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
+ * @author Anh Nguyen
  */
 public class GetHomeRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());

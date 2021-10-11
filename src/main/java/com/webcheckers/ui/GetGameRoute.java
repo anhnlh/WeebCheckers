@@ -16,6 +16,8 @@ import static spark.Spark.halt;
 
 /**
  * The {@code GET /game} route handler.
+ *
+ * @author Anh Nguyen
  */
 public class GetGameRoute implements Route {
     // Values used in the view-model map for rendering the game view.
