@@ -50,6 +50,16 @@ public class Row implements Iterable<Space> {
      * @param isBlackSpace 
      *  True puts a checker piece on the tile, and tile is empty if false
      */
+//    public void initialize(PIECECOLOR color, boolean isBlackSpace) {
+//        for (int col = 0; col < BoardView.BOARD_LENGTH; col++) {
+//            if (isBlackSpace && color != PIECECOLOR.NONE) {
+//                spaces.add(new Space(col, true, new Piece(Piece.TYPE.SINGLE, color)));
+//            } else {
+//                spaces.add(new Space(col, isBlackSpace, null));
+//            }
+//            isBlackSpace = !isBlackSpace;
+//        }
+//    }
     public void initialize(PIECECOLOR color, boolean isBlackSpace) {
         for (int col = 0; col < BoardView.BOARD_LENGTH; col++) {
             if (isBlackSpace && color != PIECECOLOR.NONE) {

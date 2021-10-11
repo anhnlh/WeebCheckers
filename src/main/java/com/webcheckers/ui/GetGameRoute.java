@@ -108,9 +108,6 @@ public class GetGameRoute implements Route {
         httpSession.attribute(RED_PLAYER, httpSession.attribute(GetHomeRoute.CURRENT_USER));
         vm.put(RED_PLAYER, httpSession.attribute(RED_PLAYER));
 
-        httpSession.attribute(RED_PLAYER, httpSession.attribute(GetHomeRoute.CURRENT_USER));
-        vm.put(WHITE_PLAYER, httpSession.attribute(WHITE_PLAYER));
-
         Player opponent = playerLobby.getPlayer(request.queryParams(OPPONENT));
         httpSession.attribute(WHITE_PLAYER, opponent);
         vm.put(WHITE_PLAYER, httpSession.attribute(WHITE_PLAYER));

@@ -26,6 +26,21 @@ public class BoardView implements Iterable<Row> {
      */
     public BoardView() {
         this.board = new ArrayList<>();
+        initialize();
+    }
+
+    private void initialize() {
+        boolean blackSpace = false;
+        for(int i = 0; i < BOARD_LENGTH; i++) {
+            if (i < 3) {
+                board.add(new Row(i, Piece.PIECECOLOR.WHITE, blackSpace));
+            } else if (i > 4) {
+                board.add(new Row(i, Piece.PIECECOLOR.RED, blackSpace));
+            } else {
+                board.add(new Row(i, Piece.PIECECOLOR.NONE, blackSpace));
+            }
+            blackSpace = !blackSpace;
+        }
     }
 
     public BoardView(List<Row> board) {
