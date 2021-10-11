@@ -45,6 +45,10 @@ public class BoardView implements Iterable<Row> {
         return BOARD_LENGTH;
     }
 
+    private List<Row> rows;
+    public static final int DIM = 8;
+
+
     @Override
     public Iterator<Row> iterator() {
         return this.board.iterator();

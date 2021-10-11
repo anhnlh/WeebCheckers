@@ -13,6 +13,10 @@ import com.webcheckers.model.Piece.PIECECOLOR;
  */
 public class Row implements Iterable<Space> {
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a8b859794a9987c130295556f238ecc30ff8a266
     // // Possible colors of a space
     // private enum SPACECOLOR {
     // Black, Red, None
