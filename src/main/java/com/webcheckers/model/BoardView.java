@@ -1,6 +1,8 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Model class for a checker board row
@@ -14,17 +16,28 @@ public class BoardView implements Iterable<Row> {
         RED, WHITE
     }
 
-    // The board length
+    // board length
     static final int BOARD_LENGTH = 8;
-    // The color of the player using the boardView
-    private final UserColor color;
+    // Array list for board made up of Rows
+    private final List<Row> board;
 
-    public BoardView(UserColor color) {
-        this.color = color;
-        board = new Board(color);
+    /**
+     * Constructor for our Board
+     * 
+     * Another construcot for a board with a current board implementation
+     */
+    public BoardView() {
+        this.board = new ArrayList<>();
     }
 
-    public Board getBoard() {
+    public BoardView(List<Row> board) {
+        this.board = board;
+    }
+
+    /**
+     * Getters & Setters
+     */
+    public List<Row> getBoard() {
         return board;
     }
 
@@ -32,15 +45,8 @@ public class BoardView implements Iterable<Row> {
         return BOARD_LENGTH;
     }
 
-    public UserColor getColor() {
-        return color;
-    }
-
     @Override
     public Iterator<Row> iterator() {
-        List<Row> rows = new ArrayList<>();
-        for (int i = 0; i < BOARD_LENGTH; i++)
-            rows.add(new Row(i, board));
-        return rows.iterator();
+        return this.board.iterator();
     }
 }

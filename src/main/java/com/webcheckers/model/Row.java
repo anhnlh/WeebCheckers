@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.webcheckers.model.Piece.PIECECOLOR;
+
 /**
  * Model class for a checker board row
  * 
@@ -11,8 +13,16 @@ import java.util.List;
  */
 public class Row implements Iterable<Space> {
 
+<<<<<<< HEAD
     // Possible colors of a space
     private enum SPACECOLOR {Black, Red}
+=======
+    // // Possible colors of a space
+    // private enum SPACECOLOR {
+    // Black, Red, None
+    // }
+
+>>>>>>> f5d9ef6b36291fe62e4c223f596224523d46a007
     // Index of a given row
     private final int index;
     // Spaces within a given row
@@ -26,11 +36,19 @@ public class Row implements Iterable<Space> {
      * @param color
      *  COLOR: starting color
      * @param blackSpace
+<<<<<<< HEAD
      */ 
  
     public Row(int index, SPACECOLOR color, boolean blackSpace) {
         this.spaces = new ArrayList<Space>();
         this.index = index;
+=======
+     */
+    public Row(int index, PIECECOLOR color, boolean blackSpace) {
+        this.spaces = new ArrayList<Space>();
+        this.index = index;
+        initialize(color, blackSpace);
+>>>>>>> f5d9ef6b36291fe62e4c223f596224523d46a007
     }
 
     /**
@@ -43,20 +61,38 @@ public class Row implements Iterable<Space> {
         this.index = index;
     }
 
+    /**
+     * Initializes a board based on the color of the spaces.
+     *
+     * @param color        The player's color
+     * @param isBlackSpace True puts a checker piece on the tile, and tile is empty
+     *                     if false
+     */
+    public void initialize(PIECECOLOR color, boolean isBlackSpace) {
+        for (int col = 0; col < BoardView.BOARD_LENGTH; col++) {
+            if (isBlackSpace && color != PIECECOLOR.NONE) {
+                spaces.add(new Space(col, true, new Piece(Piece.TYPE.SINGLE, color)));
+            } else {
+                spaces.add(new Space(col, isBlackSpace, null));
+            }
+            isBlackSpace = !isBlackSpace;
+        }
+    }
+
+    /**
+     * Getters & Setters
+     */
     public int getIndex(int index) {
         return index;
     }
 
+    /**
+     * Iterator for the row
+     *
+     * @return Iterator of the row
+     */
     @Override
     public Iterator<Space> iterator() {
-        boolean isValid = false;
-        for (int i = 0; i < 8; i++) {
-            if ((i % 2 != 0) && (index == 4 || index == 3)) {
-                isValid = true;
-            }
-            if ((i % 2 != 0))
-            spaces.add(new Space(i + (index * 8), isValid,  ));
-        }
-        return spaces.iterator();
+        return this.spaces.iterator();
     }
 }
