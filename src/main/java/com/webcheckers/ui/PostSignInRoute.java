@@ -62,6 +62,7 @@ public class PostSignInRoute implements Route {
         // Store unique attribute for player
         String name = request.queryParams(USER_ID);
         name = name.trim();
+        name = name.replaceAll(" ", "_");
 
         httpSession.attribute(SESSION_ATTR, name);
 

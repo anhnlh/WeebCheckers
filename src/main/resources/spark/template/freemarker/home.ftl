@@ -2,7 +2,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-  <meta http-equiv="refresh" content="10">
+  <meta http-equiv="refresh" content="5">
   <title>Web Checkers | ${title}</title>
   <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
@@ -19,6 +19,7 @@
 
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
+    <#include "error.ftl" />
 
     <!-- TODO: future content on the Home:
             to start games,
@@ -27,12 +28,12 @@
     -->
     <#if currentUser??>
       <#list activePlayers as player>
-        <p>${player.name}</p>
+      <form action="/game" method="GET">
+          <input type="submit" name="opponent" value=${player.name}>
       </#list>
     <#else>
       <p>${activePlayerCount}</p>
     </#if>
-
 
   </div>
 
