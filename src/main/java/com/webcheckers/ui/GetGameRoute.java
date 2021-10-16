@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import com.webcheckers.app.Game;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import static spark.Spark.halt;
@@ -32,6 +33,8 @@ public class GetGameRoute implements Route {
     static final String ACTIVE_COLOR_ATTR = "activeColor";
     static final String OPPONENT_ATTR = "opponent";
     static final String GAME_ID_PARAM = "gameID";
+    static final String ERROR_ATTR = "error";
+
 
     private final PlayerLobby playerLobby;
     private HashMap<String, Game> gameMap;
@@ -88,20 +91,25 @@ public class GetGameRoute implements Route {
                         gameID = String.valueOf(game.getID());
                         gameMap.put(gameID, game);
                         response.redirect(WebServer.GAME_URL + "?gameID=" + gameID);
+                    } else {
+                        // opponent is in game, redirect to home page
+                        httpSession.attribute(ERROR_ATTR, GetHomeRoute.OPPONENT_IN_GAME);
+                        response.redirect(WebServer.HOME_URL);
                     }
                 }
+                halt();
+                return null;
             } else {
                 Game game = gameMap.get(gameID);
-                vm.put(VIEW_MODE_ATTR, MODE.PLAY);
                 vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
                 vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
                 if (game.isRedPlayer(player)) {
-                    System.out.println("Red Player:" + player);
                     vm.put(BOARD_ATTR, game.redPlayerBoard());
                 } else {
-                    System.out.println("White Player:" + player);
                     vm.put(BOARD_ATTR, game.whitePlayerBoard());
                 }
+
+                vm.put(VIEW_MODE_ATTR, MODE.PLAY);
                 vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR.RED);
             }
         } else {

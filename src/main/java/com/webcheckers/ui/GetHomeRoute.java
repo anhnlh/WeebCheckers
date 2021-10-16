@@ -29,6 +29,8 @@ public class GetHomeRoute implements Route {
     public static final String MESSAGE = "message";
     public static final String ACTIVE_PLAYERS = "activePlayers";
     public static final String ACTIVE_PLAYER_COUNT = "activePlayerCount";
+    public static final Message OPPONENT_IN_GAME = Message.error("Opponent is in game. Try another player.");
+
 
     // message
     private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
@@ -100,6 +102,10 @@ public class GetHomeRoute implements Route {
 
         // display a user message in the Home page
         vm.put(MESSAGE, WELCOME_MSG);
+
+        if (httpSession.attribute(GetGameRoute.ERROR_ATTR) != null) {
+            vm.put(GetGameRoute.ERROR_ATTR, OPPONENT_IN_GAME);
+        }
 
         // displays other active players
         vm.put(ACTIVE_PLAYERS, activePlayers);

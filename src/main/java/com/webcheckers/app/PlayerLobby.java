@@ -34,7 +34,7 @@ public class PlayerLobby {
 
     /**
      * Adds players to lobby
-     * @param name
+     * @param playerName
      *  str: Player name
      * @return
      *  Bool: true on successful add / false on unsuccessful add
@@ -42,15 +42,15 @@ public class PlayerLobby {
     public synchronized boolean addPlayer(String playerName) {
         
         //return false if name invalid
-        if(playerName.length() >= 26 || playerName.length() <= 0 || playerName.isEmpty()) { 
-            return false; 
+        if(playerName.length() >= 26 || playerName.length() <= 0 || playerName.isEmpty()) {
+            return false;
         }
         
         //return false if name invalid
-        Pattern invalid = Pattern.compile("[^A-Za-z0-9, ]");
+        Pattern invalid = Pattern.compile("[^A-Za-z0-9-_, ]");
         Matcher find = invalid.matcher(playerName);
         if(find.find()) {
-             return false; 
+            return false;
         }
         
         //If name doesnt exist in lobby, add and return true
@@ -58,7 +58,7 @@ public class PlayerLobby {
             lobby.put(playerName.toLowerCase(), new Player(playerName));
             return true;
         }
-        
+
         return false;
     }
 
