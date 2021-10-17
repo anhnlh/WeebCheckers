@@ -37,7 +37,8 @@ public class Game {
 
     /**
      * Constructor for the Game class
-     * @param redPlayer given red player
+     *
+     * @param redPlayer   given red player
      * @param whitePlayer given white player
      */
     public Game(Player redPlayer, Player whitePlayer) {
@@ -49,6 +50,7 @@ public class Game {
 
     /**
      * BoardView for the red player
+     *
      * @return the board
      */
     public BoardView redPlayerBoard() {
@@ -57,6 +59,7 @@ public class Game {
 
     /**
      * BoardView for the white player, which is backwards
+     *
      * @return newly built backward board
      */
     public BoardView whitePlayerBoard() {
@@ -75,6 +78,7 @@ public class Game {
 
     /**
      * Returns the red player
+     *
      * @return red Player
      */
     public Player getRedPlayer() {
@@ -83,6 +87,7 @@ public class Game {
 
     /**
      * Returns the white player
+     *
      * @return white Player
      */
     public Player getWhitePlayer() {
@@ -91,6 +96,7 @@ public class Game {
 
     /**
      * Returns the game's ID
+     *
      * @return game's ID
      */
     public int getID() {
@@ -99,6 +105,7 @@ public class Game {
 
     /**
      * Checks if the given player is the red player
+     *
      * @param other given player
      * @return true if given player is the red player
      */
