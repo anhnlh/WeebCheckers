@@ -6,15 +6,7 @@ import spark.*;
 import com.webcheckers.app.PlayerLobby;
 
 
-/**
- * The constructor for the {@code POST /signout} route handler.
- *
- * @param templateEngine
- *    template engine to use for rendering HTML page
- *
- * @throws NullPointerException
- *    when the {@code playerLobby} or {@code templateEngine} parameter is null
- */
+
 public class PostSignOutRoute implements Route{
 
     static final String SESSION_ATTR = "id";
@@ -22,6 +14,15 @@ public class PostSignOutRoute implements Route{
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
 
+    /**
+     * The constructor for the {@code POST /signout} route handler.
+     *
+     * @param templateEngine
+     *    template engine to use for rendering HTML page
+     *
+     * @throws NullPointerException
+     *    when the {@code playerLobby} or {@code templateEngine} parameter is null
+     */
     public PostSignOutRoute(PlayerLobby playerLobby, TemplateEngine templateEngine) {
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
