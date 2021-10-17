@@ -24,20 +24,19 @@ public class GetHomeRoute implements Route {
     public static final String VIEW_NAME = "home.ftl";
 
     // freemarker variables
-    public static final String TITLE = "title";
-    public static final String CURRENT_USER = "currentUser";
-    public static final String MESSAGE = "message";
-    public static final String ACTIVE_PLAYERS = "activePlayers";
-    public static final String ACTIVE_PLAYER_COUNT = "activePlayerCount";
-    public static final Message OPPONENT_IN_GAME = Message.error("Opponent is in game. Try another player.");
-
+    public static final String TITLE_ATTR = "title";
+    public static final String CURRENT_USER_ATTR = "currentUser";
+    public static final String MESSAGE_ATTR = "message";
+    public static final String ACTIVE_PLAYERS_ATTR = "activePlayers";
+    public static final String ACTIVE_PLAYER_COUNT_ATTR = "activePlayerCount";
+    public static final String ERROR_ATTR = "error";
 
     // message
     private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
-    // parameter initalizations
-    private TemplateEngine templateEngine;
-    private PlayerLobby playerLobby;
+    // parameter initializations
+    private final TemplateEngine templateEngine;
+    private final PlayerLobby playerLobby;
     private HashMap<String, Game> gameMap;
 
     /**
@@ -58,6 +57,7 @@ public class GetHomeRoute implements Route {
 
     /**
      * Render the WebCheckers Home page.
+     * Redirects the white player into the game they're challenged into
      *
      * @param request  the HTTP request
      * @param response the HTTP response
@@ -70,8 +70,7 @@ public class GetHomeRoute implements Route {
 
         // retrieve session
         final Session httpSession = request.session();
-        Player player = httpSession.attribute(CURRENT_USER);
-
+        Player player = httpSession.attribute(CURRENT_USER_ATTR);
 
         // start building the View-Model
         final Map<String, Object> vm = new HashMap<>();
@@ -80,8 +79,9 @@ public class GetHomeRoute implements Route {
         String activePlayersCount = playerLobby.activePlayersMessage();
 
         // display welcome title
-        vm.put(TITLE, "Welcome!");
+        vm.put(TITLE_ATTR, "Welcome!");
 
+        // redirects player into the game with the player they're challenged with (if possible)
         if (player != null) {
             if (player.isPlaying()) {
                 int gameID = 0;
@@ -98,20 +98,20 @@ public class GetHomeRoute implements Route {
         }
 
         // store current user
-        vm.put(CURRENT_USER, player);
+        vm.put(CURRENT_USER_ATTR, player);
 
         // display a user message in the Home page
-        vm.put(MESSAGE, WELCOME_MSG);
+        vm.put(MESSAGE_ATTR, WELCOME_MSG);
 
-        if (httpSession.attribute(GetGameRoute.ERROR_ATTR) != null) {
-            vm.put(GetGameRoute.ERROR_ATTR, OPPONENT_IN_GAME);
+        if (httpSession.attribute(ERROR_ATTR) != null) {
+            vm.put(ERROR_ATTR, httpSession.attribute(ERROR_ATTR));
         }
 
         // displays other active players
-        vm.put(ACTIVE_PLAYERS, activePlayers);
+        vm.put(ACTIVE_PLAYERS_ATTR, activePlayers);
 
         // displays number of players
-        vm.put(ACTIVE_PLAYER_COUNT, activePlayersCount);
+        vm.put(ACTIVE_PLAYER_COUNT_ATTR, activePlayersCount);
 
         // render the View
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
