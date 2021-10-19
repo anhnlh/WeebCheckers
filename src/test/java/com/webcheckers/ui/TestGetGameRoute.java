@@ -31,6 +31,9 @@ public class TestGetGameRoute {
     private TemplateEngine engine;
     private HashMap<String, Game> gameMap;
     private PlayerLobby playerLobby;
+    private Player p1;
+    private Player p2;
+    private Game game;
 
     /**
      * Setup new mock objects for each test.
@@ -47,14 +50,15 @@ public class TestGetGameRoute {
         playerLobby = new PlayerLobby();
         playerLobby.addPlayer("Player_1");
         playerLobby.addPlayer("Player_2");
+        // simulate getting opponent from playerLobby
+        when(playerLobby.getPlayer(request.queryParams(GetGameRoute.OPPONENT_ATTR))).thenReturn(p2);
 
         // simulate a game created
-        Player p1 = playerLobby.getPlayer("Player_1");
-        Player p2 = playerLobby.getPlayer("Player_2");
-        Game game = new Game(p1, p2);
+        p1 = playerLobby.getPlayer("Player_1");
+        p2 = playerLobby.getPlayer("Player_2");
+        game = new Game(p1, p2);
         gameMap = new HashMap<>();
         gameMap.put(String.valueOf(game.getID()), game);
-
 
         // create a unique CuT for each test
         CuT = new GetGameRoute(gameMap, playerLobby, engine);
@@ -62,22 +66,21 @@ public class TestGetGameRoute {
 
     @Test
     public void newGame() {
+        // simulate current user as Player_1
+        when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(p1);
+        // simulate "opponent" param to be "Player_2"
+        when(request.queryParams(GetGameRoute.OPPONENT_ATTR)).thenReturn("Player_2");
+
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
-
-        Player player = session.attribute(GetHomeRoute.CURRENT_USER);
-        assertNotNull(player);
 
         CuT.handle(request, response);
 
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
 
-
-        testHelper.assertViewModelAttribute(GetHomeRoute.CURRENT_USER, player);
+        testHelper.assertViewModelAttribute(GetHomeRoute.CURRENT_USER, p1);
         testHelper.assertViewModelAttribute(GetGameRoute.TITLE_ATTR, "Welcome!");
 
-        Game game = ((List<Game>) gameMap.values()).get(0);
-        assertNull(request.queryParams(GetGameRoute.GAME_ID_PARAM));
     }
 }
