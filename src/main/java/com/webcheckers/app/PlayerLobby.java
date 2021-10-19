@@ -8,11 +8,11 @@ import java.util.Collection;
 import java.util.HashMap;
 
 /**
- * @author Phil Ganem 
+ * @author Phil Ganem
  * Application tier entity for a player lobby
  * */
 public class PlayerLobby {
-    
+
     //Hashmap representation of a lobby
     // name (str) connects to Player object
     private HashMap<String, Player> lobby;
@@ -40,25 +40,25 @@ public class PlayerLobby {
      *  Bool: true on successful add / false on unsuccessful add
      */
     public synchronized boolean addPlayer(String playerName) {
-        
+
         //return false if name invalid
-        if(playerName.length() >= 26 || playerName.length() <= 0 || playerName.isEmpty()) { 
-            return false; 
+        if(playerName.length() >= 26 || playerName.length() <= 0 || playerName.isEmpty()) {
+            return false;
         }
-        
+
         //return false if name invalid
         Pattern invalid = Pattern.compile("[^A-Za-z0-9-_ ]");
         Matcher find = invalid.matcher(playerName);
         if(find.find()) {
-             return false; 
+             return false;
         }
-        
+
         //If name doesnt exist in lobby, add and return true
         if(!lobby.containsKey(playerName.toLowerCase())) {
             lobby.put(playerName.toLowerCase(), new Player(playerName));
             return true;
         }
-        
+
         return false;
     }
 
@@ -79,7 +79,7 @@ public class PlayerLobby {
      *  Player: found player object
      */
     public synchronized Player getPlayer(String player) {
-        if(lobby.containsKey(player.toLowerCase())) {
+        if (player != null && lobby.containsKey(player.toLowerCase())) {
             return lobby.get(player.toLowerCase());
         }
         return null;
@@ -96,7 +96,7 @@ public class PlayerLobby {
 
     /**
      * Returns a message that tells how many players are in the Collection of active players
-     * 
+     *
      * @return
      *  String: A message of how many active players there are
      */
@@ -118,7 +118,7 @@ public class PlayerLobby {
      * @param exclude
      *  Player: Player object that should be excluded from collection
      * @return
-     *  Collection<str>: collection of all players but excluded 
+     *  Collection<str>: collection of all players but excluded
      */
     public Collection<Player> getOtherActivePlayers(Player exclude) {
         Collection<Player> temp = new ArrayList<>();

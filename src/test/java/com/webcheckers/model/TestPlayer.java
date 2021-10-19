@@ -46,7 +46,7 @@ public class TestPlayer {
         Player aPlayer = new Player("Player-A");
         Player bPlayer = new Player("Player-B");
         boolean actual = aPlayer.equals(bPlayer);
-        assertTrue(actual);
+        assertFalse(actual);
     }
 
     @Test

@@ -1,7 +1,6 @@
 package com.webcheckers.ui;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -36,11 +35,11 @@ public class GetGameRoute implements Route {
     private final PlayerLobby playerLobby;
     private HashMap<String, Game> gameMap;
 
-    private enum MODE {
+    public enum mode {
         PLAY
     }
 
-    private enum ACTIVE_COLOR {
+    public enum activeColor {
         RED, WHITE
     }
 
@@ -88,11 +87,19 @@ public class GetGameRoute implements Route {
                         gameID = String.valueOf(game.getID());
                         gameMap.put(gameID, game);
                         response.redirect(WebServer.GAME_URL + "?gameID=" + gameID);
+                    } else {
+                        response.redirect(WebServer.HOME_URL);
+                        halt();
+                        return null;
                     }
+                } else {
+                    response.redirect(WebServer.HOME_URL);
+                    halt();
+                    return null;
                 }
             } else {
                 Game game = gameMap.get(gameID);
-                vm.put(VIEW_MODE_ATTR, MODE.PLAY);
+                vm.put(VIEW_MODE_ATTR, mode.PLAY);
                 vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
                 vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
                 if (game.isRedPlayer(player)) {
@@ -102,7 +109,7 @@ public class GetGameRoute implements Route {
                     System.out.println("White Player:" + player);
                     vm.put(BOARD_ATTR, game.whitePlayerBoard());
                 }
-                vm.put(ACTIVE_COLOR_ATTR, ACTIVE_COLOR.RED);
+                vm.put(ACTIVE_COLOR_ATTR, activeColor.RED);
             }
         } else {
             response.redirect(WebServer.HOME_URL);
