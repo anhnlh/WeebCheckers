@@ -1,4 +1,4 @@
-package com.webcheckers.tests;
+package com.webcheckers.model;
 
 import static org.junit.Assert.*;
 
