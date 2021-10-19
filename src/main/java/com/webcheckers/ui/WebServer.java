@@ -78,7 +78,7 @@ public class WebServer {
 
   private final TemplateEngine templateEngine;
   private final PlayerLobby playerLobby;
-  private final HashMap<String, Game> gameMap; // change to gameCenter in future
+  private final HashMap<String, Game> gameMap;
   private final Gson gson;
 
   //

@@ -3,22 +3,18 @@ geometry: margin=1in
 ---
 # PROJECT Design Documentation
 
-> _The following template provides the headings for your Design
-> Documentation.  As you edit each section make sure you remove these
-> commentary 'blockquotes'; the lines that start with a > character
-> and appear in the generated PDF in italics._
-
 ## Team Information
-* Team name: TEAMNAME
+* Team name: Team Rhamz
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * Anh Nguyen
+  * Rhamsez Thevenin
+  * Sierra Tran
+  * Phil Ganem
+  * Mohammed Alam
 
 ## Executive Summary
 
-This is a summary of the project.
+EDIT THIS
 
 ### Purpose
 > _Provide a very brief statement about the project and the most
@@ -54,11 +50,13 @@ This section describes the features of the application.
 
 This section describes the application domain.
 
-![The WebCheckers Domain Model](domain-model-placeholder.png)
+![The WebCheckers Domain Model](DomainModelTeam.png)
 
 > _Provide a high-level overview of the domain for this application. You
 > can discuss the more important domain entities and their relationship
 > to each other._
+
+EDIT THIS
 
 
 ## Architecture and Design
@@ -87,11 +85,12 @@ Details of the components within these tiers are supplied below.
 This section describes the web interface flow; this is how the user views and interacts
 with the WebCheckers application.
 
-![The WebCheckers Web Interface Statechart](web-interface-placeholder.png)
+![The WebCheckers Web Interface Statechart](WebInterfaceStatechart.png)
 
 > _Provide a summary of the application's user interface.  Describe, from
 > the user's perspective, the flow of the pages in the web application._
 
+EDIT THIS
 
 ### UI Tier
 > _Provide a summary of the Server-side UI tier of your architecture.
