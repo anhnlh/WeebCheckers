@@ -106,8 +106,4 @@ public class Row implements Iterable<Space> {
         return index == spaces1.index && spaces.equals(spaces1.spaces);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(index, spaces);
-    }
 }

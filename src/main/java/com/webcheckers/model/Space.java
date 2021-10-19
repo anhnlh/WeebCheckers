@@ -69,8 +69,4 @@ public class Space {
         return cellIdx == space.cellIdx && Objects.equals(piece, space.piece);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(cellIdx, piece);
-    }
 }

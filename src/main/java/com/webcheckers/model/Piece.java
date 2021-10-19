@@ -80,8 +80,4 @@ public class Piece {
         return type == piece.type && color == piece.color;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(type, color);
-    }
 }

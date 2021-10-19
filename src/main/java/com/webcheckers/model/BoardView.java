@@ -81,8 +81,4 @@ public class BoardView implements Iterable<Row> {
         return board.equals(rows.board);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(board);
-    }
 }
