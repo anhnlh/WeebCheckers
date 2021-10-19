@@ -14,18 +14,18 @@ geometry: margin=1in
 
 ## Executive Summary
 
-EDIT THIS
-
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+> This project is a web-application of checkers. 
+> Users should be able to log-in, and play against other players.
 
 ### Glossary and Acronyms
 > _Provide a table of terms and acronyms._
 
 | Term | Definition |
 |------|------------|
-| VO | Value Object |
+| UI | User Interface |
+| POJOs | Plain Old Java Objects |
+| MVP | Minimal Viable Product |
 
 
 ## Requirements
