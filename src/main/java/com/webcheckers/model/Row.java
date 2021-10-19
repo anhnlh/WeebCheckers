@@ -3,6 +3,7 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import com.webcheckers.model.Piece.PIECECOLOR;
 
@@ -95,5 +96,18 @@ public class Row implements Iterable<Space> {
     @Override
     public Iterator<Space> iterator() {
         return this.spaces.iterator();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Row)) return false;
+        Row spaces1 = (Row) o;
+        return index == spaces1.index && spaces.equals(spaces1.spaces);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(index, spaces);
     }
 }

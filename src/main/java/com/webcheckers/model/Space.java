@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.Objects;
+
 /**
  * Model object for a space on the board
  * 
@@ -59,4 +61,16 @@ public class Space {
         return this.cellIdx;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Space)) return false;
+        Space space = (Space) o;
+        return cellIdx == space.cellIdx && Objects.equals(piece, space.piece);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cellIdx, piece);
+    }
 }
