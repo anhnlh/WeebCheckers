@@ -31,7 +31,7 @@ public class PostSignOutRoute implements Route{
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
 
         // start building the View-Model
         final Map<String, Object> vm = new HashMap<>();

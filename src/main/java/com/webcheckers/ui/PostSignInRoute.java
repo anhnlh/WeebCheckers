@@ -13,7 +13,7 @@ public class PostSignInRoute implements Route {
     //freemarker variables
     private final String TITLE = "title";
     private final String ERROR = "error";
-    private final String USER_ID = "userID";
+    static final String USER_ID = "userID";
 
     //error message
     private static final Message INVALID_NAME = Message.error("Invalid Request. Please try again.");

@@ -127,6 +127,10 @@ public class PlayerLobby {
         return temp;
     }
 
+    public boolean contains(String player) {
+        return getPlayer(player) != null;
+    }
+
 // --- Getters and Setters ---
 
     public HashMap<String, Player> getLobby() {
