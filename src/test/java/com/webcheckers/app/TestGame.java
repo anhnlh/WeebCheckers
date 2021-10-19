@@ -6,7 +6,8 @@ import com.webcheckers.model.BoardView;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.Row;
 import com.webcheckers.model.Space;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.platform.commons.annotation.Testable;
 
@@ -20,10 +21,25 @@ import java.util.Objects;
 @Tag("Application-tier")
 @Testable
 public class TestGame {
+
+    /**
+     * The component-under-test (CuT)
+     */
+    private Game CuT;
+
     // Values for testing purposes
-    private final Player redPlayer = new Player("Player 1");
-    private final Player whitePlayer = new Player("Player 2");
-    private final BoardView board = new BoardView();
+    private Player redPlayer;
+    private Player whitePlayer;
+    private BoardView board;
+
+    @BeforeEach
+    public void setup() {
+        redPlayer = new Player("Player 1");
+        whitePlayer = new Player("Player 2");
+        board = new BoardView();
+
+        CuT = new Game(redPlayer, whitePlayer);
+    }
 
     /**
      * Tests Game's constructor {@link Game#Game(Player, Player)}
@@ -38,7 +54,6 @@ public class TestGame {
      */
     @Test
     public void testGetRedPlayer() {
-        Game CuT = new Game(redPlayer, whitePlayer);
         assertEquals(CuT.getRedPlayer(), redPlayer);
     }
 
@@ -47,7 +62,6 @@ public class TestGame {
      */
     @Test
     public void testGetWhitePlayer() {
-        Game CuT = new Game(redPlayer, whitePlayer);
         assertEquals(CuT.getWhitePlayer(), whitePlayer);
     }
 
@@ -56,7 +70,6 @@ public class TestGame {
      */
     @Test
     public void testGetID() {
-        Game CuT = new Game(redPlayer, whitePlayer);
         assertEquals(CuT.getID(), Objects.hash(redPlayer, whitePlayer));
     }
 
@@ -65,7 +78,6 @@ public class TestGame {
      */
     @Test
     public void testIsRedPlayer() {
-        Game CuT = new Game(redPlayer, whitePlayer);
         assertTrue(CuT.isRedPlayer(redPlayer));
         assertFalse(CuT.isRedPlayer(whitePlayer));
     }
@@ -75,7 +87,6 @@ public class TestGame {
      */
     @Test
     public void testRedPlayerBoard() {
-        Game CuT = new Game(redPlayer, whitePlayer);
         assertEquals(CuT.redPlayerBoard(), board);
     }
 
@@ -96,7 +107,6 @@ public class TestGame {
         }
         BoardView whitePlayerBoard = new BoardView(whiteBoard);
 
-        Game CuT = new Game(redPlayer, whitePlayer);
         assertEquals(CuT.whitePlayerBoard(), whitePlayerBoard, "White's boards don't match");
     }
 }
