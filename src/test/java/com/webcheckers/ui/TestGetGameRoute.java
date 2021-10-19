@@ -64,6 +64,9 @@ public class TestGetGameRoute {
         CuT = new GetGameRoute(gameMap, playerLobby, templateEngine);
     }
 
+    /**
+     * Tests {@link GetGameRoute#GetGameRoute(HashMap, PlayerLobby, TemplateEngine)}
+     */
     @Test
     public void constructorTest() {
         new GetGameRoute(gameMap, playerLobby, templateEngine);
@@ -76,7 +79,7 @@ public class TestGetGameRoute {
      * Tests {@link GetGameRoute#handle(Request, Response)}
      */
     @Test
-    public void handleTest() {
+    public void defaultHandleTest() {
         // simulate current user as Player_1
         when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(p1);
         // simulate "opponent" param to be "Player_2"
@@ -130,16 +133,76 @@ public class TestGetGameRoute {
     }
 
     /**
+     * Tests {@link GetGameRoute#handle(Request, Response)}
+     */
+    @Test
+    public void whitePlayerHandleTest() {
+        // simulate current user as Player_1
+        when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(p1);
+        // simulate "opponent" param to be "Player_2"
+        when(request.queryParams(GetGameRoute.OPPONENT_ATTR)).thenReturn("Player_2");
+
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+
+        // first handle creates the game
+        CuT.handle(request, response);
+
+        // simulate game created
+        String gameID = String.valueOf(Objects.hash(p1, p2)); // (p2, p1) instead
+        when(request.queryParams(GetGameRoute.GAME_ID_PARAM)).
+                thenReturn(gameID);
+
+        // game is created
+        Game game = gameMap.get(gameID);
+
+        // current user is the white player
+        when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(p2);
+
+        // second handle builds the game view
+        CuT.handle(request, response);
+
+        // checks the board
+        testHelper.assertViewModelAttribute(GetGameRoute.WHITE_PLAYER_ATTR, game.getWhitePlayer());
+    }
+
+    /**
+     * Tests when redPlayer is playing
+     */
+    @Test
+    public void redPlayerPlayingTest() {
+        when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(p1);
+        p1.setPlaying(true);
+
+        try {
+            CuT.handle(request, response);
+        } catch (HaltException ignored) {}
+    }
+
+    /**
+     * Tests when whitePlayer is playing
+     */
+    @Test
+    public void whitePlayerPlayingTest() {
+        when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(p1);
+        when(request.queryParams(GetGameRoute.OPPONENT_ATTR)).thenReturn("Player_2");
+        p2.setPlaying(true);
+
+        try {
+            CuT.handle(request, response);
+        } catch (HaltException ignored) {}
+    }
+
+    /**
      * Tests a faulty case with {@link GetGameRoute#handle(Request, Response)}
      */
     @Test
-    public void faultyHandleTest() {
+    public void playerNullTest() {
         when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(null);
 
         // tests handle
         try {
             CuT.handle(request, response);
-            fail("Redirects invoke halt exceptions.");
         } catch (HaltException ignored) {}
 
         // should redirect to homepage
