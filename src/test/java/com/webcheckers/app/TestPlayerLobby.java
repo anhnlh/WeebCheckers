@@ -214,6 +214,23 @@ public class TestPlayerLobby {
 
     @Test
     public void testSize() {
+        // Empty at the start
+        assertEquals(0, CuT.size());
 
+        // Adding players, size increasing
+        CuT.addPlayer(player1Name);
+        assertEquals(1, CuT.size());
+
+        CuT.addPlayer(player2Name);
+        CuT.addPlayer(player3Name);
+        assertEquals(3, CuT.size());
+
+        // Removing players, size decreasing
+        CuT.removePlayer(player1Name);
+        assertEquals(2, CuT.size());
+
+        CuT.removePlayer(player2Name);
+        CuT.removePlayer(player3Name);
+        assertEquals(0, CuT.size());
     }
 }
