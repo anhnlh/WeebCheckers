@@ -1,20 +1,19 @@
 package com.webcheckers.ui;
-
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * @Authot Phil
+ * @Authot Phil Ganem
  */
+@Tag("UI-tier")
 public class PostSignInRouteTest{
 
     private PostSignInRoute CuT;
@@ -44,6 +43,9 @@ public class PostSignInRouteTest{
 
 
     @Test
+    /**
+     * Test the constructor for PostSignInRoute with null values
+     */
     public void testConstructor_Null() {
         boolean isThrown = false;
 
@@ -57,7 +59,11 @@ public class PostSignInRouteTest{
         assertTrue(isThrown);
     }
 
+    
     @Test
+    /**
+     * Test the constructor for PostSignInRoute
+     */
     public void testConstructor() {
 
         boolean isThrown = false;
