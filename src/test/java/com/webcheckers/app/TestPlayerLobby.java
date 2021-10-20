@@ -20,6 +20,7 @@ public class TestPlayerLobby {
     private Player player2;
     private Player player3;
     private Player player4;
+    private Player playerNull;
     private HashMap<String, Player> lobby;
 
     private int lobbyNum;
@@ -27,15 +28,18 @@ public class TestPlayerLobby {
     private String player2Name;
     private String player3Name;
     private String player4Name;
+    private String playerNullName;
+
     
     @BeforeEach
     public void setup() {
         CuT = new PlayerLobby();
 
-        player1Name = "hi";
-        player2Name = "hello";
-        player3Name = "bye";
-        player4Name = "hi";
+        player1Name = "Hi";
+        player2Name = "Hello";
+        player3Name = "Bye";
+        player4Name = "Hi";
+        playerNullName = "Goodbye";
 
         player1 = new Player(player1Name);
         player2 = new Player(player2Name);
@@ -92,5 +96,19 @@ public class TestPlayerLobby {
         CuT.removePlayer(player3Name);
         assertEquals(0, CuT.getLobby().size());
         assertTrue(!CuT.getLobby().containsKey(player3Name.toLowerCase()));
+    }
+
+    @Test
+    public void testGetPlayer() {
+        CuT.addPlayer(player1Name);
+
+        // Player 1 is in the lobby, should return Player 1
+        assertTrue(player1.equals(CuT.getPlayer(player1Name)));
+
+        // Player 2 is not in the lobby, should return null
+        assertEquals(null, CuT.getPlayer(player2Name));
+
+        // The Player Null is null itself, should return null
+        assertEquals(null, CuT.getPlayer(playerNullName));
     }
 }
