@@ -197,7 +197,14 @@ public class TestPlayerLobby {
 
     @Test
     public void testGetLobbyID() {
+        assertEquals(0, CuT.getLobbyID());
 
+        // In the case that new or more player lobbies are created
+        CuT = new PlayerLobby();
+        assertEquals(1, CuT.getLobbyID());
+
+        PlayerLobby temp = new PlayerLobby();
+        assertEquals(2, temp.getLobbyID());
     }
 
     @Test
