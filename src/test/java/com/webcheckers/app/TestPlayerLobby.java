@@ -3,6 +3,8 @@ package com.webcheckers.app;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import com.webcheckers.model.Player;
@@ -133,4 +135,21 @@ public class TestPlayerLobby {
         assertTrue(CuT.contains(player1Name));
         assertFalse(CuT.contains(player2Name));
     }
+
+    @Test
+    public void testGetActivePlayers() {
+        Collection<Player> temp = new ArrayList<>();
+        temp.add(player1);
+        temp.add(player2);
+        temp.add(player3);
+
+        CuT.addPlayer(player1Name);
+        CuT.addPlayer(player2Name);
+        CuT.addPlayer(player3Name);
+
+        assertFalse(CuT.getActivePlayers().isEmpty());
+        assertEquals(temp.toString(), CuT.getActivePlayers().toString());
+    }
+
+    
 }
