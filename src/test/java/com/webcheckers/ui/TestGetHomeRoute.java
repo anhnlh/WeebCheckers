@@ -8,9 +8,7 @@ import java.util.HashMap;
 import com.webcheckers.app.Game;
 import com.webcheckers.app.PlayerLobby;
 
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.*;
 import org.junit.platform.commons.annotation.Testable;
 
 import spark.*;
@@ -21,14 +19,15 @@ public class TestGetHomeRoute {
     
     private GetHomeRoute CuT;
 
+    private PlayerLobby playerLobby;
+    private HashMap<String, Game> gameMap;
+    private String player1Name;
+
     private Request request;
     private Response response;
     private Session session;
     private TemplateEngine templateEngine;
-    private PlayerLobby playerLobby;
-    private HashMap<String, Game> gameMap;
-
-
+    
     @BeforeEach
     public void setup() {
         request = mock(Request.class);
@@ -36,9 +35,12 @@ public class TestGetHomeRoute {
         when(request.session()).thenReturn(session);
         response = mock(Response.class);
         templateEngine = mock(TemplateEngine.class);
-
+        
+        player1Name = "player1";
         playerLobby = new PlayerLobby();
-        gameMap = new HashMap<String, Game>();
+        playerLobby.addPlayer(player1Name);
+
+        gameMap = new HashMap<>();
 
         CuT = new GetHomeRoute(gameMap, playerLobby, templateEngine);
     }
@@ -50,4 +52,5 @@ public class TestGetHomeRoute {
         assertNotNull(playerLobby);
         assertNotNull(templateEngine);
     }
+
 }
