@@ -20,7 +20,7 @@ public class TestPlayerLobby {
     private Player player2;
     private Player player3;
     private Player player4;
-    private Player playerNull;
+
     private HashMap<String, Player> lobby;
 
     private int lobbyNum;
@@ -28,7 +28,6 @@ public class TestPlayerLobby {
     private String player2Name;
     private String player3Name;
     private String player4Name;
-    private String playerNullName;
 
     
     @BeforeEach
@@ -39,7 +38,6 @@ public class TestPlayerLobby {
         player2Name = "Hello";
         player3Name = "Bye";
         player4Name = "Hi";
-        playerNullName = "Goodbye";
 
         player1 = new Player(player1Name);
         player2 = new Player(player2Name);
@@ -107,8 +105,5 @@ public class TestPlayerLobby {
 
         // Player 2 is not in the lobby, should return null
         assertEquals(null, CuT.getPlayer(player2Name));
-
-        // The Player Null is null itself, should return null
-        assertEquals(null, CuT.getPlayer(playerNullName));
     }
 }
