@@ -53,11 +53,6 @@ public class TestPlayerLobby {
         player4 = new Player(player4Name);
     }
 
-    @AfterEach
-    public void clean() {
-        CuT = null;
-    }
-
     /**
      * Tests {@link PlayerLobby#PlayerLobby()}
      */
