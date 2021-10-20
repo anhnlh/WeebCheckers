@@ -151,5 +151,18 @@ public class TestPlayerLobby {
         assertEquals(temp.toString(), CuT.getActivePlayers().toString());
     }
 
-    
+    @Test
+    public void testGetOtherActivePlayers() {
+        CuT.addPlayer(player1Name);
+        CuT.addPlayer(player2Name);
+        CuT.addPlayer(player3Name);
+
+        Collection<Player> exclude1 = CuT.getOtherActivePlayers(player1);
+        Collection<Player> exclude2 = CuT.getOtherActivePlayers(player2);
+        Collection<Player> exclude3 = CuT.getOtherActivePlayers(player3);
+
+        assertFalse(exclude1.contains(player1));
+        assertFalse(exclude2.contains(player2));
+        assertFalse(exclude3.contains(player3));
+    }
 }
