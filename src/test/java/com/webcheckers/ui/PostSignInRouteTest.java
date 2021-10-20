@@ -1,14 +1,15 @@
 package com.webcheckers.ui;
 import com.webcheckers.app.PlayerLobby;
-import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @Authot Phil Ganem
@@ -17,28 +18,28 @@ import static org.mockito.Mockito.when;
 public class PostSignInRouteTest{
 
     private PostSignInRoute CuT;
-    private PlayerLobby lobby;
+    private PlayerLobby playerLobby;
+    private TemplateEngine templateEngine;
     private Request request;
-    private Session session;
-    private Player asker;
-    private TemplateEngine engine;
     private Response response;
+    private Session session;
+    private String name;
 
     @BeforeEach
     public void setup()
     {
         request = mock(Request.class);
         session = mock(Session.class);
+        name = "Player";
         when(request.session()).thenReturn(session);
-        when(session.id()).thenReturn("session1");
         response = mock(Response.class);
-        engine = mock(TemplateEngine.class);
+        templateEngine = mock(TemplateEngine.class);
 
-        lobby = new PlayerLobby();
+        // simulate the player lobby
+        playerLobby = new PlayerLobby();
+        playerLobby.addPlayer(name);
 
-        asker = new Player("player1");
-        lobby.addPlayer(asker.getName());
-        CuT = new PostSignInRoute(lobby, engine);
+        CuT = new PostSignInRoute(playerLobby, templateEngine);
     }
 
 
@@ -49,13 +50,9 @@ public class PostSignInRouteTest{
     public void testConstructor_Null() {
         boolean isThrown = false;
 
-        try {
-            CuT = new PostSignInRoute(null, null);
-        }
-        catch (NullPointerException e) {
-            isThrown = true;
-        }
-
+        try {CuT = new PostSignInRoute(null, null);}
+        catch (NullPointerException e) {isThrown = true;}
+        
         assertTrue(isThrown);
     }
 
@@ -67,15 +64,27 @@ public class PostSignInRouteTest{
     public void testConstructor() {
 
         boolean isThrown = false;
-
-        try {
-            CuT = new PostSignInRoute(lobby, engine);
-        }
-        catch (Error e) {
-            isThrown = true;
-        }
+        
+        try {CuT = new PostSignInRoute(playerLobby, templateEngine);}
+        catch (Error e) {isThrown = true;}
 
         assertFalse(isThrown);
+    }
+
+    @Test 
+    /**
+     * Tests handle to see if it takes player signin
+     */
+    public void testHandle(){
+        when(session.attribute(PostSignInRoute.SESSION_ATTR)).thenReturn(name);
+
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+
+        int expected = 1;
+        int actual = playerLobby.size();
+
+        assertEquals(expected, actual);
     }
 }
 

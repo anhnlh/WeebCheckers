@@ -70,7 +70,9 @@ public class PieceTest {
     @Test
     public void testequalsSingle() {
         Piece CuT = new Piece(TYPE.SINGLE, PIECECOLOR.RED);
+        
         Piece otherPiece = new Piece(TYPE.SINGLE, PIECECOLOR.RED);
+        
         assertEquals(CuT.equals(otherPiece), true); 
     }
 
@@ -80,7 +82,9 @@ public class PieceTest {
     @Test
     public void testequalsKing() {
         Piece CuT = new Piece(TYPE.KING, PIECECOLOR.WHITE);
+        
         Piece otherPiece = new Piece(TYPE.KING, PIECECOLOR.WHITE);
+
         assertEquals(CuT.equals(otherPiece), true); 
     }
 }
