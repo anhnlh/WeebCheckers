@@ -74,4 +74,23 @@ public class TestPlayerLobby {
         CuT.addPlayer(player4Name);
         assertEquals(3, CuT.getLobby().size());
     }
+
+    @Test
+    public void testRemovePlayer() {
+        CuT.addPlayer(player1Name);
+        CuT.addPlayer(player2Name);
+        CuT.addPlayer(player3Name);
+
+        CuT.removePlayer(player1Name);
+        assertEquals(2, CuT.getLobby().size());
+        assertTrue(!CuT.getLobby().containsKey(player1Name.toLowerCase()));
+
+        CuT.removePlayer(player2Name);
+        assertEquals(1, CuT.getLobby().size());
+        assertTrue(!CuT.getLobby().containsKey(player2Name.toLowerCase()));
+
+        CuT.removePlayer(player3Name);
+        assertEquals(0, CuT.getLobby().size());
+        assertTrue(!CuT.getLobby().containsKey(player3Name.toLowerCase()));
+    }
 }
