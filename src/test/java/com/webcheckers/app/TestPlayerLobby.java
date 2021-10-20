@@ -165,4 +165,29 @@ public class TestPlayerLobby {
         assertFalse(exclude2.contains(player2));
         assertFalse(exclude3.contains(player3));
     }
+
+    @Test
+    public void testGetLobby() {
+
+    }
+
+    @Test
+    public void testSetLobby() {
+
+    }
+
+    @Test
+    public void testGetLobbyID() {
+
+    }
+
+    @Test
+    public void testGetLobbyNum() {
+
+    }
+
+    @Test
+    public void testSize() {
+
+    }
 }
