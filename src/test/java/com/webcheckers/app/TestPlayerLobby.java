@@ -173,7 +173,26 @@ public class TestPlayerLobby {
 
     @Test
     public void testSetLobby() {
+        // lobby is empty at first
+        assertTrue(CuT.getLobby().isEmpty());
 
+        // This HashMap will be passed in and become the new lobby
+        HashMap<String, Player> temp = new HashMap<>();
+        temp.put(player1Name.toLowerCase(), player1);
+        temp.put(player2Name.toLowerCase(), player2);
+        temp.put(player3Name.toLowerCase(), player3);
+
+        // assert that temp is the new lobby
+        CuT.setLobby(temp);
+        assertEquals(temp.toString(), CuT.getLobby().toString());
+
+        // remove Player 1 and Player 2
+        temp.remove(player1);
+        temp.remove(player2);
+
+        // assert that temp is the new lobby, this time without Player 1 and Player 2
+        CuT.setLobby(temp);
+        assertEquals(temp.toString(), CuT.getLobby().toString());
     }
 
     @Test
