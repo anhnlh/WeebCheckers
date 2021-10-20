@@ -234,14 +234,14 @@ public class TestPlayerLobby {
      */
     @Test
     public void testGetLobbyID() {
-        assertEquals(0, CuT.getLobbyID());
+        assertEquals(10, CuT.getLobbyID());
 
         // In the case that new or more player lobbies are created
         CuT = new PlayerLobby();
-        assertEquals(1, CuT.getLobbyID());
+        assertEquals(11, CuT.getLobbyID());
 
         PlayerLobby temp = new PlayerLobby();
-        assertEquals(2, temp.getLobbyID());
+        assertEquals(12, temp.getLobbyID());
     }
 
     /**
@@ -249,7 +249,7 @@ public class TestPlayerLobby {
      */
     @Test
     public void testGetLobbyNum() {
-        assertEquals(1, CuT.getLobbyNum());
+        assertEquals(6, CuT.getLobbyNum());
     }
 
     /**
