@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import com.webcheckers.app.Game;
 import com.webcheckers.app.PlayerLobby;
+import com.webcheckers.model.Player;
 
 import org.junit.jupiter.api.*;
 import org.junit.platform.commons.annotation.Testable;
@@ -21,13 +22,15 @@ public class TestGetHomeRoute {
 
     private PlayerLobby playerLobby;
     private HashMap<String, Game> gameMap;
-    private String player1Name;
+    private Player player;    
 
     private Request request;
     private Response response;
     private Session session;
     private TemplateEngine templateEngine;
-    
+
+    private String playerName;
+
     @BeforeEach
     public void setup() {
         request = mock(Request.class);
@@ -36,9 +39,9 @@ public class TestGetHomeRoute {
         response = mock(Response.class);
         templateEngine = mock(TemplateEngine.class);
         
-        player1Name = "player1";
+        playerName = "player1";
+        player = new Player(playerName);
         playerLobby = new PlayerLobby();
-        playerLobby.addPlayer(player1Name);
 
         gameMap = new HashMap<>();
 
@@ -53,4 +56,30 @@ public class TestGetHomeRoute {
         assertNotNull(templateEngine);
     }
 
+    @Test
+    public void handleTest() {
+        // When the player isn't signed in
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+
+        CuT.handle(request, response);
+
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+
+        testHelper.assertViewModelAttribute(GetHomeRoute.TITLE, "Welcome!");
+        testHelper.assertViewModelAttribute(GetHomeRoute.ACTIVE_PLAYER_COUNT, playerLobby.activePlayersMessage());
+
+        // When the player is signed in
+        when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(player);
+
+        CuT.handle(request, response);
+
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+
+        testHelper.assertViewModelAttribute(GetHomeRoute.TITLE, "Welcome!");
+        testHelper.assertViewModelAttribute(GetHomeRoute.ACTIVE_PLAYERS, playerLobby.getOtherActivePlayers(player));
+
+    }
 }
