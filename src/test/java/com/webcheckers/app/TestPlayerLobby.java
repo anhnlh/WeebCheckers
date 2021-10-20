@@ -209,7 +209,7 @@ public class TestPlayerLobby {
 
     @Test
     public void testGetLobbyNum() {
-
+        assertEquals(1, CuT.getLobbyNum());
     }
 
     @Test
