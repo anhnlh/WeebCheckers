@@ -12,10 +12,16 @@ import com.webcheckers.model.Player;
 import org.junit.jupiter.api.*;
 import org.junit.platform.commons.annotation.Testable;
 
+
+/** 
+ * Tests the Application-tier PlayerLobby class 
+*/
 @Tag("Application-tier")
 @Testable
 public class TestPlayerLobby {
-    
+    /**
+     * The component-under-test (CuT)
+     */
     private PlayerLobby CuT;
 
     private Player player1;
@@ -23,15 +29,15 @@ public class TestPlayerLobby {
     private Player player3;
     private Player player4;
 
-    private HashMap<String, Player> lobby;
-
     private int lobbyNum;
     private String player1Name;
     private String player2Name;
     private String player3Name;
     private String player4Name;
 
-    
+    /**
+     * Setup values before each test
+     */
     @BeforeEach
     public void setup() {
         CuT = new PlayerLobby();
@@ -45,15 +51,24 @@ public class TestPlayerLobby {
         player2 = new Player(player2Name);
         player3 = new Player(player3Name);
         player4 = new Player(player4Name);
-
-        lobby = new HashMap<>();
     }
 
+    @AfterEach
+    public void clean() {
+        CuT = null;
+    }
+
+    /**
+     * Tests {@link PlayerLobby#PlayerLobby()}
+     */
     @Test
     public void constructorTest() {
         assertNotNull(new PlayerLobby());
     }
 
+    /**
+     * Tests {@link PlayerLobby#addPlayer(String)}
+     */
     @Test
     public void testAddPlayer() {
         // 0 players added
@@ -79,6 +94,9 @@ public class TestPlayerLobby {
         assertEquals(3, CuT.getLobby().size());
     }
 
+    /**
+     * Tests {@link PlayerLobby#removePlayer(String)}
+     */
     @Test
     public void testRemovePlayer() {
         CuT.addPlayer(player1Name);
@@ -98,6 +116,9 @@ public class TestPlayerLobby {
         assertTrue(!CuT.getLobby().containsKey(player3Name.toLowerCase()));
     }
 
+    /**
+     * Tests {@link PlayerLobby#getPlayer(String)}
+     */
     @Test
     public void testGetPlayer() {
         CuT.addPlayer(player1Name);
@@ -109,6 +130,9 @@ public class TestPlayerLobby {
         assertEquals(null, CuT.getPlayer(player2Name));
     }
 
+    /**
+     * Tests {@link PlayerLobby#activePlayersMessage()}
+     */
     @Test
     public void testActivePlayersMessage() {
         String no_players = "There are currently no players online.";
@@ -128,6 +152,9 @@ public class TestPlayerLobby {
         assertEquals(three_players, CuT.activePlayersMessage());
     }
 
+    /**
+     * Tests {@link PlayerLobby#contains(String)}
+     */
     @Test
     public void testContains() {
         CuT.addPlayer(player1Name);
@@ -136,6 +163,9 @@ public class TestPlayerLobby {
         assertFalse(CuT.contains(player2Name));
     }
 
+    /**
+     * Tests {@link PlayerLobby#getActivePlayers()}
+     */
     @Test
     public void testGetActivePlayers() {
         Collection<Player> temp = new ArrayList<>();
@@ -151,6 +181,9 @@ public class TestPlayerLobby {
         assertEquals(temp.toString(), CuT.getActivePlayers().toString());
     }
 
+    /**
+     * Tests {@link PlayerLobby#getOtherActivePlayers(String)}
+     */
     @Test
     public void testGetOtherActivePlayers() {
         CuT.addPlayer(player1Name);
@@ -166,11 +199,17 @@ public class TestPlayerLobby {
         assertFalse(exclude3.contains(player3));
     }
 
+    /**
+     * Tests {@link PlayerLobby#getLobby()}
+     */
     @Test
     public void testGetLobby() {
         assertNotNull(CuT.getLobby());
     }
 
+    /** 
+     * Tests {@link PlayerLobby#setLobby(HashMap<String, Player>)}
+     */
     @Test
     public void testSetLobby() {
         // lobby is empty at first
@@ -195,6 +234,9 @@ public class TestPlayerLobby {
         assertEquals(temp.toString(), CuT.getLobby().toString());
     }
 
+    /**
+     * Tests {@link PlayerLobby#getLobbyID()}
+     */
     @Test
     public void testGetLobbyID() {
         assertEquals(0, CuT.getLobbyID());
@@ -207,11 +249,17 @@ public class TestPlayerLobby {
         assertEquals(2, temp.getLobbyID());
     }
 
+    /**
+     * Tests {@link PlayerLobby#getLobbyNum()}
+     */
     @Test
     public void testGetLobbyNum() {
         assertEquals(1, CuT.getLobbyNum());
     }
 
+    /**
+     * Tests {@link PlayerLobby#size()}
+     */
     @Test
     public void testSize() {
         // Empty at the start
