@@ -1,5 +1,8 @@
 package com.webcheckers.app;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.HashMap;
 
 import com.webcheckers.model.Player;
@@ -27,6 +30,11 @@ public class TestPlayerLobby {
         player1 = new Player("player1");
         player2 = new Player("player2");
         player3 = new Player("player3");
+    }
+
+    @Test
+    public void constructorTest() {
+        new PlayerLobby();
     }
 
 
