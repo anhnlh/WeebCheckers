@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 @Tag("Model-tier")
 public class TestPlayer {
 
+    /**
+     * Tests {@link Player#getName()}
+     */
     @Test
     public void testGetName() {
         String expected = "Test";
@@ -18,6 +21,9 @@ public class TestPlayer {
         assertEquals(expected, actual);
     }
 
+    /**
+     * Tests {@link Player#isPlaying()}
+     */
     @Test
     public void testIsPlaying() {
         Player player = new Player("Test");
@@ -25,6 +31,9 @@ public class TestPlayer {
         assertFalse(actual);
     }
 
+    /**
+     * Tests {@link Player#setPlaying(Boolean)}
+     */
     @Test
     public void testSetPlaying() {
         Player player = new Player("Test");
@@ -33,6 +42,9 @@ public class TestPlayer {
         assertTrue(actual);
     }
 
+    /**
+     * Tests if {@link Player#equals()} returns true
+     */
     @Test
     public void testEqualsTrue() {
         Player aPlayer = new Player("Player-A");
@@ -41,6 +53,9 @@ public class TestPlayer {
         assertTrue(actual);
     }
 
+    /**
+     * Tests if {@link Player#equals()} returns true
+     */
     @Test
     public void testEqualsFalse() {
         Player aPlayer = new Player("Player-A");
@@ -49,6 +64,9 @@ public class TestPlayer {
         assertFalse(actual);
     }
 
+    /**
+     * Tests {@link Player#toString()}
+     */    
     @Test
     public void testToString() {
         String expected = "Test";
