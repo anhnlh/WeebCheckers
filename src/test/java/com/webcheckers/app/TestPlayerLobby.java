@@ -125,4 +125,12 @@ public class TestPlayerLobby {
         CuT.addPlayer(player3Name);
         assertEquals(three_players, CuT.activePlayersMessage());
     }
+
+    @Test
+    public void testContains() {
+        CuT.addPlayer(player1Name);
+
+        assertTrue(CuT.contains(player1Name));
+        assertFalse(CuT.contains(player2Name));
+    }
 }
