@@ -19,7 +19,7 @@ public class GetSignInRoute implements Route {
     public static final String VIEW_NAME = "signin.ftl";
 
     //freemarker variables
-    private static final String TITLE = "title";
+    public static final String TITLE = "title";
     private static final String MESSAGE = "message";
 
 
