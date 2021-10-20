@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import com.webcheckers.app.Game;
 import com.webcheckers.app.PlayerLobby;
 
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.platform.commons.annotation.Testable;
@@ -39,5 +41,13 @@ public class TestGetHomeRoute {
         gameMap = new HashMap<String, Game>();
 
         CuT = new GetHomeRoute(gameMap, playerLobby, templateEngine);
+    }
+
+    @Test
+    public void constructorTest() {
+        new GetHomeRoute(gameMap, playerLobby, templateEngine);
+        assertNotNull(gameMap);
+        assertNotNull(playerLobby);
+        assertNotNull(templateEngine);
     }
 }
