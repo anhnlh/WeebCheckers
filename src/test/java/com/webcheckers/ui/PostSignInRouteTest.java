@@ -50,7 +50,7 @@ public class PostSignInRouteTest{
         boolean isThrown = false;
 
         try {
-            new PostSignInRoute(null, null);
+            CuT = new PostSignInRoute(null, null);
         }
         catch (NullPointerException e) {
             isThrown = true;
