@@ -168,7 +168,7 @@ public class TestPlayerLobby {
 
     @Test
     public void testGetLobby() {
-
+        assertNotNull(CuT.getLobby());
     }
 
     @Test
