@@ -106,4 +106,23 @@ public class TestPlayerLobby {
         // Player 2 is not in the lobby, should return null
         assertEquals(null, CuT.getPlayer(player2Name));
     }
+
+    @Test
+    public void testActivePlayersMessage() {
+        String no_players = "There are currently no players online.";
+        String one_player = "There is 1 player online.";
+        String two_players = "There are 2 players online.";
+        String three_players = "There are 3 players online.";
+
+        assertEquals(no_players, CuT.activePlayersMessage());
+
+        CuT.addPlayer(player1Name);
+        assertEquals(one_player, CuT.activePlayersMessage());
+
+        CuT.addPlayer(player2Name);
+        assertEquals(two_players, CuT.activePlayersMessage());
+
+        CuT.addPlayer(player3Name);
+        assertEquals(three_players, CuT.activePlayersMessage());
+    }
 }
