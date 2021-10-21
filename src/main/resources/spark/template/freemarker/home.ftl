@@ -19,6 +19,7 @@
 
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
+    <#include "error.ftl" />
 
     <!-- TODO: future content on the Home:
             to start games,

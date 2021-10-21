@@ -1,6 +1,7 @@
 package com.webcheckers.app;
 
 import com.webcheckers.model.Player;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.HashMap;
 /**
  * @author Phil Ganem
  * Application tier entity for a player lobby
- * */
+ */
 public class PlayerLobby {
 
     //Hashmap representation of a lobby
@@ -34,15 +35,14 @@ public class PlayerLobby {
 
     /**
      * Adds players to lobby
-     * @param name
-     *  str: Player name
-     * @return
-     *  Bool: true on successful add / false on unsuccessful add
+     *
+     * @param playerName str: Player name
+     * @return Bool: true on successful add / false on unsuccessful add
      */
     public synchronized boolean addPlayer(String playerName) {
 
         //return false if name invalid
-        if(playerName.length() >= 26 || playerName.length() <= 0 || playerName.isEmpty()) {
+        if (playerName.length() >= 26 || playerName.length() <= 0 || playerName.isEmpty()) {
             return false;
         }
 
@@ -54,7 +54,7 @@ public class PlayerLobby {
         }
 
         //If name doesnt exist in lobby, add and return true
-        if(!lobby.containsKey(playerName.toLowerCase())) {
+        if (!lobby.containsKey(playerName.toLowerCase())) {
             lobby.put(playerName.toLowerCase(), new Player(playerName));
             return true;
         }
@@ -64,8 +64,8 @@ public class PlayerLobby {
 
     /**
      * Removes a player from the map
-     * @param player
-     *  str: Player name
+     *
+     * @param player str: Player name
      */
     public synchronized void removePlayer(String player) {
         lobby.remove(player.toLowerCase());
@@ -73,10 +73,9 @@ public class PlayerLobby {
 
     /**
      * Finds a player within the lobby
-     * @param player
-     *  str: player name
-     * @return
-     *  Player: found player object
+     *
+     * @param player str: player name
+     * @return Player: found player object
      */
     public synchronized Player getPlayer(String player) {
         if (player != null && lobby.containsKey(player.toLowerCase())) {
@@ -87,8 +86,8 @@ public class PlayerLobby {
 
     /**
      * Get all the players wihin Lobby object
-     * @return
-     *  Collection<str>: all player objects
+     *
+     * @return Collection<str>: all player objects
      */
     public Collection<Player> getActivePlayers() {
         return lobby.values();
@@ -103,9 +102,9 @@ public class PlayerLobby {
     public String activePlayersMessage() {
         int activePlayers = this.size();
 
-        if(activePlayers == 0) {
+        if (activePlayers == 0) {
             return "There are currently no players online.";
-        } else if(activePlayers == 1) {
+        } else if (activePlayers == 1) {
             return "There is 1 player online.";
         }
 
@@ -133,22 +132,47 @@ public class PlayerLobby {
 
 // --- Getters and Setters ---
 
+    /**
+     * Returns the lobby
+     *
+     * @return HashMap of Players
+     */
     public HashMap<String, Player> getLobby() {
         return lobby;
     }
 
+    /**
+     * Sets the current lobby with a given lobby
+     *
+     * @param lobby given lobby
+     */
     public void setLobby(HashMap<String, Player> lobby) {
         this.lobby = lobby;
     }
 
+    /**
+     * Returns the lobby's ID
+     *
+     * @return lobby's ID
+     */
     public int getLobbyID() {
         return lobbyID;
     }
 
+    /**
+     * Returns the current lobbyNum static counter
+     *
+     * @return lobbyNum's value
+     */
     public static int getLobbyNum() {
         return lobbyNum;
     }
 
+    /**
+     * Returns the size of the lobby, size of the HashMap
+     *
+     * @return size of the lobby
+     */
     public int size() {
         return lobby.size();
     }

@@ -1,13 +1,15 @@
 package com.webcheckers.model;
 
+import com.webcheckers.app.Game;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
 /**
- * Model class for a checker board row
- * 
+ * Model class for the checkers board
+ *
  * @author Mohammed Alam
  * @author Anh Nguyen
  */
@@ -21,7 +23,7 @@ public class BoardView implements Iterable<Row> {
 
     /**
      * Constructor for our Board
-     * 
+     * <p>
      * Another construcot for a board with a current board implementation
      */
     public BoardView() {
@@ -29,9 +31,22 @@ public class BoardView implements Iterable<Row> {
         initialize();
     }
 
+    /**
+     * Constructor with a given board (List of Row)
+     * Only use is {@link Game#getWhitePlayer()} to build white player's board
+     *
+     * @param board given board
+     */
+    public BoardView(List<Row> board) {
+        this.board = board;
+    }
+
+    /**
+     * Populates BoardView with Rows
+     */
     private void initialize() {
         boolean blackSpace = false;
-        for(int i = 0; i < BOARD_LENGTH; i++) {
+        for (int i = 0; i < BOARD_LENGTH; i++) {
             if (i < 3) {
                 board.add(new Row(i, Piece.PIECECOLOR.WHITE, blackSpace));
             } else if (i > 4) {
@@ -43,10 +58,6 @@ public class BoardView implements Iterable<Row> {
         }
     }
 
-    public BoardView(List<Row> board) {
-        this.board = board;
-    }
-
     @Override
     public Iterator<Row> iterator() {
         return this.board.iterator();
@@ -56,13 +67,19 @@ public class BoardView implements Iterable<Row> {
 
     /**
      * Gets the board
-     * @return
-     *  list: board
+     *
+     * @return list: board
      */
     public List<Row> getBoard() {
         return board;
     }
 
+    /**
+     * Finds and returns a Row from the board
+     *
+     * @param index index of the Row
+     * @return the Row
+     */
     public Row getRow(int index) {
         Row row = null;
         for (Row r : board) {

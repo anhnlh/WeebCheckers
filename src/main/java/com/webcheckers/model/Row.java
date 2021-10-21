@@ -27,10 +27,10 @@ public class Row implements Iterable<Space> {
      *  int: Index of a row
      * @param color
      *  COLOR: starting color
-     * @param blackSpace
+     * @param blackSpace alternating flag to find black space on board
      */
     public Row(int index, PIECECOLOR color, boolean blackSpace) {
-        this.spaces = new ArrayList<Space>();
+        this.spaces = new ArrayList<>();
         this.index = index;
         initialize(color, blackSpace);
     }
@@ -38,10 +38,10 @@ public class Row implements Iterable<Space> {
     /**
      * Constructor for an empty row
      * 
-     * @param index
+     * @param index index of the row
      */
     public Row(int index) {
-        this.spaces = new ArrayList<Space>();
+        this.spaces = new ArrayList<>();
         this.index = index;
     }
 
@@ -63,7 +63,12 @@ public class Row implements Iterable<Space> {
         }
     }
 
+    /**
+     * Adds a space
+     * @param space given Space
+     */
     public void addSpace(Space space) {
+        assert(spaces.size() < BoardView.BOARD_LENGTH);
         spaces.add(space);
     }
 
@@ -78,6 +83,11 @@ public class Row implements Iterable<Space> {
         return this.index;
     }
 
+    /**
+     * Finds and returns the space with a given cell index
+     * @param cellIdx given cell index
+     * @return Space
+     */
     public Space getSpace(int cellIdx) {
         Space space = null;
         for (Space s : spaces) {

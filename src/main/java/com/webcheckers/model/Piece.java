@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * Model class for a chess piece
- * 
+ *
  * @author Phil Ganem and Sierra Tran
  */
 public class Piece {
@@ -21,11 +21,11 @@ public class Piece {
     // type of piece
     private TYPE type;
     // color of piece
-    private PIECECOLOR color;
+    private final PIECECOLOR color;
 
     /**
      * Constructor of model class Piece
-     * 
+     *
      * @param type  TYPE: type of piece
      * @param color COLOR: color of piece
      */
@@ -36,18 +36,18 @@ public class Piece {
 
     /**
      * Checks to see if a piece is a king
-     * 
+     *
      * @return bool: if piece is king
      */
     public boolean isKing() {
         return this.getType() == TYPE.KING;
     }
-    
+
 // ------- Getters and Setters -------
 
     /**
      * Sets the type of a piece. Allowing a piece to become a king
-     * 
+     *
      * @param type TYPE: type that piece becomes
      */
     public void setType(TYPE type) {
@@ -56,7 +56,7 @@ public class Piece {
 
     /**
      * gets the type of current piece
-     * 
+     *
      * @return TYPE: piece type
      */
     public TYPE getType() {
@@ -65,7 +65,7 @@ public class Piece {
 
     /**
      * Gets the color of current piece
-     * 
+     *
      * @return COLOR: color of current piece
      */
     public PIECECOLOR getColor() {

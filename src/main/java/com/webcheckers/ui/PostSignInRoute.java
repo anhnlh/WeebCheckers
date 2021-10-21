@@ -8,20 +8,24 @@ import static spark.Spark.halt;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.util.Message;
 
+/**
+ * The {@code POST /signin} route handler.
+ *
+ */
 public class PostSignInRoute implements Route {
 
-    //freemarker variables
-    private final String TITLE = "title";
-    private final String ERROR = "error";
-    static final String USER_ID = "userID";
+    // freemarker variables
+    private final String TITLE_ATTR = "title";
+    private final String ERROR_ATTR = "error";
+    private final String USER_ID_ATTR = "userID";
 
-    //error message
+    // error message
     private static final Message INVALID_NAME = Message.error("Invalid Request. Please try again.");
 
     // session id
-    static final String SESSION_ATTR = "id";
+    public static final String SESSION_ATTR = "id";
 
-    //parameter initializations
+    // parameter initializations
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
 
@@ -43,13 +47,16 @@ public class PostSignInRoute implements Route {
         this.templateEngine = templateEngine;
     }
 
-    //
-    // TemplateViewRoute method
-    //
-
     /**
-     * {@inheritDoc}
+     * Handles the sign in request.
      *
+     * @param request
+     *   the HTTP request
+     * @param response
+     *   the HTTP response
+     *
+     * @return
+     *   the rendered HTML for the Sign In page
      */
     @Override
     public String handle(Request request, Response response) {
@@ -60,8 +67,9 @@ public class PostSignInRoute implements Route {
         final Session httpSession = request.session();
 
         // Store unique attribute for player
-        String name = request.queryParams(USER_ID);
+        String name = request.queryParams(USER_ID_ATTR);
         name = name.trim();
+        name = name.replaceAll(" ", "_");
 
         httpSession.attribute(SESSION_ATTR, name);
 
@@ -69,14 +77,14 @@ public class PostSignInRoute implements Route {
         if(playerLobby.addPlayer(name)) { 
             // setting home.ftl variables & getting session player
             // Stores current user into session
-            httpSession.attribute(GetHomeRoute.CURRENT_USER, playerLobby.getPlayer(name));
+            httpSession.attribute(GetHomeRoute.CURRENT_USER_ATTR, playerLobby.getPlayer(name));
             response.redirect(WebServer.HOME_URL);
             halt();
             return null;
         } else {
             // give an error if invalid name is given
-            vm.put(TITLE, "Sign in error.");
-            vm.put(ERROR, INVALID_NAME);
+            vm.put(TITLE_ATTR, "Sign in error.");
+            vm.put(ERROR_ATTR, INVALID_NAME);
             return templateEngine.render(new ModelAndView(vm, GetSignInRoute.VIEW_NAME));
         }
 

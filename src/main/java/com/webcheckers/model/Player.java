@@ -1,7 +1,7 @@
 package com.webcheckers.model;
 
 /**
- * @author Phil Ganem 
+ * @author Phil Ganem
  * Model tier entity for a player
  * */
 public class Player {
@@ -9,6 +9,7 @@ public class Player {
     //Player name
     private String name;
 
+    //Player is in game or not
     private boolean isPlaying;
 
     /**
@@ -30,10 +31,18 @@ public class Player {
         return name;
     }
 
+    /**
+     * Returns if the player is in a game
+     * @return true if player in game
+     */
     public boolean isPlaying() {
         return isPlaying;
     }
 
+    /**
+     * Sets player's playing status
+     * @param playing status to be set
+     */
     public void setPlaying(boolean playing) {
         isPlaying = playing;
     }

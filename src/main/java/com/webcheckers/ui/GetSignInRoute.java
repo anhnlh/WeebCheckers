@@ -15,19 +15,18 @@ import com.webcheckers.util.Message;
 public class GetSignInRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
-    //freemarker file
+    // freemarker file
     public static final String VIEW_NAME = "signin.ftl";
 
-    //freemarker variables
-    public static final String TITLE = "title";
-    private static final String MESSAGE = "message";
+    // freemarker variables
+    public static final String TITLE_ATTR = "title";
+    private static final String MESSAGE_ATTR = "message";
 
+    // message
+    private static final Message SIGN_IN_MSG = Message.info("Sign-in into the world of Web Checkers!");
 
-    //message
-    private static final Message SIGNIN_MSG = Message.info("Sign-in into the world of Web Checkers!");
-
-    //parameter initializations
-    private TemplateEngine templateEngine;
+    // parameter initializations
+    private final TemplateEngine templateEngine;
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -44,7 +43,7 @@ public class GetSignInRoute implements Route {
     }
 
     /**
-     * Render the WebCheckers Sign page.
+     * Render the WebCheckers Sign in page.
      *
      * @param request
      *   the HTTP request
@@ -63,10 +62,10 @@ public class GetSignInRoute implements Route {
         final Map<String, Object> vm = new HashMap<>();
 
         // display welcome title for sign in
-        vm.put(TITLE, "Welcome!");
+        vm.put(TITLE_ATTR, "Welcome!");
 
         // display a user message in the Sign In page
-        vm.put(MESSAGE, SIGNIN_MSG);
+        vm.put(MESSAGE_ATTR, SIGN_IN_MSG);
         
         // render the View
         return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
