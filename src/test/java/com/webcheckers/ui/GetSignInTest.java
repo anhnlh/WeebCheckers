@@ -17,7 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 /**
- * Test class for {@link GetSignIn}
+ * Test class for {@link GetSignInRoute}
  */
 public class GetSignInTest {
     
@@ -81,17 +81,17 @@ public class GetSignInTest {
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
 
-        testHelper.assertViewModelAttribute(GetSignInRoute.TITLE, "Welcome!");
+        testHelper.assertViewModelAttribute(GetSignInRoute.TITLE_ATTR, "Welcome!");
 
         // When the player is signed in
-        when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(player);
+        when(session.attribute(GetHomeRoute.CURRENT_USER_ATTR)).thenReturn(player);
 
         CuT.handle(request, response);
 
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
 
-        testHelper.assertViewModelAttribute(GetSignInRoute.TITLE, "Welcome!");
+        testHelper.assertViewModelAttribute(GetSignInRoute.TITLE_ATTR, "Welcome!");
         assertEquals(GetSignInRoute.VIEW_NAME, "signin.ftl");
     }
 }

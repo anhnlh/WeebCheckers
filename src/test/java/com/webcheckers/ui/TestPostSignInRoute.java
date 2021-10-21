@@ -9,13 +9,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * @Authot Phil Ganem
+ * @author Phil Ganem
  */
 @Tag("UI-tier")
-public class PostSignInRouteTest{
+public class TestPostSignInRoute {
 
     private PostSignInRoute CuT;
     private PlayerLobby playerLobby;
@@ -43,24 +43,24 @@ public class PostSignInRouteTest{
     }
 
 
-    @Test
     /**
      * Test the constructor for PostSignInRoute with null values
      */
+    @Test
     public void testConstructor_Null() {
         boolean isThrown = false;
 
         try {CuT = new PostSignInRoute(null, null);}
         catch (NullPointerException e) {isThrown = true;}
-        
+
         assertTrue(isThrown);
     }
 
-    
-    @Test
+
     /**
      * Test the constructor for PostSignInRoute
      */
+    @Test
     public void testConstructor() {
 
         boolean isThrown = false;
@@ -71,10 +71,10 @@ public class PostSignInRouteTest{
         assertFalse(isThrown);
     }
 
-    @Test 
     /**
      * Tests handle to see if it takes player signin
      */
+    @Test
     public void testHandle(){
         when(session.attribute(PostSignInRoute.SESSION_ATTR)).thenReturn(name);
 

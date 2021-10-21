@@ -3,8 +3,9 @@ import com.webcheckers.model.Piece.TYPE;
 import org.junit.Test;
 import org.junit.jupiter.api.Tag;
 
-import static org.junit.Assert.assertEquals;
 import com.webcheckers.model.Piece.PIECECOLOR;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Mohammed Alam
@@ -13,25 +14,25 @@ import com.webcheckers.model.Piece.PIECECOLOR;
 public class TestSpace {
     @Test
     public void testValid() {
-        // make a row wiht a new index
+        // make a row with a new index
         Space mySpace = new Space(0, true, new Piece(TYPE.SINGLE, PIECECOLOR.RED));
 
         // assert expected index vs result form getIndex()
-        assertEquals(mySpace.isValid(), true);
+        assertTrue(mySpace.isValid());
     }
 
     @Test
     public void testNotValid() {
-        // make a row wiht a new index
+        // make a row with a new index
         Space mySpace = new Space(1, false, new Piece(TYPE.SINGLE, PIECECOLOR.RED));
 
         // assert expected index vs result form getIndex()
-        assertEquals(mySpace.isValid(), false);
+        assertFalse(mySpace.isValid());
     }
 
     @Test
     public void testGetPiece() {
-        // make a row wiht a new index
+        // make a row with a new index
         Piece myPiece = new Piece(TYPE.SINGLE, PIECECOLOR.RED);
         Space mySpace = new Space(0, true, myPiece);
 
@@ -40,8 +41,8 @@ public class TestSpace {
     }
 
     @Test
-    public void testGetCellDx() {
-        // make a row wiht a new index
+    public void testGetCellIDx() {
+        // make a row with a new index
         Piece myPiece = new Piece(TYPE.SINGLE, PIECECOLOR.RED);
         Space mySpace = new Space(0, true, myPiece);
 
@@ -51,7 +52,7 @@ public class TestSpace {
 
     @Test
     public void testSpaceEquals() {
-        // make a row wiht a new index
+        // make a row with a new index
         Piece myPiece1 = new Piece(TYPE.SINGLE, PIECECOLOR.RED);
         Space mySpace1 = new Space(0, true, myPiece1);
 
@@ -59,6 +60,6 @@ public class TestSpace {
         Space mySpace2 = new Space(0, true, myPiece2);
 
         // assert expected index vs result form getIndex()
-        assertEquals(mySpace1.equals(mySpace2), true);
+        assertTrue(mySpace1.equals(mySpace2));
     }
 }

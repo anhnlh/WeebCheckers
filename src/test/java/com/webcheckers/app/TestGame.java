@@ -17,6 +17,7 @@ import java.util.Objects;
 
 /**
  * Tests the Application-tier Game class
+ * @author Anh Nguyen
  */
 @Tag("Application-tier")
 @Testable

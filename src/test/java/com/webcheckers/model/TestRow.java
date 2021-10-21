@@ -17,7 +17,7 @@ public class TestRow {
 
     @Test
     public void testGetIndex() {
-        // make a row wiht a new index
+        // make a row with a new index
         Row myRow = new Row(5);
 
         // assert expected index vs result form getIndex()

@@ -4,13 +4,15 @@ import org.junit.Test;
 import org.junit.jupiter.api.Tag;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import com.webcheckers.model.Piece.PIECECOLOR;
 
 /**
  * @author Phil Ganem
  */
 @Tag("Model-tier")
-public class PieceTest {
+public class TestPiece {
     
     /**
      * Tests to see if color of a piece is correctly set
@@ -72,8 +74,8 @@ public class PieceTest {
         Piece CuT = new Piece(TYPE.SINGLE, PIECECOLOR.RED);
         
         Piece otherPiece = new Piece(TYPE.SINGLE, PIECECOLOR.RED);
-        
-        assertEquals(CuT.equals(otherPiece), true); 
+
+        assertEquals(CuT, otherPiece);
     }
 
     /**
@@ -85,7 +87,7 @@ public class PieceTest {
         
         Piece otherPiece = new Piece(TYPE.KING, PIECECOLOR.WHITE);
 
-        assertEquals(CuT.equals(otherPiece), true); 
+        assertTrue(CuT.equals(otherPiece));
     }
 }
 

@@ -1,6 +1,6 @@
 package com.webcheckers.ui;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.HashMap;
@@ -88,18 +88,18 @@ public class TestGetHomeRoute {
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
 
-        testHelper.assertViewModelAttribute(GetHomeRoute.TITLE, "Welcome!");
-        testHelper.assertViewModelAttribute(GetHomeRoute.ACTIVE_PLAYER_COUNT, playerLobby.activePlayersMessage());
+        testHelper.assertViewModelAttribute(GetHomeRoute.TITLE_ATTR, "Welcome!");
+        testHelper.assertViewModelAttribute(GetHomeRoute.ACTIVE_PLAYER_COUNT_ATTR, playerLobby.activePlayersMessage());
 
         // When the player is signed in
-        when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(player);
+        when(session.attribute(GetHomeRoute.CURRENT_USER_ATTR)).thenReturn(player);
 
         CuT.handle(request, response);
 
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
 
-        testHelper.assertViewModelAttribute(GetHomeRoute.TITLE, "Welcome!");
-        testHelper.assertViewModelAttribute(GetHomeRoute.ACTIVE_PLAYERS, playerLobby.getOtherActivePlayers(player));
+        testHelper.assertViewModelAttribute(GetHomeRoute.TITLE_ATTR, "Welcome!");
+        testHelper.assertViewModelAttribute(GetHomeRoute.ACTIVE_PLAYERS_ATTR, playerLobby.getOtherActivePlayers(player));
     }
 }

@@ -1,6 +1,6 @@
 package com.webcheckers.ui;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
@@ -89,8 +89,8 @@ public class TestPostSignOutRoute {
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
 
-        testHelper.assertViewModelAttribute(GetHomeRoute.TITLE, "Welcome!");
-        testHelper.assertViewModelAttribute(GetHomeRoute.ACTIVE_PLAYER_COUNT, playerLobby.activePlayersMessage());
+        testHelper.assertViewModelAttribute(GetHomeRoute.TITLE_ATTR, "Welcome!");
+        testHelper.assertViewModelAttribute(GetHomeRoute.ACTIVE_PLAYER_COUNT_ATTR, playerLobby.activePlayersMessage());
         testHelper.assertViewName(GetHomeRoute.VIEW_NAME);
     }
 

@@ -32,7 +32,7 @@ public class TestPlayer {
     }
 
     /**
-     * Tests {@link Player#setPlaying(Boolean)}
+     * Tests {@link Player#setPlaying(boolean)}
      */
     @Test
     public void testSetPlaying() {
@@ -43,7 +43,7 @@ public class TestPlayer {
     }
 
     /**
-     * Tests if {@link Player#equals()} returns true
+     * Tests if {@link Player#equals(Player)} returns true
      */
     @Test
     public void testEqualsTrue() {
@@ -54,7 +54,7 @@ public class TestPlayer {
     }
 
     /**
-     * Tests if {@link Player#equals()} returns true
+     * Tests if {@link Player#equals(Player)} returns false
      */
     @Test
     public void testEqualsFalse() {

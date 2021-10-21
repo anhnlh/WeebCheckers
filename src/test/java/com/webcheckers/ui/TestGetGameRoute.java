@@ -81,7 +81,7 @@ public class TestGetGameRoute {
     @Test
     public void defaultHandleTest() {
         // simulate current user as Player_1
-        when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(p1);
+        when(session.attribute(GetHomeRoute.CURRENT_USER_ATTR)).thenReturn(p1);
         // simulate "opponent" param to be "Player_2"
         when(request.queryParams(GetGameRoute.OPPONENT_ATTR)).thenReturn("Player_2");
 
@@ -98,7 +98,7 @@ public class TestGetGameRoute {
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
 
-        testHelper.assertViewModelAttribute(GetHomeRoute.CURRENT_USER, p1);
+        testHelper.assertViewModelAttribute(GetHomeRoute.CURRENT_USER_ATTR, p1);
         testHelper.assertViewModelAttribute(GetGameRoute.TITLE_ATTR, "Welcome!");
 
         // simulate game created
@@ -138,7 +138,7 @@ public class TestGetGameRoute {
     @Test
     public void whitePlayerHandleTest() {
         // simulate current user as Player_1
-        when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(p1);
+        when(session.attribute(GetHomeRoute.CURRENT_USER_ATTR)).thenReturn(p1);
         // simulate "opponent" param to be "Player_2"
         when(request.queryParams(GetGameRoute.OPPONENT_ATTR)).thenReturn("Player_2");
 
@@ -157,7 +157,7 @@ public class TestGetGameRoute {
         Game game = gameMap.get(gameID);
 
         // current user is the white player
-        when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(p2);
+        when(session.attribute(GetHomeRoute.CURRENT_USER_ATTR)).thenReturn(p2);
 
         // second handle builds the game view
         CuT.handle(request, response);
@@ -171,7 +171,7 @@ public class TestGetGameRoute {
      */
     @Test
     public void redPlayerPlayingTest() {
-        when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(p1);
+        when(session.attribute(GetHomeRoute.CURRENT_USER_ATTR)).thenReturn(p1);
         p1.setPlaying(true);
 
         try {
@@ -184,7 +184,7 @@ public class TestGetGameRoute {
      */
     @Test
     public void whitePlayerPlayingTest() {
-        when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(p1);
+        when(session.attribute(GetHomeRoute.CURRENT_USER_ATTR)).thenReturn(p1);
         when(request.queryParams(GetGameRoute.OPPONENT_ATTR)).thenReturn("Player_2");
         p2.setPlaying(true);
 
@@ -198,7 +198,7 @@ public class TestGetGameRoute {
      */
     @Test
     public void playerNullTest() {
-        when(session.attribute(GetHomeRoute.CURRENT_USER)).thenReturn(null);
+        when(session.attribute(GetHomeRoute.CURRENT_USER_ATTR)).thenReturn(null);
 
         // tests handle
         try {

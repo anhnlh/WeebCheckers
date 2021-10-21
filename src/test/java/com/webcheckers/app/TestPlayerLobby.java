@@ -1,7 +1,6 @@
 package com.webcheckers.app;
 
-import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,7 +57,7 @@ public class TestPlayerLobby {
      */
     @Test
     public void constructorTest() {
-        assertNotNull(new PlayerLobby());
+        new PlayerLobby();
     }
 
     /**
@@ -100,15 +99,15 @@ public class TestPlayerLobby {
 
         CuT.removePlayer(player1Name);
         assertEquals(2, CuT.getLobby().size());
-        assertTrue(!CuT.getLobby().containsKey(player1Name.toLowerCase()));
+        assertFalse(CuT.getLobby().containsKey(player1Name.toLowerCase()));
 
         CuT.removePlayer(player2Name);
         assertEquals(1, CuT.getLobby().size());
-        assertTrue(!CuT.getLobby().containsKey(player2Name.toLowerCase()));
+        assertFalse(CuT.getLobby().containsKey(player2Name.toLowerCase()));
 
         CuT.removePlayer(player3Name);
         assertEquals(0, CuT.getLobby().size());
-        assertTrue(!CuT.getLobby().containsKey(player3Name.toLowerCase()));
+        assertFalse(CuT.getLobby().containsKey(player3Name.toLowerCase()));
     }
 
     /**
@@ -122,7 +121,7 @@ public class TestPlayerLobby {
         assertTrue(player1.equals(CuT.getPlayer(player1Name)));
 
         // Player 2 is not in the lobby, should return null
-        assertEquals(null, CuT.getPlayer(player2Name));
+        assertNull(CuT.getPlayer(player2Name));
     }
 
     /**
@@ -177,7 +176,7 @@ public class TestPlayerLobby {
     }
 
     /**
-     * Tests {@link PlayerLobby#getOtherActivePlayers(String)}
+     * Tests {@link PlayerLobby#getOtherActivePlayers(Player)}
      */
     @Test
     public void testGetOtherActivePlayers() {
@@ -203,7 +202,7 @@ public class TestPlayerLobby {
     }
 
     /** 
-     * Tests {@link PlayerLobby#setLobby(HashMap<String, Player>)}
+     * Tests {@link PlayerLobby#setLobby(HashMap)}
      */
     @Test
     public void testSetLobby() {
@@ -221,8 +220,8 @@ public class TestPlayerLobby {
         assertEquals(temp.toString(), CuT.getLobby().toString());
 
         // remove Player 1 and Player 2
-        temp.remove(player1);
-        temp.remove(player2);
+        temp.remove(player1.getName());
+        temp.remove(player2.getName());
 
         // assert that temp is the new lobby, this time without Player 1 and Player 2
         CuT.setLobby(temp);
@@ -249,7 +248,7 @@ public class TestPlayerLobby {
      */
     @Test
     public void testGetLobbyNum() {
-        assertEquals(6, CuT.getLobbyNum());
+        assertEquals(6, PlayerLobby.getLobbyNum());
     }
 
     /**
