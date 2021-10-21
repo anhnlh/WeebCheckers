@@ -5,6 +5,7 @@ import com.webcheckers.app.Game;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Model class for the checkers board
@@ -89,5 +90,12 @@ public class BoardView implements Iterable<Row> {
         return row;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BoardView)) return false;
+        BoardView rows = (BoardView) o;
+        return board.equals(rows.board);
+    }
 
 }

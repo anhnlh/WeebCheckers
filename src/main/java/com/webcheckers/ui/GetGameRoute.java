@@ -45,12 +45,12 @@ public class GetGameRoute implements Route {
     private HashMap<String, Game> gameMap;
 
     // enum for viewMode in game.ftl
-    private enum mode {
+    public enum mode {
         PLAY
     }
 
     // enum for activeColor in game.ftl
-    private enum activeColor {
+    public enum activeColor {
         RED
     }
 
@@ -110,6 +110,10 @@ public class GetGameRoute implements Route {
                         httpSession.attribute(GetHomeRoute.ERROR_ATTR, OPPONENT_IN_GAME);
                         response.redirect(WebServer.HOME_URL);
                     }
+                } else {
+                    response.redirect(WebServer.HOME_URL);
+                    halt();
+                    return null;
                 }
                 halt();
                 return null;

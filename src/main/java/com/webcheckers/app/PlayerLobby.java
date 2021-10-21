@@ -47,10 +47,10 @@ public class PlayerLobby {
         }
 
         //return false if name invalid
-        Pattern invalid = Pattern.compile("[^A-Za-z0-9-_, ]");
+        Pattern invalid = Pattern.compile("[^A-Za-z0-9-_ ]");
         Matcher find = invalid.matcher(playerName);
-        if (find.find()) {
-            return false;
+        if(find.find()) {
+             return false;
         }
 
         //If name doesnt exist in lobby, add and return true
@@ -78,7 +78,7 @@ public class PlayerLobby {
      * @return Player: found player object
      */
     public synchronized Player getPlayer(String player) {
-        if (lobby.containsKey(player.toLowerCase())) {
+        if (player != null && lobby.containsKey(player.toLowerCase())) {
             return lobby.get(player.toLowerCase());
         }
         return null;
@@ -96,7 +96,8 @@ public class PlayerLobby {
     /**
      * Returns a message that tells how many players are in the Collection of active players
      *
-     * @return String: A message of how many active players there are
+     * @return
+     *  String: A message of how many active players there are
      */
     public String activePlayersMessage() {
         int activePlayers = this.size();
@@ -113,14 +114,20 @@ public class PlayerLobby {
     /**
      * Gets all players excluding a singulair one (the viewer)
      *
-     * @param exclude Player: Player object that should be excluded from collection
-     * @return Collection<str>: collection of all players but excluded
+     * @param exclude
+     *  Player: Player object that should be excluded from collection
+     * @return
+     *  Collection<str>: collection of all players but excluded
      */
     public Collection<Player> getOtherActivePlayers(Player exclude) {
         Collection<Player> temp = new ArrayList<>();
         lobby.values().forEach(player -> temp.add(player));
         temp.remove(exclude);
         return temp;
+    }
+
+    public boolean contains(String player) {
+        return getPlayer(player) != null;
     }
 
 // --- Getters and Setters ---

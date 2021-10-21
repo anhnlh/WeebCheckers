@@ -19,9 +19,8 @@ public class GetSignInRoute implements Route {
     public static final String VIEW_NAME = "signin.ftl";
 
     // freemarker variables
-    private static final String TITLE_ATTR = "title";
+    public static final String TITLE_ATTR = "title";
     private static final String MESSAGE_ATTR = "message";
-
 
     // message
     private static final Message SIGN_IN_MSG = Message.info("Sign-in into the world of Web Checkers!");
