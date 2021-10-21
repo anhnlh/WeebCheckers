@@ -13,7 +13,9 @@ geometry: margin=1in
   * Mohammed Alam
 
 ## Executive Summary
-
+WebCheckers is an application that users can sign in to play online Checkers
+with other players. Using the Spark framework for Java, WebCheckers
+provides users with a realtime experience challenging an opponent.
 
 ### Purpose
 > This project is a web-application of checkers. 
