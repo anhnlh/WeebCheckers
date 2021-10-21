@@ -14,6 +14,7 @@ geometry: margin=1in
 
 ## Executive Summary
 
+
 ### Purpose
 > This project is a web-application of checkers. 
 > Users should be able to log-in, and play against other players.
@@ -52,12 +53,29 @@ This section describes the application domain.
 
 ![The WebCheckers Domain Model](DomainModelTeam.png)
 
-> _Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
+The domain highlights the general flow of the application:
+- The user signs in to be at the home page (menu)
+  
+- The user can then start a game (becoming a Player) or check player stats 
+  for competitive mode
+  
+- The player can make a move to play the game
+  
+- The move communicates with the model which includes
+  the Board, Row, Space, and Pieces
+  
+- The player plays the game
 
-EDIT THIS
+The most important entities of the domain model are the Player, Board, Row, 
+Space, and Piece entities.
 
+- Each set of 24 checker Pieces on the board represents a Player in the
+  game. Players take a turn when they make a move which is played with
+  Checkers which are on the board.
+  
+- Regular or King Pieces are on specific Spaces which belong to Rows which also
+  builds the entire Board. In short, there can be zero or one Piece on each Space,
+  there are 8 Spaces on each Row, and there are 8 Rows on a board.
 
 ## Architecture and Design
 
