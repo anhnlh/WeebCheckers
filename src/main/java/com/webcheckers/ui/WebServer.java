@@ -162,7 +162,11 @@ public class WebServer {
     get(GAME_URL, new GetGameRoute(gameMap, playerLobby, templateEngine));
     post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
     post(SIGNOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
-    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameMap, templateEngine, gson));
+    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameMap, gson));
+    post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gameMap, gson));
+    post(CHECK_TURN_URL, new PostCheckTurnRoute(gameMap, gson));
+    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gameMap, gson));
+    post(RESIGN_GAME_URL, new PostResignGameRoute(gameMap, gson));
     //
     LOG.config("WebServer is initialized.");
 

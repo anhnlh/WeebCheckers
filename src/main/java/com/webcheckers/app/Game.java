@@ -1,9 +1,7 @@
 package com.webcheckers.app;
 
-import com.webcheckers.model.BoardView;
-import com.webcheckers.model.Player;
-import com.webcheckers.model.Row;
-import com.webcheckers.model.Space;
+import com.webcheckers.model.*;
+import com.webcheckers.util.Message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,5 +109,37 @@ public class Game {
      */
     public boolean isRedPlayer(Player other) {
         return other.equals(this.redPlayer);
+    }
+
+    private boolean isSimpleMove(Move move) {
+        // TODO: Check if move is a simple move (1 diagonally)
+        return false;
+    }
+
+    private boolean isJumpMove(Move move) {
+        // TODO: Check if move is a jump move (2 diagonally over an opponent's piece)
+        return false;
+    }
+
+    private boolean availableJumpMove(Move move) {
+        // TODO: Check if a jump move is available
+        return false;
+    }
+
+    public Message validateMove(Move move) {
+        Message message = Message.error("Invalid move.");
+        if (isSimpleMove(move)) {
+            if (availableJumpMove(move)) {
+                message = Message.error("Jump move available. Must make jump moves.");
+            } else {
+                // do something
+                message = Message.info("Valid simple move.");
+            }
+        } else if (isJumpMove(move)){
+            // do something
+            message = Message.info("Valid jump move.");
+        }
+
+        return message;
     }
 }
