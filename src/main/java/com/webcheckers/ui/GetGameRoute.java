@@ -121,7 +121,7 @@ public class GetGameRoute implements Route {
                 halt();
                 return null;
             } else {
-                // Game exists, renders the /game page
+                // Game exists, renders the /game page.
                 Game game = gameMap.get(gameID);
                 vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
                 vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
