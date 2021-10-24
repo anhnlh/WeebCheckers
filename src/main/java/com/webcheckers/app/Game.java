@@ -146,15 +146,14 @@ public class Game {
 
         Piece startPiece = board.getRow(startRow).getSpace(startCell).getPiece();   // should be not null if valid move
         Piece endPiece = board.getRow(endRow).getSpace(endCell).getPiece();         // should be null if valid move
-
         // perform check
         if (startPiece != null && endPiece == null) {
             switch (startPiece.getType()) {
                 case SINGLE:
                     // red's board is different from white's
                     valid = isRedPlayer(playerInTurn) ?
-                            endRow == startRow + 1 && (endCell == startCell + 1 || endCell == startCell - 1) :  // red
-                            endRow == startRow - 1 && (endCell == startCell + 1 || endCell == startCell - 1);   // white
+                            endRow == startRow - 1 && (endCell == startCell + 1 || endCell == startCell - 1) :  // red
+                            endRow == startRow + 1 && (endCell == startCell + 1 || endCell == startCell - 1);   // white
                     break;
                 case KING:
                     // king can move diagonally backwards
@@ -185,9 +184,9 @@ public class Game {
             switch (startPiece.getType()) {
                 case SINGLE:
                     valid = isRedPlayer(playerInTurn) ?
-                            endRow == startRow + 2 && (endCell == startCell + 2 || endCell == startCell - 2)
-                                    && !capturePiece.getColor().equals(getPieceColor()) :                         // red
                             endRow == startRow - 2 && (endCell == startCell + 2 || endCell == startCell - 2)
+                                    && !capturePiece.getColor().equals(getPieceColor()) :                         // red
+                            endRow == startRow + 2 && (endCell == startCell + 2 || endCell == startCell - 2)
                                     && !capturePiece.getColor().equals(getPieceColor());                            // white
                     break;
                 case KING:

@@ -140,12 +140,12 @@ public class GetGameRoute implements Route {
 
                 vm.put(VIEW_MODE_ATTR, mode.PLAY);
 
-                final Map<String, Object> modeOptions = new HashMap<>(2);
-                modeOptions.put(IS_GAME_OVER_ATTR, true);
-                modeOptions.put(GAME_OVER_MSG_ATTR, "Example Game Over Message.");
-
-                Gson gson = new Gson();
-                vm.put(MODE_OPTS_JSON_ATTR, gson.toJson(modeOptions));
+//                final Map<String, Object> modeOptions = new HashMap<>(2);
+//                modeOptions.put(IS_GAME_OVER_ATTR, true);
+//                modeOptions.put(GAME_OVER_MSG_ATTR, "Example Game Over Message.");
+//
+//                Gson gson = new Gson();
+//                vm.put(MODE_OPTS_JSON_ATTR, gson.toJson(modeOptions));
             }
         } else {
             response.redirect(WebServer.HOME_URL);
