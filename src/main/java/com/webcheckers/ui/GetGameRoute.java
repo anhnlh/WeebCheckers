@@ -54,7 +54,7 @@ public class GetGameRoute implements Route {
 
     // enum for activeColor in game.ftl
     public enum activeColor {
-        RED
+        RED, WHITE
     }
 
     /**
@@ -125,14 +125,20 @@ public class GetGameRoute implements Route {
                 Game game = gameMap.get(gameID);
                 vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
                 vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
+
                 if (game.isRedPlayer(player)) {
                     vm.put(BOARD_ATTR, game.redPlayerBoard());
                 } else {
                     vm.put(BOARD_ATTR, game.whitePlayerBoard());
                 }
 
+                if (game.isRedPlayerTurn()) {
+                    vm.put(ACTIVE_COLOR_ATTR, activeColor.RED);
+                } else {
+                    vm.put(ACTIVE_COLOR_ATTR, activeColor.WHITE);
+                }
+
                 vm.put(VIEW_MODE_ATTR, mode.PLAY);
-                vm.put(ACTIVE_COLOR_ATTR, activeColor.RED); // use Game to change color for player turn
 
                 final Map<String, Object> modeOptions = new HashMap<>(2);
                 modeOptions.put(IS_GAME_OVER_ATTR, true);

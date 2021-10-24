@@ -33,6 +33,8 @@ public class Game {
      */
     private final int ID;
 
+    private Player playerInTurn;
+
     /**
      * Constructor for the Game class
      *
@@ -44,6 +46,7 @@ public class Game {
         this.whitePlayer = whitePlayer;
         this.board = new BoardView();
         this.ID = Objects.hash(redPlayer, whitePlayer);
+        this.playerInTurn = redPlayer; // red player starts first
     }
 
     /**
@@ -101,6 +104,28 @@ public class Game {
         return ID;
     }
 
+    public Player getPlayerInTurn() {
+        return playerInTurn;
+    }
+
+    public void setPlayerInTurn(Player playerInTurn) {
+        this.playerInTurn = playerInTurn;
+    }
+
+    public boolean isRedPlayerTurn() {
+        return playerInTurn.equals(redPlayer);
+    }
+
+    private Piece.PIECECOLOR getPieceColor() {
+        Piece.PIECECOLOR color = null;
+        if (isRedPlayer(playerInTurn)) {
+            color = Piece.PIECECOLOR.RED;
+        } else {
+            color = Piece.PIECECOLOR.WHITE;
+        }
+        return color;
+    }
+
     /**
      * Checks if the given player is the red player
      *
@@ -112,30 +137,101 @@ public class Game {
     }
 
     private boolean isSimpleMove(Move move) {
-        // TODO: Check if move is a simple move (1 diagonally)
-        return false;
+        boolean valid = false;
+
+        int startRow = move.getStart().getRow();
+        int startCell = move.getStart().getCell();
+        int endRow = move.getEnd().getRow();
+        int endCell = move.getEnd().getCell();
+
+        Piece startPiece = board.getRow(startRow).getSpace(startCell).getPiece();   // should be not null if valid move
+        Piece endPiece = board.getRow(endRow).getSpace(endCell).getPiece();         // should be null if valid move
+
+        // perform check
+        if (startPiece != null && endPiece == null) {
+            switch (startPiece.getType()) {
+                case SINGLE:
+                    // red's board is different from white's
+                    valid = isRedPlayer(playerInTurn) ?
+                            endRow == startRow + 1 && (endCell == startCell + 1 || endCell == startCell - 1) :  // red
+                            endRow == startRow - 1 && (endCell == startCell + 1 || endCell == startCell - 1);   // white
+                    break;
+                case KING:
+                    // king can move diagonally backwards
+                    valid = (endRow == startRow + 1 || endRow == startRow - 1) &&
+                            (endCell == startCell + 1 || endCell == startCell - 1);
+                    break;
+            }
+        }
+
+        return valid;
     }
 
     private boolean isJumpMove(Move move) {
-        // TODO: Check if move is a jump move (2 diagonally over an opponent's piece)
-        return false;
+        boolean valid = false;
+
+        int startRow = move.getStart().getRow();
+        int startCell = move.getStart().getCell();
+        int endRow = move.getEnd().getRow();
+        int endCell = move.getEnd().getCell();
+
+        Piece startPiece = board.getRow(startRow).getSpace(startCell).getPiece();   // should be not null if valid move
+        Piece endPiece = board.getRow(endRow).getSpace(endCell).getPiece();         // should be null if valid move
+        Piece capturePiece = board.getRow((startRow + endRow) / 2).
+                getSpace((startCell + endCell) / 2).getPiece();   // should be not null valid move
+
+        // perform check
+        if (startPiece != null && endPiece == null && capturePiece != null) {
+            switch (startPiece.getType()) {
+                case SINGLE:
+                    valid = isRedPlayer(playerInTurn) ?
+                            endRow == startRow + 2 && (endCell == startCell + 2 || endCell == startCell - 2)
+                                    && !capturePiece.getColor().equals(getPieceColor()) :                         // red
+                            endRow == startRow - 2 && (endCell == startCell + 2 || endCell == startCell - 2)
+                                    && !capturePiece.getColor().equals(getPieceColor());                            // white
+                    break;
+                case KING:
+                    valid = (endRow == startRow + 2 || endRow == startRow - 2) &&
+                            (endCell == startCell + 2 || endCell == startCell - 2) &&
+                            !capturePiece.getColor().equals(getPieceColor());
+                    break;
+            }
+        }
+
+        return valid;
     }
 
-    private boolean availableJumpMove(Move move) {
-        // TODO: Check if a jump move is available
+    private boolean availableJumpMove() {
+        for (Row row : board) {
+            for (Space space : row) {
+                Piece piece = space.getPiece();
+                if (piece != null && !piece.getColor().equals(getPieceColor())) {
+                    Position pos = new Position(row.getIndex(), space.getCellIdx());
+                    for (int r = -2; r <= 2; r += 4) {      // -2 and +2 to rowIndex
+                        for (int c = -2; c <= 2; c += 4) {  // -2 and +2 to cellIdx
+                            Position endPos = new Position(pos.getRow() + r, pos.getCell() + c);
+                            if (endPos.getRow() != -1 && endPos.getCell() != -1) {
+                                Move move = new Move(pos, endPos);
+                                return isJumpMove(move);
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 
     public Message validateMove(Move move) {
         Message message = Message.error("Invalid move.");
         if (isSimpleMove(move)) {
-            if (availableJumpMove(move)) {
+            if (availableJumpMove()) {
                 message = Message.error("Jump move available. Must make jump moves.");
             } else {
                 // do something
                 message = Message.info("Valid simple move.");
             }
-        } else if (isJumpMove(move)){
+        } else if (isJumpMove(move)) {
             // do something
             message = Message.info("Valid jump move.");
         }

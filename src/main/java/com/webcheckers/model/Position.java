@@ -5,8 +5,17 @@ public class Position {
     private final int cell;
 
     public Position(int row, int cell) {
-        this.row = row;
-        this.cell = cell;
+        if (row >= 0 && row <= 7) {
+            this.row = row;
+        } else {
+            this.row = -1;
+        }
+        if (cell >= 0 && cell <= 7) {
+            this.cell = cell;
+        } else {
+            this.cell = -1;
+        }
+
     }
 
     public int getRow() {
