@@ -132,7 +132,7 @@ public class GetGameRoute implements Route {
                 }
 
                 vm.put(VIEW_MODE_ATTR, mode.PLAY);
-                vm.put(ACTIVE_COLOR_ATTR, activeColor.RED);
+                vm.put(ACTIVE_COLOR_ATTR, activeColor.RED); // use Game to change color for player turn
 
                 final Map<String, Object> modeOptions = new HashMap<>(2);
                 modeOptions.put(IS_GAME_OVER_ATTR, true);

@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
 import java.util.*;
+import java.util.logging.Logger;
+
 import spark.*;
 
 import static spark.Spark.halt;
@@ -13,6 +15,7 @@ import com.webcheckers.util.Message;
  *
  */
 public class PostSignInRoute implements Route {
+    private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
     // freemarker variables
     private final String TITLE_ATTR = "title";
@@ -60,6 +63,8 @@ public class PostSignInRoute implements Route {
      */
     @Override
     public String handle(Request request, Response response) {
+        LOG.finer("PostSignInRoute is invoked.");
+
         // start building the View-Model
         final Map<String, Object> vm = new HashMap<>();
 
