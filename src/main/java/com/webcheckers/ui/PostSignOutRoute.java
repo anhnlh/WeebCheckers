@@ -8,6 +8,7 @@ import com.webcheckers.app.PlayerLobby;
 /**
  * The {@code POST /signout} route handler.
  *
+ * @author Rhamsez Thevenin
  */
 public class PostSignOutRoute implements Route{
 

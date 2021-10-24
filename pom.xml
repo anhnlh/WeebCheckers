@@ -110,7 +110,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>${maven.exec.version}</version>
         <configuration>
-          <mainClass>com.example.Application</mainClass>
+          <mainClass>com.webcheckers.Application</mainClass>
         </configuration>
         <executions>
           <!--  Run all tier-specific unit test with code coverage

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.google.gson.Gson;
 import com.webcheckers.app.Game;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Player;
@@ -29,12 +30,14 @@ public class GetGameRoute implements Route {
     public static final String TITLE_ATTR = "title";
     public static final String BOARD_ATTR = "board";
     public static final String VIEW_MODE_ATTR = "viewMode";
-    public static final String MODE_OPTIONS_ATTR = "modeOptions";
     public static final String RED_PLAYER_ATTR = "redPlayer";
     public static final String WHITE_PLAYER_ATTR = "whitePlayer";
     public static final String ACTIVE_COLOR_ATTR = "activeColor";
     public static final String OPPONENT_ATTR = "opponent";
     public static final String GAME_ID_PARAM = "gameID";
+    public static final String IS_GAME_OVER_ATTR = "isGameOver";
+    public static final String GAME_OVER_MSG_ATTR = "gameOverMessage";
+    public static final String MODE_OPTS_JSON_ATTR = "modeOptionsAsJSON";
 
     // message
     public static final Message OPPONENT_IN_GAME = Message.error("Opponent is in game. Try another player.");
@@ -130,6 +133,13 @@ public class GetGameRoute implements Route {
 
                 vm.put(VIEW_MODE_ATTR, mode.PLAY);
                 vm.put(ACTIVE_COLOR_ATTR, activeColor.RED);
+
+                final Map<String, Object> modeOptions = new HashMap<>(2);
+                modeOptions.put(IS_GAME_OVER_ATTR, true);
+                modeOptions.put(GAME_OVER_MSG_ATTR, "Example Game Over Message.");
+
+                Gson gson = new Gson();
+                vm.put(MODE_OPTS_JSON_ATTR, gson.toJson(modeOptions));
             }
         } else {
             response.redirect(WebServer.HOME_URL);
