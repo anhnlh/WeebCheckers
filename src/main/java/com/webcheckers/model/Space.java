@@ -53,6 +53,14 @@ public class Space {
     }
 
     /**
+     * Sets the piece on a space
+     * @param piece the piece
+     */
+    public void setPiece(Piece piece) {
+        this.piece = piece;
+    }
+
+    /**
      * Gets the cellid of a space
      * @return
      *  int: Cell ID

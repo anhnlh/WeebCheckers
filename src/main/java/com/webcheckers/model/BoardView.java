@@ -20,6 +20,10 @@ public class BoardView implements Iterable<Row> {
     // Array list for board made up of Rows
     private final List<Row> board;
 
+    // starting number of pieces for each player
+    private int numRedPieces = 12;
+    private int numWhitePieces = 12;
+
     /**
      * Constructor for our Board
      * <p>
@@ -87,6 +91,22 @@ public class BoardView implements Iterable<Row> {
             }
         }
         return row;
+    }
+
+    public int getNumRedPieces() {
+        return numRedPieces;
+    }
+
+    public void decreaseNumRedPieces() {
+        this.numRedPieces--;
+    }
+
+    public int getNumWhitePieces() {
+        return numWhitePieces;
+    }
+
+    public void decreaseNumWhitePieces() {
+        this.numWhitePieces--;
     }
 
     @Override

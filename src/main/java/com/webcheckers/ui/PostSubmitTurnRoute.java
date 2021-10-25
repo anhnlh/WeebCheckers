@@ -37,7 +37,6 @@ public class PostSubmitTurnRoute implements Route {
 
         // returns false when there is still a jump move possible
         if (game.makeMove()) {
-            // TODO: out of moves case
             return gson.toJson(Message.info("Turn submitted."));
         } else {
             return gson.toJson(Message.error("Possible jump move detected. You must play all jump moves."));

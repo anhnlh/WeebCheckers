@@ -35,6 +35,10 @@ public class Game {
 
     private final Deque<Move> moveDeque;
 
+    private boolean gameOver;
+
+    private String gameOverMessage;
+
     /**
      * Constructor for the Game class
      *
@@ -48,6 +52,7 @@ public class Game {
         this.ID = Objects.hash(redPlayer, whitePlayer);
         this.playerInTurn = redPlayer; // red player starts first
         this.moveDeque = new LinkedList<>();
+        this.gameOver = false;
     }
 
     /**
@@ -257,22 +262,47 @@ public class Game {
     }
 
     public boolean makeMove() {
+        // if a jump move is still possible with the latest move
         if (moveDeque.getLast().getMoveType().equals(Move.MoveType.JUMP) && singlePossibleJumpMove(moveDeque.getLast())) {
             return false;
         }
+        // makes all the moves
         while (!moveDeque.isEmpty()) {
             Move move = moveDeque.remove();
+            Space start = board.getRow(move.getStart().getRow()).getSpace(move.getStart().getCell());
+            Space end = board.getRow(move.getEnd().getRow()).getSpace(move.getEnd().getCell());
             switch (move.getMoveType()) {
                 case SIMPLE:
-                    // TODO: simple move (modify the board)
+                    end.setPiece(start.getPiece());
+                    start.setPiece(null);
                     break;
                 case JUMP:
-                    // TODO: jump move (modify the board, delete the piece in between)
+                    end.setPiece(start.getPiece());
+                    Space capture = board.getRow((move.getStart().getRow() + move.getStart().getRow()) / 2).
+                            getSpace((move.getStart().getCell() + move.getStart().getCell()) / 2);
+                    capture.setPiece(null);
+                    if (isRedPlayerTurn()) {
+                        board.decreaseNumWhitePieces();
+                    } else {
+                        board.decreaseNumRedPieces();
+                    }
                     break;
             }
-            // TODO: Set King if last row
-            // TODO: Check if game over
+            if (isRedPlayerTurn() && move.getEnd().getRow() == 0 ||                             // red
+                !isRedPlayerTurn() && move.getEnd().getRow() == BoardView.BOARD_LENGTH - 1) {   // white
+                end.getPiece().setType(Piece.Type.KING);
+            }
+            if (board.getNumRedPieces() == 0) {
+                gameOver = true;
+                gameOverMessage = getWhitePlayer() + "won! " + getRedPlayer() + "ran out of pieces.";
+            } else if (board.getNumWhitePieces() == 0) {
+                gameOver = true;
+                gameOverMessage = getRedPlayer() + "won! " + getWhitePlayer() + "ran out of pieces.";
+            }
         }
+
+        // TODO: out of moves case
+
         return true;
     }
 }
