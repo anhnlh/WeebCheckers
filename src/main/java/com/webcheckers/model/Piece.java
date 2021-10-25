@@ -1,7 +1,5 @@
 package com.webcheckers.model;
 
-import java.util.Objects;
-
 /**
  * Model class for a chess piece
  *
@@ -9,19 +7,19 @@ import java.util.Objects;
  */
 public class Piece {
     // Possible types of pieces
-    public enum TYPE {
+    public enum Type {
         SINGLE, KING
     }
 
     // Possible colors of pieces
-    public enum PIECECOLOR {
+    public enum Color {
         RED, WHITE, NONE
     }
 
     // type of piece
-    private TYPE type;
+    private Type type;
     // color of piece
-    private final PIECECOLOR color;
+    private final Color color;
 
     /**
      * Constructor of model class Piece
@@ -29,7 +27,7 @@ public class Piece {
      * @param type  TYPE: type of piece
      * @param color COLOR: color of piece
      */
-    public Piece(TYPE type, PIECECOLOR color) {
+    public Piece(Type type, Color color) {
         this.type = type;
         this.color = color;
     }
@@ -40,7 +38,7 @@ public class Piece {
      * @return bool: if piece is king
      */
     public boolean isKing() {
-        return this.getType() == TYPE.KING;
+        return this.getType() == Type.KING;
     }
 
 // ------- Getters and Setters -------
@@ -50,7 +48,7 @@ public class Piece {
      *
      * @param type TYPE: type that piece becomes
      */
-    public void setType(TYPE type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
@@ -59,7 +57,7 @@ public class Piece {
      *
      * @return TYPE: piece type
      */
-    public TYPE getType() {
+    public Type getType() {
         return this.type;
     }
 
@@ -68,7 +66,7 @@ public class Piece {
      *
      * @return COLOR: color of current piece
      */
-    public PIECECOLOR getColor() {
+    public Color getColor() {
         return this.color;
     }
 

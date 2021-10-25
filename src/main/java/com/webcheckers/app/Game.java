@@ -3,9 +3,7 @@ package com.webcheckers.app;
 import com.webcheckers.model.*;
 import com.webcheckers.util.Message;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Application-tier Entity Game to represent a game
@@ -35,6 +33,8 @@ public class Game {
 
     private Player playerInTurn;
 
+    private final Deque<Move> moveDeque;
+
     /**
      * Constructor for the Game class
      *
@@ -47,6 +47,7 @@ public class Game {
         this.board = new BoardView();
         this.ID = Objects.hash(redPlayer, whitePlayer);
         this.playerInTurn = redPlayer; // red player starts first
+        this.moveDeque = new LinkedList<>();
     }
 
     /**
@@ -104,10 +105,6 @@ public class Game {
         return ID;
     }
 
-    public Player getPlayerInTurn() {
-        return playerInTurn;
-    }
-
     public void setPlayerInTurn(Player playerInTurn) {
         this.playerInTurn = playerInTurn;
     }
@@ -116,12 +113,12 @@ public class Game {
         return playerInTurn.equals(redPlayer);
     }
 
-    private Piece.PIECECOLOR getPieceColor() {
-        Piece.PIECECOLOR color = null;
+    private Piece.Color playerColor() {
+        Piece.Color color;
         if (isRedPlayer(playerInTurn)) {
-            color = Piece.PIECECOLOR.RED;
+            color = Piece.Color.RED;
         } else {
-            color = Piece.PIECECOLOR.WHITE;
+            color = Piece.Color.WHITE;
         }
         return color;
     }
@@ -177,7 +174,7 @@ public class Game {
         Piece startPiece = board.getRow(startRow).getSpace(startCell).getPiece();   // should be not null if valid move
         Piece endPiece = board.getRow(endRow).getSpace(endCell).getPiece();         // should be null if valid move
         Piece capturePiece = board.getRow((startRow + endRow) / 2).
-                getSpace((startCell + endCell) / 2).getPiece();   // should be not null valid move
+                getSpace((startCell + endCell) / 2).getPiece();               // should be not null valid move
 
         // perform check
         if (startPiece != null && endPiece == null && capturePiece != null) {
@@ -185,14 +182,14 @@ public class Game {
                 case SINGLE:
                     valid = isRedPlayer(playerInTurn) ?
                             endRow == startRow - 2 && (endCell == startCell + 2 || endCell == startCell - 2)
-                                    && !capturePiece.getColor().equals(getPieceColor()) :                         // red
+                                    && !capturePiece.getColor().equals(playerColor()) :           // red
                             endRow == startRow + 2 && (endCell == startCell + 2 || endCell == startCell - 2)
-                                    && !capturePiece.getColor().equals(getPieceColor());                            // white
+                                    && !capturePiece.getColor().equals(playerColor());            // white
                     break;
                 case KING:
                     valid = (endRow == startRow + 2 || endRow == startRow - 2) &&
                             (endCell == startCell + 2 || endCell == startCell - 2) &&
-                            !capturePiece.getColor().equals(getPieceColor());
+                            !capturePiece.getColor().equals(playerColor());
                     break;
             }
         }
@@ -200,20 +197,39 @@ public class Game {
         return valid;
     }
 
-    private boolean availableJumpMove() {
+    private boolean allPossibleJumpMoves() {
         for (Row row : board) {
             for (Space space : row) {
                 Piece piece = space.getPiece();
-                if (piece != null && !piece.getColor().equals(getPieceColor())) {
-                    Position pos = new Position(row.getIndex(), space.getCellIdx());
+                if (piece != null && !piece.getColor().equals(playerColor())) {
+                    Position start = new Position(row.getIndex(), space.getCellIdx());
                     for (int r = -2; r <= 2; r += 4) {      // -2 and +2 to rowIndex
                         for (int c = -2; c <= 2; c += 4) {  // -2 and +2 to cellIdx
-                            Position endPos = new Position(pos.getRow() + r, pos.getCell() + c);
-                            if (endPos.getRow() != -1 && endPos.getCell() != -1) {
-                                Move move = new Move(pos, endPos);
-                                return isJumpMove(move);
+                            Position end = new Position(start.getRow() + r, start.getCell() + c);
+                            if (Position.isInBounds(end)) {
+                                Move move = new Move(start, end, Move.MoveType.JUMP);
+                                if (isJumpMove(move)) {
+                                    return true;
+                                }
                             }
                         }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean singlePossibleJumpMove(Move move) {
+        Position start = move.getStart();
+        Position end = move.getEnd();
+        for (int r = -2; r <= 2; r += 4) {
+            for (int c = -2; c <= 2; c += 4) {
+                Position newEnd = new Position(end.getRow() + r, end.getCell() + c);
+                if (!newEnd.equals(start) && Position.isInBounds(newEnd)) {
+                    Move m = new Move(end, newEnd, Move.MoveType.JUMP);
+                    if (isJumpMove(m)) {
+                        return true;
                     }
                 }
             }
@@ -224,17 +240,39 @@ public class Game {
     public Message validateMove(Move move) {
         Message message = Message.error("Invalid move.");
         if (isSimpleMove(move)) {
-            if (availableJumpMove()) {
+            if (allPossibleJumpMoves()) {
                 message = Message.error("Jump move available. Must make jump moves.");
             } else {
-                // do something
+                move.setMoveType(Move.MoveType.SIMPLE);
+                moveDeque.add(move);
                 message = Message.info("Valid simple move.");
             }
         } else if (isJumpMove(move)) {
-            // do something
+            move.setMoveType(Move.MoveType.JUMP);
+            moveDeque.add(move);
             message = Message.info("Valid jump move.");
         }
 
         return message;
+    }
+
+    public boolean makeMove() {
+        if (moveDeque.getLast().getMoveType().equals(Move.MoveType.JUMP) && singlePossibleJumpMove(moveDeque.getLast())) {
+            return false;
+        }
+        while (!moveDeque.isEmpty()) {
+            Move move = moveDeque.remove();
+            switch (move.getMoveType()) {
+                case SIMPLE:
+                    // TODO: simple move (modify the board)
+                    break;
+                case JUMP:
+                    // TODO: jump move (modify the board, delete the piece in between)
+                    break;
+            }
+            // TODO: Set King if last row
+            // TODO: Check if game over
+        }
+        return true;
     }
 }

@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
 import com.webcheckers.app.Game;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Player;
@@ -48,12 +47,12 @@ public class GetGameRoute implements Route {
     private HashMap<String, Game> gameMap;
 
     // enum for viewMode in game.ftl
-    public enum mode {
+    public enum Mode {
         PLAY
     }
 
     // enum for activeColor in game.ftl
-    public enum activeColor {
+    public enum ActiveColor {
         RED, WHITE
     }
 
@@ -133,12 +132,12 @@ public class GetGameRoute implements Route {
                 }
 
                 if (game.isRedPlayerTurn()) {
-                    vm.put(ACTIVE_COLOR_ATTR, activeColor.RED);
+                    vm.put(ACTIVE_COLOR_ATTR, ActiveColor.RED);
                 } else {
-                    vm.put(ACTIVE_COLOR_ATTR, activeColor.WHITE);
+                    vm.put(ACTIVE_COLOR_ATTR, ActiveColor.WHITE);
                 }
 
-                vm.put(VIEW_MODE_ATTR, mode.PLAY);
+                vm.put(VIEW_MODE_ATTR, Mode.PLAY);
 
 //                final Map<String, Object> modeOptions = new HashMap<>(2);
 //                modeOptions.put(IS_GAME_OVER_ATTR, true);

@@ -26,6 +26,10 @@ public class Position {
         return cell;
     }
 
+    public static boolean isInBounds(Position pos) {
+        return pos.row != -1 && pos.cell != -1;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

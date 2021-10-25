@@ -125,11 +125,11 @@ public class TestGetGameRoute {
         // checks the Model-View
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
-        testHelper.assertViewModelAttribute(GetGameRoute.VIEW_MODE_ATTR, GetGameRoute.mode.PLAY);
+        testHelper.assertViewModelAttribute(GetGameRoute.VIEW_MODE_ATTR, GetGameRoute.Mode.PLAY);
         testHelper.assertViewModelAttribute(GetGameRoute.RED_PLAYER_ATTR, game.getRedPlayer());
         testHelper.assertViewModelAttribute(GetGameRoute.WHITE_PLAYER_ATTR, game.getWhitePlayer());
         testHelper.assertViewModelAttribute(GetGameRoute.BOARD_ATTR, game.redPlayerBoard());
-        testHelper.assertViewModelAttribute(GetGameRoute.ACTIVE_COLOR_ATTR, GetGameRoute.activeColor.RED);
+        testHelper.assertViewModelAttribute(GetGameRoute.ACTIVE_COLOR_ATTR, GetGameRoute.ActiveColor.RED);
     }
 
     /**

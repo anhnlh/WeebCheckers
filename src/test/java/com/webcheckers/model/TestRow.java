@@ -1,13 +1,8 @@
 package com.webcheckers.model;
-import com.webcheckers.model.Piece.TYPE;
 import org.junit.Test;
 import org.junit.jupiter.api.Tag;
 
 import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-
-import com.webcheckers.model.Piece.PIECECOLOR;
 
 /**
  * @author Mohammed Alam

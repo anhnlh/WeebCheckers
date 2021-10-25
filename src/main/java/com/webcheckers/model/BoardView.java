@@ -5,7 +5,6 @@ import com.webcheckers.app.Game;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Model class for the checkers board
@@ -48,11 +47,11 @@ public class BoardView implements Iterable<Row> {
         boolean blackSpace = false;
         for (int i = 0; i < BOARD_LENGTH; i++) {
             if (i < 3) {
-                board.add(new Row(i, Piece.PIECECOLOR.WHITE, blackSpace));
+                board.add(new Row(i, Piece.Color.WHITE, blackSpace));
             } else if (i > 4) {
-                board.add(new Row(i, Piece.PIECECOLOR.RED, blackSpace));
+                board.add(new Row(i, Piece.Color.RED, blackSpace));
             } else {
-                board.add(new Row(i, Piece.PIECECOLOR.NONE, blackSpace));
+                board.add(new Row(i, Piece.Color.NONE, blackSpace));
             }
             blackSpace = !blackSpace;
         }

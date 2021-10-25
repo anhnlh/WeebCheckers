@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.app.Game;
+import com.webcheckers.util.Message;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -22,6 +23,24 @@ public class PostSubmitTurnRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        return null;
+        LOG.finer("PostSubmitTurnRoute has been invoked.");
+
+        String gameID = request.queryParams(GetGameRoute.GAME_ID_PARAM);
+        Game game = gameMap.get(gameID);
+
+        // switch turns
+        if (game.isRedPlayerTurn()) {
+            game.setPlayerInTurn(game.getWhitePlayer());
+        } else {
+            game.setPlayerInTurn(game.getRedPlayer());
+        }
+
+        // returns false when there is still a jump move possible
+        if (game.makeMove()) {
+            // TODO: out of moves case
+            return gson.toJson(Message.info("Turn submitted."));
+        } else {
+            return gson.toJson(Message.error("Possible jump move detected. You must play all jump moves."));
+        }
     }
 }
