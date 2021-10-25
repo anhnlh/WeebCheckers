@@ -1,9 +1,21 @@
 package com.webcheckers.model;
 
+/**
+ * The Position class represents a position on the board.
+ *
+ * @author Anh Nguyen
+ */
 public class Position {
+    //row of a position
     private final int row;
+    //cell of a position
     private final int cell;
 
+    /**
+     * Constructor for Position
+     * @param row row of the position
+     * @param cell cell of the position
+     */
     public Position(int row, int cell) {
         if (row >= 0 && row <= 7) {
             this.row = row;
@@ -18,14 +30,26 @@ public class Position {
 
     }
 
+    /**
+     * Getter for row
+     * @return row of the position
+     */
     public int getRow() {
         return row;
     }
 
+    /**
+     * Getter for cell
+     * @return cell of the position
+     */
     public int getCell() {
         return cell;
     }
 
+    /**
+     * Checks if the position is valid
+     * @return true if the position is valid, false otherwise
+     */
     public static boolean isInBounds(Position pos) {
         return pos.row != -1 && pos.cell != -1;
     }
