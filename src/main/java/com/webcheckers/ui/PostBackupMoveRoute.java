@@ -2,9 +2,12 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.app.Game;
+import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import spark.Session;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -22,6 +25,26 @@ public class PostBackupMoveRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        return null;
+        LOG.finer("PostBackupMoveRoute has been invoked.");
+
+        final Session httpSession = request.session();
+        Player player = httpSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
+
+        String gameID = request.queryParams(GetGameRoute.GAME_ID_PARAM);
+        Game game = gameMap.get(gameID);
+
+        Message message;
+        if ((game.isRedPlayer(player) && game.isRedPlayerTurn()) ||
+            (!game.isRedPlayer(player) && !game.isRedPlayerTurn())) {
+            if (game.backupMove()) {
+                message = Message.info("Move backed up.");
+            } else {
+                message = Message.error("No move to back up.");
+            }
+        } else {
+            message = Message.error("Not your turn!");
+        }
+
+        return gson.toJson(message);
     }
 }

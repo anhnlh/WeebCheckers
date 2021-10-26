@@ -146,6 +146,10 @@ public class Game {
         return gameOverMessage;
     }
 
+    public void setGameOverMessage(String gameOverMessage) {
+        this.gameOverMessage = gameOverMessage;
+    }
+
     private boolean isSimpleMove(Move move) {
         boolean valid = false;
 
@@ -188,6 +192,12 @@ public class Game {
         Piece endPiece = board.getRow(endRow).getSpace(endCell).getPiece();         // should be null if valid move
         Piece capturePiece = board.getRow((startRow + endRow) / 2).
                 getSpace((startCell + endCell) / 2).getPiece();               // should be not null valid move
+
+        // chain moves
+        if (!moveDeque.isEmpty() && moveDeque.peekLast().getMoveType().equals(Move.MoveType.JUMP)) {
+            startPiece = board.getRow(moveDeque.peekLast().getEnd().getRow()).
+                    getSpace(moveDeque.peekLast().getEnd().getCell()).getPiece();
+        }
 
         // perform check
         if (startPiece != null && endPiece == null && capturePiece != null) {
@@ -242,6 +252,7 @@ public class Game {
                 if (!newEnd.equals(start) && Position.isInBounds(newEnd)) {
                     Move m = new Move(end, newEnd, Move.MoveType.JUMP);
                     if (isJumpMove(m)) {
+                        System.out.println("singlePossibleJumpMove reached");
                         return true;
                     }
                 }
@@ -252,6 +263,7 @@ public class Game {
 
     public Message validateMove(Move move) {
         Message message = Message.error("Invalid move.");
+        System.out.println(move);
         if (isSimpleMove(move)) {
             if (allPossibleJumpMoves()) {
                 message = Message.error("Jump move available. Must make jump moves.");
@@ -295,6 +307,7 @@ public class Game {
                     break;
                 case JUMP:
                     end.setPiece(start.getPiece());
+                    start.setPiece(null);
                     Space capture = board.getRow((startRow + endRow) / 2).
                                         getSpace((startCell + endCell) / 2);
                     capture.setPiece(null);
@@ -305,16 +318,18 @@ public class Game {
                     }
                     break;
             }
-            if (isRedPlayerTurn() && endRow == 0 ||                             // red
-                !isRedPlayerTurn() && endRow == BoardView.BOARD_LENGTH - 1) {   // white
+            if ((isRedPlayerTurn() && endRow == 0) ||                             // red
+                (!isRedPlayerTurn() && endRow == BoardView.BOARD_LENGTH - 1)) {   // white
                 end.getPiece().setType(Piece.Type.KING);
             }
             if (board.getNumRedPieces() == 0) {
                 gameOver = true;
                 gameOverMessage = getWhitePlayer() + "won! " + getRedPlayer() + "ran out of pieces.";
+                setGameOver();
             } else if (board.getNumWhitePieces() == 0) {
                 gameOver = true;
                 gameOverMessage = getRedPlayer() + "won! " + getWhitePlayer() + "ran out of pieces.";
+                setGameOver();
             }
             movesMade = true;
         }
@@ -322,5 +337,19 @@ public class Game {
         // TODO (Optional): lose if run out of moves
 
         return movesMade;
+    }
+
+    public void setGameOver() {
+        redPlayer.setPlaying(false);
+        whitePlayer.setPlaying(false);
+        gameOver = true;
+    }
+
+    public boolean backupMove() {
+        if (!moveDeque.isEmpty()) {
+            moveDeque.removeLast();
+            return true;
+        }
+        return false;
     }
 }

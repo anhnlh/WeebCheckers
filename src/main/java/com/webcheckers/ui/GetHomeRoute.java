@@ -94,6 +94,25 @@ public class GetHomeRoute implements Route {
                 response.redirect(WebServer.GAME_URL + "?gameID=" + gameID);
                 halt();
                 return null;
+            } else {
+                Game game = null;
+                for (Game g : gameMap.values()) {
+                    if (player.equals(g.getRedPlayer()) || player.equals(g.getWhitePlayer())) {
+                        game = g;
+                    }
+                }
+                if (game != null && game.isGameOver()) {
+                    // deletes the game from the gameMap only when there is one player
+                    // left in the game (i.e. went back to playerLobby)
+                    if (playerLobby.contains(game.getRedPlayer().getName()) &&
+                        playerLobby.contains(game.getWhitePlayer().getName())) {
+                        gameMap.remove(String.valueOf(game.getID()));
+                    }
+
+                    if (player.equals(game.getWhitePlayer()) || player.equals(game.getRedPlayer())) {
+                        playerLobby.addPlayer(player.getName());
+                    }
+                }
             }
         }
 
