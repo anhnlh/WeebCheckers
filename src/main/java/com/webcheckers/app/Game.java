@@ -207,7 +207,6 @@ public class Game {
         if (startPiece != null && endPiece == null && capturePiece != null) {
             switch (startPiece.getType()) {
                 case SINGLE:
-                    System.out.println("reached");
                     valid = isRedPlayer(playerInTurn) ?
                             endRow == startRow - 2 && (endCell == startCell + 2 || endCell == startCell - 2)
                                     && !capturePiece.getColor().equals(playerColor()) :           // red

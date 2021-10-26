@@ -63,13 +63,4 @@ public class Move {
     public void setMoveType(MoveType moveType) {
         this.moveType = moveType;
     }
-
-    @Override
-    public String toString() {
-        return "Move{" +
-                "start=" + start +
-                ", end=" + end +
-                ", moveType=" + moveType +
-                '}';
-    }
 }

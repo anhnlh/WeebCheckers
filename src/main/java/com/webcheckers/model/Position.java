@@ -61,12 +61,4 @@ public class Position {
         Position position = (Position) o;
         return row == position.row && cell == position.cell;
     }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "row=" + row +
-                ", cell=" + cell +
-                '}';
-    }
 }
