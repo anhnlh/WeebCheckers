@@ -18,11 +18,10 @@ with other players. Using the Spark framework for Java, WebCheckers
 provides users with a realtime experience challenging an opponent.
 
 ### Purpose
-> This project is a web-application of checkers. 
-> Users should be able to log-in, and play against other players.
+This project is a web-application of checkers. 
+Users should be able to log-in, and play against other players.
 
 ### Glossary and Acronyms
-> _Provide a table of terms and acronyms._
 
 | Term | Definition |
 |------|------------|
@@ -35,19 +34,25 @@ provides users with a realtime experience challenging an opponent.
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+1. Every player must sign-in before playing a game, and be able 
+   to sign-out when finished playing.
+2. Two players must be able to play a game of checkers based upon 
+   the American rules.
+3. Either player of a game may choose to resign, at any point, 
+   which ends the game.
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+- Sign In
+- Start a Game
+- Make Moves
+- Win/Lose the Game
+- Resign
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
-
+1. Player Help
+2. Tournament Play
 
 ## Application Domain
 
@@ -106,9 +111,6 @@ This section describes the web interface flow; this is how the user views and in
 with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](EditedWebInterfaceStatechart.png)
-
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
 
 So we start with our initial condition if the GET request doesn't render the page correctly. We then load on the sign-in page with GET "/" render sign-in. The sign-in page state was initially made with a piece of account information in mind, so if the user doesn't enter the right password, we would get the sign-in page again for them to input their information once again. 
 

@@ -96,13 +96,10 @@ public class TestGetGameRoute {
         assertFalse(p2.isPlaying());
 
         // first handle creates the game
-        CuT.handle(request, response);
-
-        testHelper.assertViewModelExists();
-        testHelper.assertViewModelIsaMap();
-
-        testHelper.assertViewModelAttribute(GetHomeRoute.CURRENT_USER_ATTR, p1);
-        testHelper.assertViewModelAttribute(GetGameRoute.TITLE_ATTR, "Welcome!");
+        try {
+            CuT.handle(request, response);
+        } catch (HaltException ignored) {
+        }
 
         // simulate game created
         String gameID = String.valueOf(Objects.hash(p1, p2));
@@ -149,7 +146,10 @@ public class TestGetGameRoute {
         when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 
         // first handle creates the game
-        CuT.handle(request, response);
+        try {
+            CuT.handle(request, response);
+        } catch (HaltException ignored) {
+        }
 
         // simulate game created
         String gameID = String.valueOf(Objects.hash(p1, p2)); // (p2, p1) instead
