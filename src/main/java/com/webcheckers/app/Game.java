@@ -193,16 +193,21 @@ public class Game {
         Piece capturePiece = board.getRow((startRow + endRow) / 2).
                 getSpace((startCell + endCell) / 2).getPiece();               // should be not null valid move
 
-        // chain moves
-        if (!moveDeque.isEmpty() && moveDeque.peekLast().getMoveType().equals(Move.MoveType.JUMP)) {
-            startPiece = board.getRow(moveDeque.peekLast().getEnd().getRow()).
-                    getSpace(moveDeque.peekLast().getEnd().getCell()).getPiece();
+        // multiple jump case
+        if (!moveDeque.isEmpty() && moveDeque.peekFirst().getMoveType().equals(Move.MoveType.JUMP)) {
+            // startPiece must be the piece from the start of the chain of jumps
+            // removing the move from the moveDeque and adding it back for good practice
+            Move firstJumpMove = moveDeque.removeFirst();
+            startPiece = board.getRow(firstJumpMove.getStart().getRow()).
+                    getSpace(firstJumpMove.getStart().getCell()).getPiece();
+            moveDeque.addFirst(firstJumpMove);
         }
 
         // perform check
         if (startPiece != null && endPiece == null && capturePiece != null) {
             switch (startPiece.getType()) {
                 case SINGLE:
+                    System.out.println("reached");
                     valid = isRedPlayer(playerInTurn) ?
                             endRow == startRow - 2 && (endCell == startCell + 2 || endCell == startCell - 2)
                                     && !capturePiece.getColor().equals(playerColor()) :           // red

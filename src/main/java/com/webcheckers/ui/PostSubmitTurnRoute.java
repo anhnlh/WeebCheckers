@@ -28,6 +28,14 @@ public class PostSubmitTurnRoute implements Route {
         String gameID = request.queryParams(GetGameRoute.GAME_ID_PARAM);
         Game game = gameMap.get(gameID);
 
+        Message message;
+        // returns false when there is still a jump move possible
+        if (game.makeMove()) {
+            message = Message.info("Turn submitted.");
+        } else {
+            message = Message.info("Possible jump move detected. You must play all jump moves.");
+        }
+
         // switch turns
         if (game.isRedPlayerTurn()) {
             game.setPlayerInTurn(game.getWhitePlayer());
@@ -35,11 +43,6 @@ public class PostSubmitTurnRoute implements Route {
             game.setPlayerInTurn(game.getRedPlayer());
         }
 
-        // returns false when there is still a jump move possible
-        if (game.makeMove()) {
-            return gson.toJson(Message.info("Turn submitted."));
-        } else {
-            return gson.toJson(Message.error("Possible jump move detected. You must play all jump moves."));
-        }
+        return gson.toJson(message);
     }
 }
