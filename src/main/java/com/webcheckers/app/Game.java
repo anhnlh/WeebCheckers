@@ -138,6 +138,14 @@ public class Game {
         return other.equals(this.redPlayer);
     }
 
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public String getGameOverMessage() {
+        return gameOverMessage;
+    }
+
     private boolean isSimpleMove(Move move) {
         boolean valid = false;
 
@@ -206,7 +214,7 @@ public class Game {
         for (Row row : board) {
             for (Space space : row) {
                 Piece piece = space.getPiece();
-                if (piece != null && !piece.getColor().equals(playerColor())) {
+                if (piece != null && piece.getColor().equals(playerColor())) {
                     Position start = new Position(row.getIndex(), space.getCellIdx());
                     for (int r = -2; r <= 2; r += 4) {      // -2 and +2 to rowIndex
                         for (int c = -2; c <= 2; c += 4) {  // -2 and +2 to cellIdx
@@ -262,15 +270,24 @@ public class Game {
     }
 
     public boolean makeMove() {
+        boolean movesMade = false;
+
         // if a jump move is still possible with the latest move
         if (moveDeque.getLast().getMoveType().equals(Move.MoveType.JUMP) && singlePossibleJumpMove(moveDeque.getLast())) {
             return false;
         }
+
         // makes all the moves
         while (!moveDeque.isEmpty()) {
             Move move = moveDeque.remove();
-            Space start = board.getRow(move.getStart().getRow()).getSpace(move.getStart().getCell());
-            Space end = board.getRow(move.getEnd().getRow()).getSpace(move.getEnd().getCell());
+
+            int startRow = move.getStart().getRow();
+            int startCell = move.getStart().getCell();
+            int endRow = move.getEnd().getRow();
+            int endCell = move.getEnd().getCell();
+
+            Space start = board.getRow(startRow).getSpace(startCell);
+            Space end = board.getRow(endRow).getSpace(endCell);
             switch (move.getMoveType()) {
                 case SIMPLE:
                     end.setPiece(start.getPiece());
@@ -278,8 +295,8 @@ public class Game {
                     break;
                 case JUMP:
                     end.setPiece(start.getPiece());
-                    Space capture = board.getRow((move.getStart().getRow() + move.getStart().getRow()) / 2).
-                            getSpace((move.getStart().getCell() + move.getStart().getCell()) / 2);
+                    Space capture = board.getRow((startRow + endRow) / 2).
+                                        getSpace((startCell + endCell) / 2);
                     capture.setPiece(null);
                     if (isRedPlayerTurn()) {
                         board.decreaseNumWhitePieces();
@@ -288,8 +305,8 @@ public class Game {
                     }
                     break;
             }
-            if (isRedPlayerTurn() && move.getEnd().getRow() == 0 ||                             // red
-                !isRedPlayerTurn() && move.getEnd().getRow() == BoardView.BOARD_LENGTH - 1) {   // white
+            if (isRedPlayerTurn() && endRow == 0 ||                             // red
+                !isRedPlayerTurn() && endRow == BoardView.BOARD_LENGTH - 1) {   // white
                 end.getPiece().setType(Piece.Type.KING);
             }
             if (board.getNumRedPieces() == 0) {
@@ -299,10 +316,11 @@ public class Game {
                 gameOver = true;
                 gameOverMessage = getRedPlayer() + "won! " + getWhitePlayer() + "ran out of pieces.";
             }
+            movesMade = true;
         }
 
-        // TODO: out of moves case
+        // TODO (Optional): lose if run out of moves
 
-        return true;
+        return movesMade;
     }
 }

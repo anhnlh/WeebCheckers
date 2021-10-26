@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.app.Game;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Player;
@@ -32,6 +33,7 @@ public class TestGetGameRoute {
     private Response response;
     private TemplateEngine templateEngine;
     private HashMap<String, Game> gameMap;
+    private Gson gson;
     private PlayerLobby playerLobby;
     private Player p1;
     private Player p2;
@@ -46,6 +48,7 @@ public class TestGetGameRoute {
         when(request.session()).thenReturn(session);
         response = mock(Response.class);
         templateEngine = mock(TemplateEngine.class);
+        gson = new Gson();
 
         // simulate the player lobby
         playerLobby = new PlayerLobby();
@@ -61,15 +64,15 @@ public class TestGetGameRoute {
         gameMap = new HashMap<>();
 
         // create a unique CuT for each test
-        CuT = new GetGameRoute(gameMap, playerLobby, templateEngine);
+        CuT = new GetGameRoute(gameMap, playerLobby, templateEngine, gson);
     }
 
     /**
-     * Tests {@link GetGameRoute#GetGameRoute(HashMap, PlayerLobby, TemplateEngine)}
+     * Tests {@link GetGameRoute#GetGameRoute(HashMap, PlayerLobby, TemplateEngine, Gson)}
      */
     @Test
     public void constructorTest() {
-        new GetGameRoute(gameMap, playerLobby, templateEngine);
+        new GetGameRoute(gameMap, playerLobby, templateEngine, gson);
         assertNotNull(gameMap);
         assertNotNull(playerLobby);
         assertNotNull(templateEngine);

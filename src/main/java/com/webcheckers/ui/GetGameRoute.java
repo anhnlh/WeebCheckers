@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.google.gson.Gson;
 import com.webcheckers.app.Game;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Player;
@@ -44,7 +45,8 @@ public class GetGameRoute implements Route {
     // parameter initializations
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
-    private HashMap<String, Game> gameMap;
+    private final HashMap<String, Game> gameMap;
+    private final Gson gson;
 
     // enum for viewMode in game.ftl
     public enum Mode {
@@ -61,12 +63,13 @@ public class GetGameRoute implements Route {
      *
      * @param templateEngine The {@link TemplateEngine} used for rendering page HTML.
      */
-    public GetGameRoute(HashMap<String, Game> gameMap, PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+    public GetGameRoute(HashMap<String, Game> gameMap, PlayerLobby playerLobby, final TemplateEngine templateEngine, Gson gson) {
         Objects.requireNonNull(templateEngine, "templateEngine is required");
 
         this.gameMap = gameMap;
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
+        this.gson = gson;
     }
 
     /**
@@ -139,12 +142,14 @@ public class GetGameRoute implements Route {
 
                 vm.put(VIEW_MODE_ATTR, Mode.PLAY);
 
-//                final Map<String, Object> modeOptions = new HashMap<>(2);
-//                modeOptions.put(IS_GAME_OVER_ATTR, true);
-//                modeOptions.put(GAME_OVER_MSG_ATTR, "Example Game Over Message.");
-//
-//                Gson gson = new Gson();
-//                vm.put(MODE_OPTS_JSON_ATTR, gson.toJson(modeOptions));
+                // game over modeOptions
+                if (game.isGameOver()) {
+                    final Map<String, Object> modeOptions = new HashMap<>(2);
+                    modeOptions.put(IS_GAME_OVER_ATTR, game.isGameOver());
+                    modeOptions.put(GAME_OVER_MSG_ATTR, game.getGameOverMessage());
+                    vm.put(MODE_OPTS_JSON_ATTR, gson.toJson(modeOptions));
+                }
+
             }
         } else {
             response.redirect(WebServer.HOME_URL);
