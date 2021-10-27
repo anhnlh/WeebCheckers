@@ -70,6 +70,12 @@ public class Piece {
         return this.color;
     }
 
+    /**
+     * Checks if this Piece and the given Object is equal.
+     * 
+     * @param o an object
+     * @return whether this Piece and given object are equal.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

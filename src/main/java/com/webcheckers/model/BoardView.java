@@ -92,22 +92,44 @@ public class BoardView implements Iterable<Row> {
         return row;
     }
 
+    /**
+     * Returns the number of pieces the red player has
+     * 
+     * @return number of red pieces
+     */
     public int getNumRedPieces() {
         return numRedPieces;
     }
 
+    /**
+     * Subtracts the number of pieces the red player has by one.
+     */
     public void decreaseNumRedPieces() {
         this.numRedPieces--;
     }
 
+    /**
+     * Returns the number of pieces the white player has
+     * 
+     * @return number of white pieces
+     */
     public int getNumWhitePieces() {
         return numWhitePieces;
     }
 
+    /**
+     * Subtracts the number of pieces the white player has by one.
+     */
     public void decreaseNumWhitePieces() {
         this.numWhitePieces--;
     }
 
+    /**
+     * Checks if this BoardView and the given Object is equal.
+     * 
+     * @param o an object
+     * @return whether this BoardView and given object are equal.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

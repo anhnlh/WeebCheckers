@@ -69,6 +69,12 @@ public class Space {
         return this.cellIdx;
     }
 
+    /**
+     * Checks if this Space and the given Object is equal.
+     * 
+     * @param o an object
+     * @return whether this Space and given object are equal.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

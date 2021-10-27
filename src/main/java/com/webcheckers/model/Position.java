@@ -54,6 +54,12 @@ public class Position {
         return pos.row != -1 && pos.cell != -1;
     }
 
+    /**
+     * Checks if this Position and the given Object is equal.
+     * 
+     * @param o an object
+     * @return whether this Position and given object are equal.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

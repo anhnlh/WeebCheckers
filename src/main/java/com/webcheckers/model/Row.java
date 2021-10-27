@@ -106,6 +106,12 @@ public class Row implements Iterable<Space> {
         return this.spaces.iterator();
     }
 
+    /**
+     * Checks if this Row and the given Object is equal.
+     * 
+     * @param o an object
+     * @return whether this Row and given object are equal.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
