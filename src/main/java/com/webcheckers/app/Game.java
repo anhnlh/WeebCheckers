@@ -150,6 +150,12 @@ public class Game {
         this.gameOverMessage = gameOverMessage;
     }
 
+    public void setGameOver() {
+        redPlayer.setPlaying(false);
+        whitePlayer.setPlaying(false);
+        gameOver = true;
+    }
+
     private boolean isSimpleMove(Move move) {
         boolean valid = false;
 
@@ -267,7 +273,6 @@ public class Game {
 
     public Message validateMove(Move move) {
         Message message = Message.error("Invalid move.");
-        System.out.println(move);
         if (isSimpleMove(move)) {
             if (allPossibleJumpMoves()) {
                 message = Message.error("Jump move available. Must make jump moves.");
@@ -327,11 +332,9 @@ public class Game {
                 end.getPiece().setType(Piece.Type.KING);
             }
             if (board.getNumRedPieces() == 0) {
-                gameOver = true;
                 gameOverMessage = getWhitePlayer() + "won! " + getRedPlayer() + "ran out of pieces.";
                 setGameOver();
             } else if (board.getNumWhitePieces() == 0) {
-                gameOver = true;
                 gameOverMessage = getRedPlayer() + "won! " + getWhitePlayer() + "ran out of pieces.";
                 setGameOver();
             }
@@ -341,12 +344,6 @@ public class Game {
         // TODO (Optional): lose if run out of moves
 
         return movesMade;
-    }
-
-    public void setGameOver() {
-        redPlayer.setPlaying(false);
-        whitePlayer.setPlaying(false);
-        gameOver = true;
     }
 
     public boolean backupMove() {

@@ -18,6 +18,10 @@ import java.util.HashMap;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Tests {@link PostValidateMoveRoute}
+ * @author Anh Nguyen
+ */
 @Tag("UI-tier")
 @Testable
 public class TestPostValidateMoveRoute {

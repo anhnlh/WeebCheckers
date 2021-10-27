@@ -18,6 +18,10 @@ import java.util.HashMap;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Tests {@link PostResignGameRoute}
+ * @author Anh Nguyen
+ */
 @Tag("UI-Tier")
 @Testable
 public class TestPostResignGameRoute {
