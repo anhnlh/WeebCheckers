@@ -30,4 +30,10 @@ public class TestPosition {
         Position testPosition2 = new Position(2,2);
         assertEquals(false, testPosition.equals(testPosition2));
     }
+
+    @Test
+    public void testIsInBounds() {
+        Position testPosition = new Position(1,1);
+        assertEquals(true, testPosition.isInBounds());
+    }
 }

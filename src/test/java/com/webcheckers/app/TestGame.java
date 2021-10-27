@@ -110,4 +110,9 @@ public class TestGame {
 
         assertEquals(CuT.whitePlayerBoard(), whitePlayerBoard, "White's boards don't match");
     }
+
+    @Test
+    public void testGetBoard() {
+        assertEquals(CuT.getBoard(), board);
+    }
 }

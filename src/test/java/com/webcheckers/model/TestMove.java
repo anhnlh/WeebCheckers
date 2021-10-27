@@ -1,5 +1,5 @@
 package com.webcheckers.model;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
 import static org.junit.Assert.assertEquals;
 
@@ -64,5 +64,16 @@ public class TestMove {
         // Verify the results
         assertEquals(MoveType.SIMPLE, move.getMoveType());
     }
-    
+
+    @Test    
+    public void test_setType() {
+        // Setup
+        Position start = new Position(0, 0);
+        Position end = new Position(1, 1);
+        // Run the test
+        Move move = new Move(start, end, MoveType.SIMPLE);
+        move.setMoveType(MoveType.JUMP);
+        // Verify the results
+        assertEquals(MoveType.JUMP, move.getMoveType());
+    }
 }
