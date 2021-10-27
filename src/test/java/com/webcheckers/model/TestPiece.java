@@ -1,6 +1,6 @@
 package com.webcheckers.model;
 import com.webcheckers.model.Piece.Type;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
 
 import static org.junit.Assert.assertEquals;
