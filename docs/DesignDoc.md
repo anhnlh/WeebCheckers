@@ -180,9 +180,17 @@ check that invokes `PostCheckTurnRoute` which checks if it is their turn yet.
 ![Waiting for My Turn state model](GameView%20PlayMode%20WaitingMyTurn%20state%20model.png)
 
 ### Application Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+
+The Application Tier follows as so. We have two organization classes, the Player 
+Lobby and the Game classes. The Player Lobby class is used to manage the introductory 
+processes in Web Checkers. A User can sign in efficiently and be redirected to a Menu where
+they can choose to play against another player, or even be redirected onto another game.
+
+The Game class is in play when the Checkers Game has already started. This class is used to 
+manage user turns and checker piece locations. The rules of checkers are situated in this 
+class, giving us the logic to determine specific player locations & posisble moves & incorrect
+moves based on that. 
+
 #### Game
 > Each game will have a red Player (a player with red checkers), a white player, and a board.
 > The board will be shown differently for each player.
