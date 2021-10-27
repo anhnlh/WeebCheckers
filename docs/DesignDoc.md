@@ -155,11 +155,11 @@ get redirected to the same `/game?gameID=[gameID]` link which invokes
 `GetGameRoute`, building the game view for the second player (opponent
 view).
 
-**State model for the Game View**
 
 The second important part of the UI-tier is the gameplay of the WebCheckers
 application.
 
+**State model for the Game View**
 ![Top level state model for the Game View](GameView%20PlayMode%20top-level%20state%20model.png)
 
 The players in their turn can make moves which invoke `PostValidateMoveRoute`
@@ -184,36 +184,32 @@ check that invokes `PostCheckTurnRoute` which checks if it is their turn yet.
 The Application Tier follows as so. We have two organization classes, the Player 
 Lobby and the Game classes. 
 
-> Each game will have a red Player (a player with red checkers), a white player, and a board.
-> The board will be shown differently for each player.
-> The game has the ability to let players make moves, until the end game conditions are met.
+Each game will have a red Player (a player with red checkers), a white player, and a board.
+The board will be shown differently for each player.
+The game has the ability to let players make moves, until the end game conditions are met.
 
-> The player lobby holds all players who've signed into the application.
-> 
+The player lobby holds all players who've signed into the application.
+
 #### Game
-> The Game class is in play when the Checkers Game has already started. This class is used to 
-> manage user turns and checker piece locations. The rules of checkers are situated in this 
-> class, giving us the logic to determine specific player locations & posisble moves & incorrect
-> moves based on that. 
+The Game class is in play when the Checkers Game has already started. This class is used to 
+manage user turns and checker piece locations. The rules of checkers are situated in this 
+class, giving us the logic to determine specific player locations & posisble moves & incorrect
+moves based on that. 
 
 #### PlayerLobby
-> The Player Lobby class is used to manage the introductory 
-> processes in Web Checkers. A User can sign in efficiently and be redirected to a Menu where
-> they can choose to play against another player, or even be redirected onto another game.
+The Player Lobby class is used to manage the introductory 
+processes in Web Checkers. A User can sign in efficiently and be redirected to a Menu where
+they can choose to play against another player, or even be redirected onto another game.
 
 
 ### Model Tier
 Users will be represented by instances of the entity class `Player`. Players have their own uniques names and a status on whether or not they are currently playing a game. When two players are in a game against each other, the board will be set up by the `BoardView` class. At the start of a game, `BoardView` will create a board by adding eight instances of the `Row` class to it. Each row has eight instances of the `Space` class that alternate between the colors black and white. Only black spaces are valid for moves and having pieces on them. A player starts with 12 regular pieces, which have been created by the `Piece` class, that are either red or white. If a piece reaches the opposite end of the board, they can change from a regular piece to a king piece. A position on the board is represented by the `Position` class. When a player makes a move, it will be created by the `Move` class using the starting position, end position, and the type of move it is. 
 
 ### Design Improvements
-> _Discuss design improvements that you would make if the project were
-> to continue. These improvement should be based on your direct
-> analysis of where there are problems in the code base which could be
-> addressed with design changes, and describe those suggested design
-> improvements. After completion of the Code metrics exercise, you
-> will also discuss the resutling metric measurements.  Indicate the
-> hot spots the metrics identified in your code base, and your
-> suggested design improvements to address those hot spots._
+
+I would think about creating more classes in the Application tier and Model
+tier to improve coherence. The Game class is a little cluttered with all of
+the methods, but for now they all work.
 
 ## Testing
 
