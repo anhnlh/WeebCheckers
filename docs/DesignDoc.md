@@ -95,7 +95,7 @@ The following Tiers/Layers model shows a high-level view of the webapp's archite
 ![The Tiers & Layers of the Architecture](architecture-tiers-and-layers.png)
 
 As a web application, the user interacts with the system using a
-browser.  The client-side of the UI is composed of HTML pages with
+browser.  The client-side of the UI is composed of HTML pages witharchi
 some minimal CSS for styling the page.  There is also some JavaScript
 that has been provided to the team by the architect.
 
@@ -153,7 +153,12 @@ So now we are playing the game and repeating the aforementioned requests. We now
 > _Provide a summary of the Application tier of your architecture. This
 > section will follow the same instructions that are given for the UI
 > Tier above._
-
+#### Game
+> Each game will have a red Player (a player with red checkers), a white player, and a board.
+> The board will be shown differently for each player.
+> The game has the ability to let players make moves, until the end game conditions are met.
+#### PlayerLobby
+> The player lobby holds all players who've signed into the application.
 
 ### Model Tier
 > _Provide a summary of the Application tier of your architecture. This
