@@ -2,7 +2,6 @@ package com.webcheckers.model;
 import com.webcheckers.model.Piece.Type;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
-
 import com.webcheckers.model.Piece.Color;
 
 import static org.junit.Assert.*;
@@ -61,5 +60,29 @@ public class TestSpace {
 
         // assert expected index vs result form getIndex()
         assertTrue(mySpace1.equals(mySpace2));
+    }
+
+    @Test
+    public void testSpaceNotEquals() {
+        // make a row with a new index
+        Piece myPiece1 = new Piece(Type.SINGLE, Color.RED);
+        Space mySpace1 = new Space(0, true, myPiece1);
+
+        Piece myPiece2 = new Piece(Type.SINGLE, Color.RED);
+        Space mySpace2 = new Space(0, false, myPiece2);
+
+        // assert expected index vs result form getIndex()
+        assertFalse(mySpace1.equals(mySpace2));
+    }
+
+    @Test
+    public void testSetPieceOnSpace() {
+        // make a row with a new index
+        Piece oldPiece = new Piece(Type.SINGLE, Color.RED);
+        Space mySpace = new Space(0, true, oldPiece);
+        Piece newPiece = new Piece(Type.KING, Color.RED);
+        mySpace.setPiece(newPiece);
+        // assert expected index vs result form getIndex()
+        assertEquals(mySpace.getPiece(), newPiece);
     }
 }
