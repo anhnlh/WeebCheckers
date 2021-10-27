@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import spark.*;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -130,6 +131,20 @@ public class TestGetGameRoute {
         testHelper.assertViewModelAttribute(GetGameRoute.WHITE_PLAYER_ATTR, game.getWhitePlayer());
         testHelper.assertViewModelAttribute(GetGameRoute.BOARD_ATTR, game.redPlayerBoard());
         testHelper.assertViewModelAttribute(GetGameRoute.ACTIVE_COLOR_ATTR, GetGameRoute.ActiveColor.RED);
+
+        // test ActiveColor.WHITE
+        game.setPlayerInTurn(p2);
+        CuT.handle(request, response);
+        testHelper.assertViewModelAttribute(GetGameRoute.ACTIVE_COLOR_ATTR, GetGameRoute.ActiveColor.WHITE);
+
+        // test game over
+        game.setGameOver();
+        CuT.handle(request, response);
+        final Map<String, Object> modeOptions = new HashMap<>(2);
+        modeOptions.put(GetGameRoute.IS_GAME_OVER_ATTR, game.isGameOver());
+        modeOptions.put(GetGameRoute.GAME_OVER_MSG_ATTR, game.getGameOverMessage());
+        testHelper.assertViewModelAttribute(GetGameRoute.MODE_OPTS_JSON_ATTR, gson.toJson(modeOptions));
+
     }
 
     /**

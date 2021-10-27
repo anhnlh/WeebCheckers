@@ -24,7 +24,7 @@ public class PostResignGameRoute implements Route {
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
         LOG.finer("PostResignGameRoute has been invoked");
 
         final Session httpSession = request.session();
