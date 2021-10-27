@@ -182,21 +182,25 @@ check that invokes `PostCheckTurnRoute` which checks if it is their turn yet.
 ### Application Tier
 
 The Application Tier follows as so. We have two organization classes, the Player 
-Lobby and the Game classes. The Player Lobby class is used to manage the introductory 
-processes in Web Checkers. A User can sign in efficiently and be redirected to a Menu where
-they can choose to play against another player, or even be redirected onto another game.
+Lobby and the Game classes. 
 
-The Game class is in play when the Checkers Game has already started. This class is used to 
-manage user turns and checker piece locations. The rules of checkers are situated in this 
-class, giving us the logic to determine specific player locations & posisble moves & incorrect
-moves based on that. 
-
-#### Game
 > Each game will have a red Player (a player with red checkers), a white player, and a board.
 > The board will be shown differently for each player.
 > The game has the ability to let players make moves, until the end game conditions are met.
-#### PlayerLobby
+
 > The player lobby holds all players who've signed into the application.
+> 
+#### Game
+> The Game class is in play when the Checkers Game has already started. This class is used to 
+> manage user turns and checker piece locations. The rules of checkers are situated in this 
+> class, giving us the logic to determine specific player locations & posisble moves & incorrect
+> moves based on that. 
+
+#### PlayerLobby
+> The Player Lobby class is used to manage the introductory 
+> processes in Web Checkers. A User can sign in efficiently and be redirected to a Menu where
+> they can choose to play against another player, or even be redirected onto another game.
+
 
 ### Model Tier
 > _Provide a summary of the Application tier of your architecture. This
