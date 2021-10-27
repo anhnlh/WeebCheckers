@@ -126,28 +126,58 @@ So now we are playing the game and repeating the aforementioned requests. We now
 
 
 ### UI Tier
-> _Provide a summary of the Server-side UI tier of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
 
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class structure or object diagrams) with some
-> details such as critical attributes and methods._
+The UI-tier components of the WebCheckers application are all controlled
+by the WebServer class. It handles all GET and POST requests. All other
+classes in the `ui` package implement the GET and POST Routes, and each
+has its own purpose and implementation. Some of them do communicate with
+each other since they are closely related such as `GetHomeRoute` and
+`GetGameRoute`.
 
-> _You must also provide any dynamic models, such as statechart and
-> sequence diagrams, as is relevant to a particular aspect of the design
-> that you are describing.  For example, in WebCheckers you might create
-> a sequence diagram of the `POST /validateMove` HTTP request processing
-> or you might show a statechart diagram if the Game component uses a
-> state machine to manage the game._
+**Most of the flow of the UI-tier are described in the above statechart 
+section, so this part will only highlight the more important routes in 
+the UI-tier.**
 
-> _If a dynamic model, such as a statechart describes a feature that is
-> not mostly in this tier and cuts across multiple tiers, you can
-> consider placing the narrative description of that feature in a
-> separate section for describing significant features. Place this after
-> you describe the design of the three tiers._
+The first important part of the UI-tier is getting the idle player in the 
+lobby that is challenged by another player into the game that they're 
+supposed to be in. The first player invokes `GetGameRoute` which creates
+a game and sets certain parameters to signal `GetHomeRoute` to bring the
+other player into that game. The first `GetGameRoute` invocation creates
+the game with the opponent the player chose, then redirects the first
+player to the `/game?gameID=[gameID]` which invokes `GetGameRoute` again.
+The second invocation builds the View-Model map then renders it, which
+gives the user the view of the game.
 
+
+The second player (the opponent) is brought into the game by a check in
+`GetHomeRoute` if there is a game and that player is in that game. They
+get redirected to the same `/game?gameID=[gameID]` link which invokes
+`GetGameRoute`, building the game view for the second player (opponent
+view).
+
+**State model for the Game View**
+
+The second important part of the UI-tier is the gameplay of the WebCheckers
+application.
+
+![Top level state model for the Game View](GameView%20PlayMode%20top-level%20state%20model.png)
+
+The players in their turn can make moves which invoke `PostValidateMoveRoute`
+that validates the moves they make following the American Checkers rules.
+They can then submit their turn by clicking the button which invokes 
+`PostSubmitTurnRoute` that validates the turn as a whole. Before submitting,
+they can also back up their moves if they want; backing up a move invokes
+`PostBackupMoveRoute`. Both players have the option to resign at anytime
+they want which invokes `PostResignGameRoute` that ends the game and
+declares the winner of the game. The state model for the process is below.
+
+![Playing My Turn state model](GameView%20PlayMode%20PlayingMyTurn%20state%20model.png)
+
+
+During the time the player that is not in the turn, there is a continuous
+check that invokes `PostCheckTurnRoute` which checks if it is their turn yet.
+
+![Waiting for My Turn state model](GameView%20PlayMode%20WaitingMyTurn%20state%20model.png)
 
 ### Application Tier
 > _Provide a summary of the Application tier of your architecture. This

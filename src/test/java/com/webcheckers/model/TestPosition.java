@@ -34,6 +34,6 @@ public class TestPosition {
     @Test
     public void testIsInBounds() {
         Position testPosition = new Position(1,1);
-        assertEquals(true, testPosition.isInBounds());
+        assertEquals(true, Position.isInBounds(testPosition));
     }
 }
