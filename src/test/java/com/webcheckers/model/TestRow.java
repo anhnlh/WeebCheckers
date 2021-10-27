@@ -53,18 +53,21 @@ public class TestRow {
         assertEquals(myRow1, myRow2);
     }
 
+    // We need to make sure we can't just make an iterator that's not
+    // form the given Row as a return type, so we make an iterator and return
+    // one as well, makign sure they're not equal becuase they don't reference the board.
     @Test
     public void TestIteratorNotEqual() {
-        // Our spaces arraymade with getSpace()
+        // Our Rows and ArrayList, our tinital Objects we will be making
+        // iterators out of.
         Row myRow = new Row(5);
         ArrayList<Space> preSpaces = new ArrayList<>();
         
-        // ArrayList currentSpaces = Row().getSpaces()
+        // Iterators made out of our Array List and Row
         Iterator<Space> expectedSpaces = preSpaces.iterator();
         Iterator<Space> actualSpaces = myRow.iterator();
 
-        // Asserting new space is in our list by making sure to
-        // call getSpaces again()
+        // Asserting new the iterators are nto equal to each other.
         assertNotEquals(expectedSpaces, actualSpaces);
     }
 }
