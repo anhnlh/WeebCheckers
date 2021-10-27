@@ -203,9 +203,7 @@ Lobby and the Game classes.
 
 
 ### Model Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+Users will be represented by instances of the entity class `Player`. Players have their own uniques names and a status on whether or not they are currently playing a game. When two players are in a game against each other, the board will be set up by the `BoardView` class. At the start of a game, `BoardView` will create a board by adding eight instances of the `Row` class to it. Each row has eight instances of the `Space` class that alternate between the colors black and white. Only black spaces are valid for moves and having pieces on them. A player starts with 12 regular pieces, which have been created by the `Piece` class, that are either red or white. If a piece reaches the opposite end of the board, they can change from a regular piece to a king piece. A position on the board is represented by the `Position` class. When a player makes a move, it will be created by the `Move` class using the starting position, end position, and the type of move it is. 
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
