@@ -38,6 +38,8 @@ public class Position {
         return row;
     }
 
+    
+
     /**
      * Getter for cell
      * @return cell of the position
@@ -61,4 +63,5 @@ public class Position {
         Position position = (Position) o;
         return row == position.row && cell == position.cell;
     }
+
 }
