@@ -110,7 +110,7 @@ with the WebCheckers application.
 > _Provide a summary of the application's user interface.  Describe, from
 > the user's perspective, the flow of the pages in the web application._
 
-We start with our initial condition if the GET request doesn't render the page correctly. We then load on the sign-in page with GET "/" render sign-in. The sign-in page state was initially made with a piece of account information in mind, so if the user doesn't enter the right password, we would get the sign-in page again for them to input their information once again. 
+So we start with our initial condition if the GET request doesn't render the page correctly. We then load on the sign-in page with GET "/" render sign-in. The sign-in page state was initially made with a piece of account information in mind, so if the user doesn't enter the right password, we would get the sign-in page again for them to input their information once again. 
 
 Once the player successfully signs in, they are redirected to home, with the Post sending their info to check if sign-in is correct, We will be getting home after that. Once in the home page state, the User will have options such as a button that will make a get request for a page that will display the user's stats. 
 
@@ -154,7 +154,9 @@ So now we are playing the game and repeating the aforementioned requests. We now
 
 
 ### Model Tier
-Users will be represented by instances of the entity class Player. Players have their own uniques names and a status on whether or not they are currently playing a Game. When two Players are in a game against each other, the board will be set up by the BoardView class. At the start of a game, the BoardView will create a board by adding eight instances of the Row class to it. Each Row has eight instances of the Space class that alternate between the colors black and white. Only black Spaces are valid for Moves and having Pieces on them. A Player starts with 12 regular Pieces, which have been created by the Piece class, that are either red or white. If a Piece reaches the opposite end of the board, they can change from a regular Piece to a king Piece. A position on the board is represented by the Position class. When a player makes a Move, it will be created by the Move class using the starting Position, end Position, and the type of move it is. 
+> _Provide a summary of the Application tier of your architecture. This
+> section will follow the same instructions that are given for the UI
+> Tier above._
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
