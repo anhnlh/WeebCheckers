@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
 import java.util.*;
+import java.util.logging.Logger;
+
 import spark.*;
 
 import com.webcheckers.app.PlayerLobby;
@@ -8,8 +10,10 @@ import com.webcheckers.app.PlayerLobby;
 /**
  * The {@code POST /signout} route handler.
  *
+ * @author Rhamsez Thevenin
  */
 public class PostSignOutRoute implements Route{
+    private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
     // parameter initializations
     private final PlayerLobby playerLobby;
@@ -45,6 +49,7 @@ public class PostSignOutRoute implements Route{
      */
     @Override
     public Object handle(Request request, Response response) {
+        LOG.finer("PostSignOutRoute is invoked.");
 
         // start building the View-Model
         final Map<String, Object> vm = new HashMap<>();

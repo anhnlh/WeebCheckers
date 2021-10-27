@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.app.Game;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Player;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import spark.*;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -32,6 +34,7 @@ public class TestGetGameRoute {
     private Response response;
     private TemplateEngine templateEngine;
     private HashMap<String, Game> gameMap;
+    private Gson gson;
     private PlayerLobby playerLobby;
     private Player p1;
     private Player p2;
@@ -46,6 +49,7 @@ public class TestGetGameRoute {
         when(request.session()).thenReturn(session);
         response = mock(Response.class);
         templateEngine = mock(TemplateEngine.class);
+        gson = new Gson();
 
         // simulate the player lobby
         playerLobby = new PlayerLobby();
@@ -61,15 +65,15 @@ public class TestGetGameRoute {
         gameMap = new HashMap<>();
 
         // create a unique CuT for each test
-        CuT = new GetGameRoute(gameMap, playerLobby, templateEngine);
+        CuT = new GetGameRoute(gameMap, playerLobby, templateEngine, gson);
     }
 
     /**
-     * Tests {@link GetGameRoute#GetGameRoute(HashMap, PlayerLobby, TemplateEngine)}
+     * Tests {@link GetGameRoute#GetGameRoute(HashMap, PlayerLobby, TemplateEngine, Gson)}
      */
     @Test
     public void constructorTest() {
-        new GetGameRoute(gameMap, playerLobby, templateEngine);
+        new GetGameRoute(gameMap, playerLobby, templateEngine, gson);
         assertNotNull(gameMap);
         assertNotNull(playerLobby);
         assertNotNull(templateEngine);
@@ -93,13 +97,10 @@ public class TestGetGameRoute {
         assertFalse(p2.isPlaying());
 
         // first handle creates the game
-        CuT.handle(request, response);
-
-        testHelper.assertViewModelExists();
-        testHelper.assertViewModelIsaMap();
-
-        testHelper.assertViewModelAttribute(GetHomeRoute.CURRENT_USER_ATTR, p1);
-        testHelper.assertViewModelAttribute(GetGameRoute.TITLE_ATTR, "Welcome!");
+        try {
+            CuT.handle(request, response);
+        } catch (HaltException ignored) {
+        }
 
         // simulate game created
         String gameID = String.valueOf(Objects.hash(p1, p2));
@@ -125,11 +126,25 @@ public class TestGetGameRoute {
         // checks the Model-View
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
-        testHelper.assertViewModelAttribute(GetGameRoute.VIEW_MODE_ATTR, GetGameRoute.mode.PLAY);
+        testHelper.assertViewModelAttribute(GetGameRoute.VIEW_MODE_ATTR, GetGameRoute.Mode.PLAY);
         testHelper.assertViewModelAttribute(GetGameRoute.RED_PLAYER_ATTR, game.getRedPlayer());
         testHelper.assertViewModelAttribute(GetGameRoute.WHITE_PLAYER_ATTR, game.getWhitePlayer());
         testHelper.assertViewModelAttribute(GetGameRoute.BOARD_ATTR, game.redPlayerBoard());
-        testHelper.assertViewModelAttribute(GetGameRoute.ACTIVE_COLOR_ATTR, GetGameRoute.activeColor.RED);
+        testHelper.assertViewModelAttribute(GetGameRoute.ACTIVE_COLOR_ATTR, GetGameRoute.ActiveColor.RED);
+
+        // test ActiveColor.WHITE
+        game.setPlayerInTurn(p2);
+        CuT.handle(request, response);
+        testHelper.assertViewModelAttribute(GetGameRoute.ACTIVE_COLOR_ATTR, GetGameRoute.ActiveColor.WHITE);
+
+        // test game over
+        game.setGameOver();
+        CuT.handle(request, response);
+        final Map<String, Object> modeOptions = new HashMap<>(2);
+        modeOptions.put(GetGameRoute.IS_GAME_OVER_ATTR, game.isGameOver());
+        modeOptions.put(GetGameRoute.GAME_OVER_MSG_ATTR, game.getGameOverMessage());
+        testHelper.assertViewModelAttribute(GetGameRoute.MODE_OPTS_JSON_ATTR, gson.toJson(modeOptions));
+
     }
 
     /**
@@ -146,7 +161,10 @@ public class TestGetGameRoute {
         when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 
         // first handle creates the game
-        CuT.handle(request, response);
+        try {
+            CuT.handle(request, response);
+        } catch (HaltException ignored) {
+        }
 
         // simulate game created
         String gameID = String.valueOf(Objects.hash(p1, p2)); // (p2, p1) instead

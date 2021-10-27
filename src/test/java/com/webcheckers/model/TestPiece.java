@@ -1,12 +1,12 @@
 package com.webcheckers.model;
-import com.webcheckers.model.Piece.TYPE;
-import org.junit.Test;
+import com.webcheckers.model.Piece.Type;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.webcheckers.model.Piece.PIECECOLOR;
+import com.webcheckers.model.Piece.Color;
 
 /**
  * @author Phil Ganem
@@ -19,11 +19,11 @@ public class TestPiece {
      */
     @Test
     public void testGetColorRed() {
-        PIECECOLOR CuT = PIECECOLOR.RED;
+        Color CuT = Color.RED;
 
-        Piece singlePiece = new Piece(TYPE.SINGLE, PIECECOLOR.RED);
+        Piece singlePiece = new Piece(Type.SINGLE, Color.RED);
 
-        PIECECOLOR actualDefault = singlePiece.getColor();
+        Color actualDefault = singlePiece.getColor();
 
         assertEquals(CuT, actualDefault);
     }
@@ -33,11 +33,11 @@ public class TestPiece {
      */
     @Test
     public void testGetColorWhite() {
-        PIECECOLOR CuT = PIECECOLOR.WHITE;
+        Color CuT = Color.WHITE;
 
-        Piece kingPiece = new Piece(TYPE.KING, PIECECOLOR.WHITE);
+        Piece kingPiece = new Piece(Type.KING, Color.WHITE);
 
-        PIECECOLOR actualKing = kingPiece.getColor();
+        Color actualKing = kingPiece.getColor();
 
         assertEquals(CuT, actualKing);
     }
@@ -47,11 +47,11 @@ public class TestPiece {
      */
     @Test
     public void testGetTypeSingle() {
-        Piece CuT = new Piece(TYPE.SINGLE, PIECECOLOR.RED);
+        Piece CuT = new Piece(Type.SINGLE, Color.RED);
 
-        TYPE actual = CuT.getType();
+        Type actual = CuT.getType();
 
-        assertEquals(TYPE.SINGLE, actual);
+        assertEquals(Type.SINGLE, actual);
     }
 
     /**
@@ -59,11 +59,11 @@ public class TestPiece {
      */
     @Test
     public void testGetTypeKing() {
-        Piece CuT = new Piece(TYPE.KING, PIECECOLOR.WHITE);
+        Piece CuT = new Piece(Type.KING, Color.WHITE);
 
-        TYPE actual = CuT.getType();
+        Type actual = CuT.getType();
 
-        assertEquals(TYPE.KING, actual);
+        assertEquals(Type.KING, actual);
     }
  
     /**
@@ -71,9 +71,9 @@ public class TestPiece {
      */
     @Test
     public void testequalsSingle() {
-        Piece CuT = new Piece(TYPE.SINGLE, PIECECOLOR.RED);
+        Piece CuT = new Piece(Type.SINGLE, Color.RED);
         
-        Piece otherPiece = new Piece(TYPE.SINGLE, PIECECOLOR.RED);
+        Piece otherPiece = new Piece(Type.SINGLE, Color.RED);
 
         assertEquals(CuT, otherPiece);
     }
@@ -83,11 +83,27 @@ public class TestPiece {
      */
     @Test
     public void testequalsKing() {
-        Piece CuT = new Piece(TYPE.KING, PIECECOLOR.WHITE);
+        Piece CuT = new Piece(Type.KING, Color.WHITE);
         
-        Piece otherPiece = new Piece(TYPE.KING, PIECECOLOR.WHITE);
+        Piece otherPiece = new Piece(Type.KING, Color.WHITE);
 
         assertTrue(CuT.equals(otherPiece));
+    }
+
+    @Test
+    public void testSetType() {
+        Piece CuT = new Piece(Type.SINGLE, Color.RED);
+        CuT.setType(Type.KING);
+
+        assertEquals(Type.KING, CuT.getType());
+    }
+
+    @Test
+    public void testIsKing() {
+        Piece CuT = new Piece(Type.SINGLE, Color.RED);
+        CuT.setType(Type.KING);
+
+        assertTrue(CuT.isKing());
     }
 }
 

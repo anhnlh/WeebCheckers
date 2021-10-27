@@ -3,15 +3,13 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
-import com.webcheckers.model.Piece.PIECECOLOR;
+import com.webcheckers.model.Piece.Color;
 
 /**
  * Model class for a checker board row
  * 
- * @author Phil Ganem, Sierra Tran, and Mohammed Alam
- * @author Anh Nguyen
+ * @author Mohammed Alam, Phil Ganem, Sierra Tran, and Anh Nguyen
  */
 public class Row implements Iterable<Space> {
 
@@ -29,7 +27,7 @@ public class Row implements Iterable<Space> {
      *  COLOR: starting color
      * @param blackSpace alternating flag to find black space on board
      */
-    public Row(int index, PIECECOLOR color, boolean blackSpace) {
+    public Row(int index, Color color, boolean blackSpace) {
         this.spaces = new ArrayList<>();
         this.index = index;
         initialize(color, blackSpace);
@@ -52,10 +50,10 @@ public class Row implements Iterable<Space> {
      * @param isBlackSpace 
      *  True puts a checker piece on the tile, and tile is empty if false
      */
-    public void initialize(PIECECOLOR color, boolean isBlackSpace) {
+    public void initialize(Color color, boolean isBlackSpace) {
         for (int col = 0; col < BoardView.BOARD_LENGTH; col++) {
-            if (isBlackSpace && color != PIECECOLOR.NONE) {
-                spaces.add(new Space(col, true, new Piece(Piece.TYPE.SINGLE, color)));
+            if (isBlackSpace && color != Color.NONE) {
+                spaces.add(new Space(col, true, new Piece(Piece.Type.SINGLE, color)));
             } else {
                 spaces.add(new Space(col, isBlackSpace, null));
             }
@@ -108,6 +106,12 @@ public class Row implements Iterable<Space> {
         return this.spaces.iterator();
     }
 
+    /**
+     * Checks if this Row and the given Object is equal.
+     * 
+     * @param o an object
+     * @return whether this Row and given object are equal.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

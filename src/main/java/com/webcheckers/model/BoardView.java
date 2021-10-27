@@ -5,13 +5,11 @@ import com.webcheckers.app.Game;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Model class for the checkers board
  *
- * @author Mohammed Alam
- * @author Anh Nguyen
+ * @author Mohammed Alam and Anh Nguyen
  */
 
 public class BoardView implements Iterable<Row> {
@@ -20,6 +18,10 @@ public class BoardView implements Iterable<Row> {
     public static final int BOARD_LENGTH = 8;
     // Array list for board made up of Rows
     private final List<Row> board;
+
+    // starting number of pieces for each player
+    private int numRedPieces = 12;
+    private int numWhitePieces = 12;
 
     /**
      * Constructor for our Board
@@ -48,11 +50,11 @@ public class BoardView implements Iterable<Row> {
         boolean blackSpace = false;
         for (int i = 0; i < BOARD_LENGTH; i++) {
             if (i < 3) {
-                board.add(new Row(i, Piece.PIECECOLOR.WHITE, blackSpace));
+                board.add(new Row(i, Piece.Color.WHITE, blackSpace));
             } else if (i > 4) {
-                board.add(new Row(i, Piece.PIECECOLOR.RED, blackSpace));
+                board.add(new Row(i, Piece.Color.RED, blackSpace));
             } else {
-                board.add(new Row(i, Piece.PIECECOLOR.NONE, blackSpace));
+                board.add(new Row(i, Piece.Color.NONE, blackSpace));
             }
             blackSpace = !blackSpace;
         }
@@ -90,6 +92,44 @@ public class BoardView implements Iterable<Row> {
         return row;
     }
 
+    /**
+     * Returns the number of pieces the red player has
+     * 
+     * @return number of red pieces
+     */
+    public int getNumRedPieces() {
+        return numRedPieces;
+    }
+
+    /**
+     * Subtracts the number of pieces the red player has by one.
+     */
+    public void decreaseNumRedPieces() {
+        this.numRedPieces--;
+    }
+
+    /**
+     * Returns the number of pieces the white player has
+     * 
+     * @return number of white pieces
+     */
+    public int getNumWhitePieces() {
+        return numWhitePieces;
+    }
+
+    /**
+     * Subtracts the number of pieces the white player has by one.
+     */
+    public void decreaseNumWhitePieces() {
+        this.numWhitePieces--;
+    }
+
+    /**
+     * Checks if this BoardView and the given Object is equal.
+     * 
+     * @param o an object
+     * @return whether this BoardView and given object are equal.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

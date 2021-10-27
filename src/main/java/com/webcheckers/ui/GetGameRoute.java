@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.google.gson.Gson;
 import com.webcheckers.app.Game;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Player;
@@ -29,12 +30,14 @@ public class GetGameRoute implements Route {
     public static final String TITLE_ATTR = "title";
     public static final String BOARD_ATTR = "board";
     public static final String VIEW_MODE_ATTR = "viewMode";
-    public static final String MODE_OPTIONS_ATTR = "modeOptions";
     public static final String RED_PLAYER_ATTR = "redPlayer";
     public static final String WHITE_PLAYER_ATTR = "whitePlayer";
     public static final String ACTIVE_COLOR_ATTR = "activeColor";
     public static final String OPPONENT_ATTR = "opponent";
     public static final String GAME_ID_PARAM = "gameID";
+    public static final String IS_GAME_OVER_ATTR = "isGameOver";
+    public static final String GAME_OVER_MSG_ATTR = "gameOverMessage";
+    public static final String MODE_OPTS_JSON_ATTR = "modeOptionsAsJSON";
 
     // message
     public static final Message OPPONENT_IN_GAME = Message.error("Opponent is in game. Try another player.");
@@ -42,16 +45,17 @@ public class GetGameRoute implements Route {
     // parameter initializations
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
-    private HashMap<String, Game> gameMap;
+    private final HashMap<String, Game> gameMap;
+    private final Gson gson;
 
     // enum for viewMode in game.ftl
-    public enum mode {
+    public enum Mode {
         PLAY
     }
 
     // enum for activeColor in game.ftl
-    public enum activeColor {
-        RED
+    public enum ActiveColor {
+        RED, WHITE
     }
 
     /**
@@ -59,12 +63,13 @@ public class GetGameRoute implements Route {
      *
      * @param templateEngine The {@link TemplateEngine} used for rendering page HTML.
      */
-    public GetGameRoute(HashMap<String, Game> gameMap, PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+    public GetGameRoute(HashMap<String, Game> gameMap, PlayerLobby playerLobby, final TemplateEngine templateEngine, Gson gson) {
         Objects.requireNonNull(templateEngine, "templateEngine is required");
 
         this.gameMap = gameMap;
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
+        this.gson = gson;
     }
 
     /**
@@ -102,6 +107,8 @@ public class GetGameRoute implements Route {
                         Game game = new Game(player, opponent);
                         player.setPlaying(true);
                         opponent.setPlaying(true);
+                        playerLobby.removePlayer(player.getName());
+                        playerLobby.removePlayer(opponent.getName());
                         gameID = String.valueOf(game.getID());
                         gameMap.put(gameID, game);
                         response.redirect(WebServer.GAME_URL + "?gameID=" + gameID);
@@ -118,18 +125,33 @@ public class GetGameRoute implements Route {
                 halt();
                 return null;
             } else {
-                // Game exists, renders the /game page
+                // Game exists, renders the /game page.
                 Game game = gameMap.get(gameID);
                 vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
                 vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
+
                 if (game.isRedPlayer(player)) {
                     vm.put(BOARD_ATTR, game.redPlayerBoard());
                 } else {
                     vm.put(BOARD_ATTR, game.whitePlayerBoard());
                 }
 
-                vm.put(VIEW_MODE_ATTR, mode.PLAY);
-                vm.put(ACTIVE_COLOR_ATTR, activeColor.RED);
+                if (game.isRedPlayerTurn()) {
+                    vm.put(ACTIVE_COLOR_ATTR, ActiveColor.RED);
+                } else {
+                    vm.put(ACTIVE_COLOR_ATTR, ActiveColor.WHITE);
+                }
+
+                vm.put(VIEW_MODE_ATTR, Mode.PLAY);
+
+                // game over modeOptions
+                if (game.isGameOver()) {
+                    final Map<String, Object> modeOptions = new HashMap<>(2);
+                    modeOptions.put(IS_GAME_OVER_ATTR, game.isGameOver());
+                    modeOptions.put(GAME_OVER_MSG_ATTR, game.getGameOverMessage());
+                    vm.put(MODE_OPTS_JSON_ATTR, gson.toJson(modeOptions));
+                }
+
             }
         } else {
             response.redirect(WebServer.HOME_URL);

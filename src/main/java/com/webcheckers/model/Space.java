@@ -37,7 +37,7 @@ public class Space {
      *  bool: is valid?
      */
     public boolean isValid() {
-        return this.piece != null && this.isValid; // looks better
+        return this.isValid; // isValid does NOT check for null piece
     }
 
 //------- Getters and Setters -------
@@ -53,6 +53,14 @@ public class Space {
     }
 
     /**
+     * Sets the piece on a space
+     * @param piece the piece
+     */
+    public void setPiece(Piece piece) {
+        this.piece = piece;
+    }
+
+    /**
      * Gets the cellid of a space
      * @return
      *  int: Cell ID
@@ -61,6 +69,12 @@ public class Space {
         return this.cellIdx;
     }
 
+    /**
+     * Checks if this Space and the given Object is equal.
+     * 
+     * @param o an object
+     * @return whether this Space and given object are equal.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
