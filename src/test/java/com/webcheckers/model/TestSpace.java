@@ -50,6 +50,26 @@ public class TestSpace {
     }
 
     @Test
+    public void testEqualsSelf() {
+        // make a row with a new index
+        Piece myPiece = new Piece(Type.SINGLE, Color.RED);
+        Space mySpace = new Space(0, true, myPiece);
+
+        // assert expected index vs result form getIndex()
+        assertTrue(mySpace.equals(mySpace));
+    }
+
+    @Test
+    public void testEqualsOtherObject() {
+        // make a row with a new index
+        Piece myPiece = new Piece(Type.SINGLE, Color.RED);
+        Space mySpace = new Space(0, true, myPiece);
+
+        // assert expected index vs result form getIndex()
+        assertFalse(mySpace.equals(myPiece));
+    }
+
+    @Test
     public void testSpaceEquals() {
         // make a row with a new index
         Piece myPiece1 = new Piece(Type.SINGLE, Color.RED);
@@ -68,7 +88,7 @@ public class TestSpace {
         Piece myPiece1 = new Piece(Type.SINGLE, Color.RED);
         Space mySpace1 = new Space(0, true, myPiece1);
 
-        Piece myPiece2 = new Piece(Type.SINGLE, Color.RED);
+        Piece myPiece2 = new Piece(Type.SINGLE, Color.WHITE);
         Space mySpace2 = new Space(0, false, myPiece2);
 
         // assert expected index vs result form getIndex()
@@ -84,5 +104,13 @@ public class TestSpace {
         mySpace.setPiece(newPiece);
         // assert expected index vs result form getIndex()
         assertEquals(mySpace.getPiece(), newPiece);
+    }
+
+    @Test
+    public void testGetPieceOnSpaceNull() {
+        // make a row with a new index
+        Space mySpace = new Space(0, true, null);
+        // assert expected index vs result form getIndex()
+        assertNull(mySpace.getPiece());
     }
 }

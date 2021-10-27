@@ -89,5 +89,21 @@ public class TestPiece {
 
         assertTrue(CuT.equals(otherPiece));
     }
+
+    @Test
+    public void testSetType() {
+        Piece CuT = new Piece(Type.SINGLE, Color.RED);
+        CuT.setType(Type.KING);
+
+        assertEquals(Type.KING, CuT.getType());
+    }
+
+    @Test
+    public void testIsKing() {
+        Piece CuT = new Piece(Type.SINGLE, Color.RED);
+        CuT.setType(Type.KING);
+
+        assertTrue(CuT.isKing());
+    }
 }
 
