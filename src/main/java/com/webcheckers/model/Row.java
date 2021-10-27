@@ -9,8 +9,7 @@ import com.webcheckers.model.Piece.Color;
 /**
  * Model class for a checker board row
  * 
- * @author Phil Ganem, Sierra Tran, and Mohammed Alam
- * @author Anh Nguyen
+ * @author Mohammed Alam, Phil Ganem, Sierra Tran, and Anh Nguyen
  */
 public class Row implements Iterable<Space> {
 

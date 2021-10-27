@@ -9,8 +9,7 @@ import java.util.List;
 /**
  * Model class for the checkers board
  *
- * @author Mohammed Alam
- * @author Anh Nguyen
+ * @author Mohammed Alam and Anh Nguyen
  */
 
 public class BoardView implements Iterable<Row> {
