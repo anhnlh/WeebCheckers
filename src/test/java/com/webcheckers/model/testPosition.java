@@ -9,6 +9,7 @@ import static org.junit.Assert.assertEquals;
 @Tag("Model-tier")
 public class testPosition {
 
+    
     @Test
     public void test_constructor() {
         Position testPosition = new Position(1,1);
