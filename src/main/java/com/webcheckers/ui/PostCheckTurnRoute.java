@@ -24,7 +24,7 @@ public class PostCheckTurnRoute implements Route {
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
         LOG.finer("PostCheckTurnRoute has been invoked.");
 
         final Session httpSession = request.session();

@@ -289,7 +289,7 @@ public class Game {
         boolean movesMade = false;
 
         // if a jump move is still possible with the latest move
-        if (moveDeque.getLast().getMoveType().equals(Move.MoveType.JUMP) && singlePossibleJumpMove(moveDeque.getLast())) {
+        if (!moveDeque.isEmpty() && moveDeque.getLast().getMoveType().equals(Move.MoveType.JUMP) && singlePossibleJumpMove(moveDeque.getLast())) {
             return false;
         }
 

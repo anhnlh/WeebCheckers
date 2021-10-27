@@ -22,7 +22,7 @@ public class PostSubmitTurnRoute implements Route {
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
         LOG.finer("PostSubmitTurnRoute has been invoked.");
 
         String gameID = request.queryParams(GetGameRoute.GAME_ID_PARAM);

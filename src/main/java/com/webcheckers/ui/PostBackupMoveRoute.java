@@ -24,25 +24,17 @@ public class PostBackupMoveRoute implements Route {
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
         LOG.finer("PostBackupMoveRoute has been invoked.");
-
-        final Session httpSession = request.session();
-        Player player = httpSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
         String gameID = request.queryParams(GetGameRoute.GAME_ID_PARAM);
         Game game = gameMap.get(gameID);
 
         Message message;
-        if ((game.isRedPlayer(player) && game.isRedPlayerTurn()) ||
-            (!game.isRedPlayer(player) && !game.isRedPlayerTurn())) {
-            if (game.backupMove()) {
-                message = Message.info("Move backed up.");
-            } else {
-                message = Message.error("No move to back up.");
-            }
+        if (game.backupMove()) {
+            message = Message.info("Move backed up.");
         } else {
-            message = Message.error("Not your turn!");
+            message = Message.error("No move to back up.");
         }
 
         return gson.toJson(message);
