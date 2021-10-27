@@ -206,19 +206,30 @@ check that invokes `PostCheckTurnRoute` which checks if it is their turn yet.
 > suggested design improvements to address those hot spots._
 
 ## Testing
-> _This section will provide information about the testing performed
-> and the results of the testing._
 
 ### Acceptance Testing
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+
+All user stories are tested before being sent to the Done checklist.
+This means that all acceptance criteria were checked off by demoing
+the application and seeing if they match each acceptance criterion.
+No issues were found while completing acceptance testing.
 
 ### Unit Testing and Code Coverage
-> _Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets. If there are any anomalies, discuss
-> those._
+
+Unit testing was done especially well and almost maximum code coverage
+for each component of the application. The basic strategy was to study
+the code well for each class that needs to be tested to write such tests
+that would cover every line of instruction and every branch of logic.
+The results are as follows.
+
+#### Top Level Code Coverage
+![Top Level Code Coverage](CodeCoverage%20top-level.png)
+
+#### Application-Tier Code Coverage
+![Application-Tier Code Coverage](CodeCoverage%20application-tier.png)
+
+#### Model-Tier Code Coverage
+![Model-Tier Code Coverage](CodeCoverage%20model-tier.png)
+
+#### UI-Tier Code Coverage
+![UI-Tier Code Coverage](CodeCoverage%20ui-tier.png)
