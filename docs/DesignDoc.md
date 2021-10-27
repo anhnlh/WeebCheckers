@@ -160,7 +160,7 @@ The second important part of the UI-tier is the gameplay of the WebCheckers
 application.
 
 **State model for the Game View**
-![Top level state model for the Game View](GameView%20PlayMode%20top-level%20state%20model.png)
+![Top level state model for the Game View](top-level-state-model.png)
 
 The players in their turn can make moves which invoke `PostValidateMoveRoute`
 that validates the moves they make following the American Checkers rules.
@@ -171,13 +171,13 @@ they can also back up their moves if they want; backing up a move invokes
 they want which invokes `PostResignGameRoute` that ends the game and
 declares the winner of the game. The state model for the process is below.
 
-![Playing My Turn state model](GameView%20PlayMode%20PlayingMyTurn%20state%20model.png)
+![Playing My Turn state model](playingmyturn-state-model.png)
 
 
 During the time the player that is not in the turn, there is a continuous
 check that invokes `PostCheckTurnRoute` which checks if it is their turn yet.
 
-![Waiting for My Turn state model](GameView%20PlayMode%20WaitingMyTurn%20state%20model.png)
+![Waiting for My Turn state model](waitingmyturn-state-model.png)
 
 ### Application Tier
 
@@ -229,13 +229,13 @@ that would cover every line of instruction and every branch of logic.
 The results are as follows.
 
 #### Top Level Code Coverage
-![Top Level Code Coverage](CodeCoverage%20top-level.png)
+![Top Level Code Coverage](CodeCoverage-top-level.png)
 
 #### Application-Tier Code Coverage
-![Application-Tier Code Coverage](CodeCoverage%20application-tier.png)
+![Application-Tier Code Coverage](CodeCoverage-application-tier.png)
 
 #### Model-Tier Code Coverage
-![Model-Tier Code Coverage](CodeCoverage%20model-tier.png)
+![Model-Tier Code Coverage](CodeCoverage-model-tier.png)
 
 #### UI-Tier Code Coverage
-![UI-Tier Code Coverage](CodeCoverage%20ui-tier.png)
+![UI-Tier Code Coverage](CodeCoverage-ui-tier.png)
