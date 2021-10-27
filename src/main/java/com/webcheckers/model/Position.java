@@ -38,8 +38,6 @@ public class Position {
         return row;
     }
 
-    
-
     /**
      * Getter for cell
      * @return cell of the position
