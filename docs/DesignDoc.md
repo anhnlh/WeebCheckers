@@ -159,7 +159,6 @@ view).
 The second important part of the UI-tier is the gameplay of the WebCheckers
 application.
 
-**State model for the Game View**
 ![Top level state model for the Game View](top-level-state-model.png)
 
 The players in their turn can make moves which invoke `PostValidateMoveRoute`

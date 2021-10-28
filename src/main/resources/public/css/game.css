@@ -108,16 +108,16 @@ table#game-board td > div {
   background-size: contain;
 }
 table#game-board td > div[data-type="SINGLE"][data-color="RED"] {
-  background-image: url("../img/single-piece-red.svg");
+  background-image: url("../img/single-piece-red.png");
 }
 table#game-board td > div[data-type="KING"][data-color="RED"] {
-  background-image: url("../img/king-piece-red.svg");
+  background-image: url("../img/king-piece-red.png");
 }
 table#game-board td > div[data-type="SINGLE"][data-color="WHITE"] {
-  background-image: url("../img/single-piece-white.svg");
+  background-image: url("../img/single-piece-white.png");
 }
 table#game-board td > div[data-type="KING"][data-color="WHITE"] {
-  background-image: url("../img/king-piece-white.svg");
+  background-image: url("../img/king-piece-white.png");
 }
 table#game-board td.pending {
   animation: background-fades;
