@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 
 import spark.*;
 
+import static spark.Spark.halt;
+
 import com.webcheckers.app.PlayerLobby;
 
 /**
@@ -62,12 +64,10 @@ public class PostSignOutRoute implements Route{
         playerLobby.removePlayer(name);
         httpSession.attribute(GetHomeRoute.CURRENT_USER_ATTR, null);
 
-        // variables for home.ftl set
-        vm.put(GetHomeRoute.TITLE_ATTR, "Welcome!");
-        vm.put(GetHomeRoute.ACTIVE_PLAYER_COUNT_ATTR, playerLobby.activePlayersMessage());
-        
-        // render
-        return templateEngine.render(new ModelAndView(vm, GetHomeRoute.VIEW_NAME));
+        // return to the home page, where the player can sign in again
+        response.redirect(WebServer.HOME_URL);
+        halt();
+        return null;
     }
 
 }
