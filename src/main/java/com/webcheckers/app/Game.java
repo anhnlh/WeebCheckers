@@ -138,24 +138,45 @@ public class Game {
         return other.equals(this.redPlayer);
     }
 
+    /**
+     * Checks if the game is over
+     * @return true if game is over
+     */
     public boolean isGameOver() {
         return gameOver;
     }
 
+    /**
+     * Gets the game over message
+     * @return game over message
+     */
     public String getGameOverMessage() {
         return gameOverMessage;
     }
 
+    /**
+     * Sets the game over message
+     * @param gameOverMessage game over message
+     */
     public void setGameOverMessage(String gameOverMessage) {
         this.gameOverMessage = gameOverMessage;
     }
 
+    /**
+     * Sets the game to be over
+     */
     public void setGameOver() {
         redPlayer.setPlaying(false);
         whitePlayer.setPlaying(false);
         gameOver = true;
     }
 
+
+    /**
+     * Checks if the move is a simple move
+     * @param move given move
+     * @return true if move is a simple move
+     */
     private boolean isSimpleMove(Move move) {
         boolean valid = false;
 
@@ -186,6 +207,11 @@ public class Game {
         return valid;
     }
 
+    /**
+     * Checks if the move is a jump move
+     * @param move given move
+     * @return true if move is a jump move
+     */
     private boolean isJumpMove(Move move) {
         boolean valid = false;
 
@@ -230,6 +256,10 @@ public class Game {
         return valid;
     }
 
+    /**
+     * Checks if there is a jump move available from any piece
+     * @return true if there is a jump move available
+     */
     private boolean allPossibleJumpMoves() {
         for (Row row : board) {
             for (Space space : row) {
@@ -253,6 +283,11 @@ public class Game {
         return false;
     }
 
+    /**
+     * Checks if there is a jump move available of a given Move
+     * @param move given move
+     * @return true if there is a jump move available
+     */
     private boolean singlePossibleJumpMove(Move move) {
         Position start = move.getStart();
         Position end = move.getEnd();
@@ -290,6 +325,12 @@ public class Game {
         return message;
     }
 
+    /**
+     * Makes a move on the board
+     * Checks if the piece reached the end of the board to be crowned as a king piece
+     * Checks if the move was a winning move
+     * @return true if the move was made
+     */
     public boolean makeMove() {
         boolean movesMade = false;
 
@@ -346,6 +387,10 @@ public class Game {
         return movesMade;
     }
 
+    /**
+     * Backups the move by removing the last move from the moveDeque
+     * @return true if the move was backed up
+     */
     public boolean backupMove() {
         if (!moveDeque.isEmpty()) {
             moveDeque.removeLast();
