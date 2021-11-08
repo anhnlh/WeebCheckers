@@ -1,10 +1,10 @@
 package com.webcheckers.ui;
 
-import freemarker.log.Logger;
+import java.util.logging.*;
 import spark.*;
 
 public class GetHelpRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(GetHelpRoute.class.getName());
 
     // freemarker file
     public static final String VIEW_NAME = "help.ftl";
@@ -17,10 +17,15 @@ public class GetHelpRoute implements Route {
 
     public GetHelpRoute(TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
+
+        LOG.config("GetHelpRoute is initialized.");
     }
 
     @Override
     public Object handle(Request request, Response response) {
-        return null;
+        
+        LOG.finer("GetHelpRoute is invoked.");
+        
+        return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
 }
