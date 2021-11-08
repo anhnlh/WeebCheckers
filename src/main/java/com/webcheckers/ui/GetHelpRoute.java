@@ -11,9 +11,12 @@ public class GetHelpRoute implements Route {
 
     // freemarker variables
 
+    // parameter initializations
+    private final TemplateEngine templateEngine;
 
-    public GetHelpRoute() {
 
+    public GetHelpRoute(TemplateEngine templateEngine) {
+        this.templateEngine = templateEngine;
     }
 
     @Override
