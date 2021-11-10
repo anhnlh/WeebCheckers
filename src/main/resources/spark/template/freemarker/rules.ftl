@@ -13,7 +13,7 @@
 
     <div class="body">
         <p>
-        <h1>American Rules for Checkers</h1>
+        <h2>American Rules for Checkers</h2>
         <ol>
         <!-- Rule #1 -->
             <li>The checkerboard is an 8x8 grid of light and dark squares in the famous "checkerboard" pattern. Each player has a dark square on the far left and a light square on his far right. The double-corner sometimes mentioned is the distinctive pair of dark squares in the near right corner.</li>
