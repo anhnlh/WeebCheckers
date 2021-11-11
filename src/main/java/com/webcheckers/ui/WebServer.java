@@ -62,13 +62,12 @@ public class WebServer {
   public static final String SIGNIN_URL = "/signin";
   public static final String SIGNOUT_URL = "/signout";
   public static final String GAME_URL = "/game";
-  public static final String HELP_URL = "/help";
   public static final String VALIDATE_MOVE_URL = "/validateMove";
   public static final String SUBMIT_TURN_URL = "/submitTurn";
   public static final String CHECK_TURN_URL = "/checkTurn";
   public static final String BACKUP_MOVE_URL = "/backupMove";
   public static final String RESIGN_GAME_URL = "/resignGame";
-  
+  public static final String HELP_URL = "/help";
 
 
   //
@@ -162,7 +161,6 @@ public class WebServer {
     get(HOME_URL, new GetHomeRoute(gameMap, playerLobby, templateEngine));
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
     get(GAME_URL, new GetGameRoute(gameMap, playerLobby, templateEngine, gson));
-    get(HELP_URL, new GetHelpRoute(templateEngine));
     post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
     post(SIGNOUT_URL, new PostSignOutRoute(playerLobby, templateEngine));
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameMap, gson));
@@ -170,6 +168,7 @@ public class WebServer {
     post(CHECK_TURN_URL, new PostCheckTurnRoute(gameMap, gson));
     post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gameMap, gson));
     post(RESIGN_GAME_URL, new PostResignGameRoute(gameMap, gson));
+    get(HELP_URL, new GetHelpRoute(templateEngine));
     //
     LOG.config("WebServer is initialized.");
 

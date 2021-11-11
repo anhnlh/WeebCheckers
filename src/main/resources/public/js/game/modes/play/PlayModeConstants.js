@@ -26,7 +26,7 @@ define(function () {
     , CHECKING_MY_TURN: 'Checking for My Turn on the Server'
     // The "Game Over" singular state
     , GAME_OVER: 'Showing Game Over'
-
+    , HELP: "Showing Help Screen"
     //
     // Buttons
     //
@@ -39,6 +39,7 @@ define(function () {
     , RESIGN_BUTTON_TOOLTIP: 'Resign from the game.'
     , EXIT_BUTTON_ID: 'exitBtn'
     , EXIT_BUTTON_TOOLTIP: 'Click here to exit the game and go to the Home page.'
-
+    , HELP_BUTTON_ID: 'helpBtn'
+    , HELP_BUTTON_TOOLTIP: 'Click here to open a help window'
   };
 });

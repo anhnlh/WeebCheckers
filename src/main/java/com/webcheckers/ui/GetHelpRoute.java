@@ -6,9 +6,9 @@ import java.util.logging.*;
 import spark.*;
 
 /**
- * The {@code GET /help} route handler.
+ * The UI Controller to GET the Help page.
  *
- * @author Sierra Tran
+ * @author Sierra Tran and Rhamsez Thevenin
  */
 public class GetHelpRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHelpRoute.class.getName());
@@ -19,13 +19,16 @@ public class GetHelpRoute implements Route {
     // freemarker variables
     public static final String TITLE_ATTR = "title";
 
+
     // parameter initializations
     private final TemplateEngine templateEngine;
 
+
     /**
-     * The constructor for the {@code GET /help} route handler.
+     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
      *
-     * @param templateEngine The {@link TemplateEngine} used for rendering page HTML.
+     * @param templateEngine
+     *   the HTML template rendering engine
      */
     public GetHelpRoute(TemplateEngine templateEngine) {
         Objects.requireNonNull(templateEngine, "templateEngine is required");
@@ -36,11 +39,15 @@ public class GetHelpRoute implements Route {
     }
 
     /**
-     * Renders the WebCheckers Help page.
-     * 
-     * @param request  the HTTP request
-     * @param response the HTTP response
-     * @return the rendered HTML for the Game page
+     * Render the WebCheckers Help page.
+     *
+     * @param request
+     *   the HTTP request
+     * @param response
+     *   the HTTP response
+     *
+     * @return
+     *   the rendered HTML for the Help page
      */
     @Override
     public Object handle(Request request, Response response) {
@@ -50,9 +57,10 @@ public class GetHelpRoute implements Route {
         // start building the View-Model
         final Map<String, Object> vm = new HashMap<>();
 
-        // display help title
+        // display help title for help menu
         vm.put(TITLE_ATTR, "Help");
-        
+
+        // render the View
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
 }

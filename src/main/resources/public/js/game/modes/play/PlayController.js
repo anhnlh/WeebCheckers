@@ -89,6 +89,8 @@ define(function(require){
         PlayModeConstants.RESIGN_BUTTON_TOOLTIP, this.resignGame);
     this.addButton(PlayModeConstants.EXIT_BUTTON_ID, 'Exit', true,
         PlayModeConstants.EXIT_BUTTON_TOOLTIP, this.exitGame);
+    this.addButton(PlayModeConstants.HELP_BUTTON_ID, "Help", true,
+    PlayModeConstants.HELP_BUTTON_TOOLTIP, this.help);
 
     // Public (internal) methods
 
@@ -324,6 +326,13 @@ define(function(require){
       throw new Error('No Piece found at: ' + move.end);
     }
     this._boardController.movePiece($piece, move.reverse());
+  };
+
+  /**
+   * Opens a help window
+   */
+  PlayController.prototype.help = function help() {
+    window.open('/help');
   };
 
   // export class constructor
