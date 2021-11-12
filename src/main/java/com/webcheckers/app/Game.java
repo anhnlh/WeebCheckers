@@ -166,8 +166,8 @@ public class Game {
      * Sets the game to be over
      */
     public void setGameOver() {
-        redPlayer.setPlaying(false);
-        whitePlayer.setPlaying(false);
+//        redPlayer.setPlaying(false);
+//        whitePlayer.setPlaying(false);
         gameOver = true;
     }
 

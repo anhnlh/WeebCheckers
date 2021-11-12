@@ -34,7 +34,8 @@ public class PostResignGameRoute implements Route {
         Game game = gameMap.get(gameID);
 
         game.setGameOver();
-        game.setGameOverMessage(player + " has resigned.");
+        game.setGameOverMessage("You won! " + player + " has resigned.");
+        player.setPlaying(false);
 
         // document says there can be an error, but I don't see how that can happen
         return gson.toJson(Message.info("Resignation successful"));

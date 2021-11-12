@@ -83,35 +83,24 @@ public class GetHomeRoute implements Route {
 
         // redirects player into the game with the player they're challenged with (if possible)
         if (player != null) {
-            if (player.isPlaying()) {
-                int gameID = 0;
-                for (Game game : gameMap.values()) {
-                    if (player.equals(game.getWhitePlayer())) {
-                        gameID = game.getID();
-                        break;
-                    }
+            Game game = null;
+            for (Game g : gameMap.values()) {
+                if (player.equals(g.getWhitePlayer()) || player.equals(g.getRedPlayer())) {
+                    game = g;
+                    break;
                 }
-                response.redirect(WebServer.GAME_URL + "?gameID=" + gameID);
+            }
+
+            if (game != null && player.isPlaying() &&
+                    player.equals(game.getWhitePlayer()) &&
+                    game.getRedPlayer().isPlaying()) {
+                response.redirect(WebServer.GAME_URL + "?gameID=" + game.getID());
                 halt();
                 return null;
-            } else {
-                Game game = null;
-                for (Game g : gameMap.values()) {
-                    if (player.equals(g.getRedPlayer()) || player.equals(g.getWhitePlayer())) {
-                        game = g;
-                    }
-                }
-                if (game != null && game.isGameOver()) {
-                    // deletes the game from the gameMap only when there is one player
-                    // left in the game (i.e. went back to playerLobby)
-                    if (playerLobby.contains(game.getRedPlayer().getName()) &&
-                        playerLobby.contains(game.getWhitePlayer().getName())) {
-                        gameMap.remove(String.valueOf(game.getID()));
-                    }
-
-                    if (player.equals(game.getWhitePlayer()) || player.equals(game.getRedPlayer())) {
-                        playerLobby.addPlayer(player.getName());
-                    }
+            } else if (game != null && game.isGameOver()) {
+                player.setPlaying(false);
+                if (!game.getRedPlayer().isPlaying() && !game.getWhitePlayer().isPlaying()) {
+                    gameMap.remove(String.valueOf(game.getID()));
                 }
             }
         }
@@ -124,6 +113,7 @@ public class GetHomeRoute implements Route {
 
         if (httpSession.attribute(ERROR_ATTR) != null) {
             vm.put(ERROR_ATTR, httpSession.attribute(ERROR_ATTR));
+            httpSession.removeAttribute(ERROR_ATTR);
         }
 
         // displays other active players

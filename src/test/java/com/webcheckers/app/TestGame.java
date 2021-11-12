@@ -437,4 +437,41 @@ public class TestGame {
         // no move to make
         assertFalse(CuT.makeMove());
     }
+
+    @Test
+    public void testThreeJumpMoves() {
+        // clear board
+        BoardView b = CuT.redPlayerBoard();
+        for (Row row : b) {
+            for (Space space : row) {
+                space.setPiece(null);
+            }
+        }
+        // decrease num pieces
+//        for (int i = 0; i < 11; i++) {
+//            b.decreaseNumWhitePieces();
+//            b.decreaseNumRedPieces();
+//        }
+
+        // setup a 3-jump move for red
+        Piece red = new Piece(Piece.Type.SINGLE, Piece.Color.RED);
+        b.getRow(7).getSpace(0).setPiece(red);
+        Piece white = new Piece(Piece.Type.SINGLE, Piece.Color.WHITE);
+        b.getRow(6).getSpace(1).setPiece(white);
+        Piece white2 = new Piece(Piece.Type.SINGLE, Piece.Color.WHITE);
+        b.getRow(4).getSpace(3).setPiece(white2);
+        Piece white3 = new Piece(Piece.Type.SINGLE, Piece.Color.WHITE);
+        b.getRow(2).getSpace(5).setPiece(white3);
+
+        Move move1 = new Move(new Position(7, 0), new Position(5, 2), null);
+        CuT.validateMove(move1);
+        Move move2 = new Move(new Position(5, 2), new Position(3, 4), null);
+        CuT.validateMove(move2);
+        Move move3 = new Move(new Position(3, 4), new Position(1, 6), null);
+        CuT.validateMove(move3);
+        CuT.makeMove();
+        System.out.println(CuT.redPlayerBoard().getRow(1).getSpace(6).getPiece());
+        assertEquals(CuT.redPlayerBoard().getRow(1).getSpace(6).getPiece(), red);
+
+    }
 }
