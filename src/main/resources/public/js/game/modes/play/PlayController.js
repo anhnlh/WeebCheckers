@@ -89,8 +89,14 @@ define(function(require){
         PlayModeConstants.RESIGN_BUTTON_TOOLTIP, this.resignGame);
     this.addButton(PlayModeConstants.EXIT_BUTTON_ID, 'Exit', true,
         PlayModeConstants.EXIT_BUTTON_TOOLTIP, this.exitGame);
-    this.addButton(PlayModeConstants.HELP_BUTTON_ID, "Help", true,
-    PlayModeConstants.HELP_BUTTON_TOOLTIP, this.help);
+        
+    if(this._gameState.isMyTurn()) {
+      console.log(this._gameState.getCurrentUser())
+      console.log(this._gameState.getActivePlayer())
+      this.addButton(PlayModeConstants.HELP_BUTTON_ID, "Hint", true,
+      PlayModeConstants.HELP_BUTTON_TOOLTIP, this.help);
+    }
+    
 
     // Public (internal) methods
 
