@@ -68,4 +68,9 @@ public class Position {
         return row == position.row && cell == position.cell;
     }
 
+    @Override
+    public String toString() {
+        return "(Row " + row + ", Column " + cell + ")";
+    }
+
 }

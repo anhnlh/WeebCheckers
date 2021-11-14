@@ -68,6 +68,7 @@ public class WebServer {
   public static final String BACKUP_MOVE_URL = "/backupMove";
   public static final String RESIGN_GAME_URL = "/resignGame";
   public static final String HELP_URL = "/help";
+  public static final String GET_HINT_URL = "/getHint";
 
 
   //
@@ -169,6 +170,7 @@ public class WebServer {
     post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gameMap, gson));
     post(RESIGN_GAME_URL, new PostResignGameRoute(gameMap, gson));
     get(HELP_URL, new GetHelpRoute(templateEngine));
+    post(GET_HINT_URL, new PostGetHintRoute(gameMap, gson));
     //
     LOG.config("WebServer is initialized.");
 

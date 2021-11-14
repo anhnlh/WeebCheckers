@@ -24,6 +24,7 @@ define(function(require){
   const StableTurnState = require('./StableTurnState');
   const WaitingForTurnValidationState = require('./WaitingForTurnValidationState');
   const WaitingForBackupValidationState = require('./WaitingForBackupValidationState');
+  const GetHintState = require('./GetHintState');
   // "Waiting for My Turn" composite states
   const WaitingForMyTurnState = require('./WaitingForMyTurnState');
   const CheckingMyTurnState = require('./CheckingMyTurnState');
@@ -69,6 +70,8 @@ define(function(require){
         new WaitingForTurnValidationState(this));
     this.addStateDefinition(PlayModeConstants.WAITING_FOR_BACKUP_VALIDATION,
         new WaitingForBackupValidationState(this));
+    this.addStateDefinition(PlayModeConstants.HELP,
+        new GetHintState(this));
     // "Waiting for My Turn" composite states
     this.addStateDefinition(PlayModeConstants.WAITING_TO_CHECK_MY_TURN,
         new WaitingForMyTurnState(this));
@@ -94,7 +97,7 @@ define(function(require){
       console.log(this._gameState.getCurrentUser())
       console.log(this._gameState.getActivePlayer())
       this.addButton(PlayModeConstants.HELP_BUTTON_ID, "Hint", true,
-      PlayModeConstants.HELP_BUTTON_TOOLTIP, this.help);
+      PlayModeConstants.HELP_BUTTON_TOOLTIP, this.getHint);
     }
     
 
@@ -153,6 +156,13 @@ define(function(require){
    */
   PlayController.prototype.submitTurn = function submitTurn() {
     this._delegateStateMessage('submitTurn', arguments);
+  };
+
+  /**
+   * This user action requests a hint.
+   */
+  PlayController.prototype.getHint = function getHint() {
+    this._delegateStateMessage('getHint', arguments);
   };
 
   /**
@@ -334,12 +344,12 @@ define(function(require){
     this._boardController.movePiece($piece, move.reverse());
   };
 
-  /**
-   * Opens a help window
-   */
-  PlayController.prototype.help = function help() {
-    window.open('/help');
-  };
+  // /**
+  //  * Opens a help window
+  //  */
+  // PlayController.prototype.help = function help() {
+  //   window.open('/help');
+  // };
 
   // export class constructor
   return PlayController;

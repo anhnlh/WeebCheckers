@@ -21,12 +21,12 @@ define(function () {
     , STABLE_TURN: 'Stable Turn'
     , WAITING_FOR_TURN_VALIDATION: 'Waiting for Turn Validation'
     , WAITING_FOR_BACKUP_VALIDATION: 'Waiting for Backup Validation'
+    , HELP: 'Providing a message to show possible moves'
     // "Waiting for My Turn" composite states
     , WAITING_TO_CHECK_MY_TURN: 'Waiting for My Turn'
     , CHECKING_MY_TURN: 'Checking for My Turn on the Server'
     // The "Game Over" singular state
     , GAME_OVER: 'Showing Game Over'
-    , HELP: "Showing Help Screen"
     //
     // Buttons
     //

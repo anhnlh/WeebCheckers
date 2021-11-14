@@ -2,7 +2,8 @@ package com.webcheckers.model;
 
 /**
  * Represents a move on the board.
- * @Author: Anh Nguyen
+ *
+ * @author Anh Nguyen
  */
 public class Move {
     /**
@@ -23,8 +24,9 @@ public class Move {
 
     /**
      * Constructor for a simple move.
+     *
      * @param start The start position of the move.
-     * @param end The end position of the move.
+     * @param end   The end position of the move.
      */
     public Move(Position start, Position end, MoveType type) {
         this.start = start;
@@ -34,6 +36,7 @@ public class Move {
 
     /**
      * Getter for the start position of the move.
+     *
      * @return The start position of the move.
      */
     public Position getStart() {
@@ -42,6 +45,7 @@ public class Move {
 
     /**
      * Getter for the end position of the move.
+     *
      * @return The end position of the move.
      */
     public Position getEnd() {
@@ -50,6 +54,7 @@ public class Move {
 
     /**
      * Getter for the type of move.
+     *
      * @return The type of move.
      */
     public MoveType getMoveType() {
@@ -58,9 +63,15 @@ public class Move {
 
     /**
      * Setter for the type of move.
+     *
      * @param moveType The type of move.
      */
     public void setMoveType(MoveType moveType) {
         this.moveType = moveType;
+    }
+
+    @Override
+    public String toString() {
+        return moveType + " MOVE: " + start + " -> " + end;
     }
 }

@@ -77,7 +77,7 @@ define(function(require){
       if (_state[actionSymbol] !== undefined) {
         _state[actionSymbol].apply(_state, args);
       } else {
-        throw new Error(`The '${state.getName()}' doesn't handle a '${actionSymbol}' message.`);
+        throw new Error(`The '${_state.getName()}' doesn't handle a '${actionSymbol}' message.`);
       }
     };
 
