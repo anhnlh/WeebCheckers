@@ -16,6 +16,13 @@
     "activeColor" : "${activeColor}"
   };
   </script>
+
+  <#--  This is an addition to add custom JS functions  -->
+  <script>
+    function testyboi(){
+      location.reload();
+    } 
+  </script>
 </head>
 <body>
   <div class="page">
