@@ -483,12 +483,21 @@ public class TestGame {
      */
     @Test
     public void testFindRandomJumpMove() {
-        // setup
+        // clear board
         BoardView b = CuT.redPlayerBoard();
-        Piece white = new Piece(Piece.Type.SINGLE, Piece.Color.WHITE);
-        b.getRow(4).getSpace(1).setPiece(white);
+        for (Row row : b) {
+            for (Space space : row) {
+                space.setPiece(null);
+            }
+        }
 
-        Move expected = new Move(new Position(5, 2), new Position(3, 0), Move.MoveType.JUMP);
+        // setup
+        Piece white = new Piece(Piece.Type.SINGLE, Piece.Color.WHITE);
+        Piece red = new Piece(Piece.Type.SINGLE, Piece.Color.RED);
+        b.getRow(4).getSpace(1).setPiece(white);
+        b.getRow(5).getSpace(0).setPiece(red);
+
+        Move expected = new Move(new Position(5, 0), new Position(3, 2), Move.MoveType.JUMP);
         assertEquals(expected.toString(), CuT.findRandomJumpMove().toString());
     }
 
