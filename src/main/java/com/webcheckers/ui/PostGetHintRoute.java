@@ -11,6 +11,9 @@ import spark.Route;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+/**
+ * The UI Controller to POST the hint route.
+ */
 public class PostGetHintRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 

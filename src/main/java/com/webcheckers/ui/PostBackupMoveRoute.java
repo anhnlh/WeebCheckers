@@ -12,6 +12,9 @@ import spark.Session;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+/**
+ * The UI Controller to handle a POST request to /backupMove
+ */
 public class PostBackupMoveRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
