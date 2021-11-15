@@ -1,6 +1,7 @@
 package com.webcheckers.app;
 
 import java.util.HashMap;
+import java.util.function.BooleanSupplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,6 +42,18 @@ public class LeaderBoard {
             playerWinMap.put(playerName.toLowerCase(), playerWinMap.get(playerName.toLowerCase() + 1));
             return true;
         }
+    }
+
+    public boolean isEmpty() {
+        return playerWinMap.size() == 0;
+    }
+
+    public int getSize(){
+        return playerWinMap.size();
+    }
+
+    public HashMap getMap (){
+        return playerWinMap;
     }
 
 }
