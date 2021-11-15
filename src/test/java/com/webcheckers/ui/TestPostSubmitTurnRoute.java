@@ -72,7 +72,8 @@ public class TestPostSubmitTurnRoute {
 
         Object actual = CuT.handle(request, response);
 
-        Object expected = gson.toJson(Message.info("Possible jump move detected. You must play all jump moves."));
+        // fixed expected
+        Object expected = gson.toJson(Message.error("Possible jump move detected. You must play all jump moves."));
         assertEquals(expected, actual);
 
         // to switch turns back to player1 (redPlayer)

@@ -438,6 +438,9 @@ public class TestGame {
         assertFalse(CuT.makeMove());
     }
 
+    /**
+     * Tests a certain case of multiple jump moves
+     */
     @Test
     public void testThreeJumpMoves() {
         // clear board
@@ -473,5 +476,38 @@ public class TestGame {
         System.out.println(CuT.redPlayerBoard().getRow(1).getSpace(6).getPiece());
         assertEquals(CuT.redPlayerBoard().getRow(1).getSpace(6).getPiece(), red);
 
+    }
+
+    /**
+     * Tests {@link Game#findRandomJumpMove()}
+     */
+    @Test
+    public void testFindRandomJumpMove() {
+        // setup
+        BoardView b = CuT.redPlayerBoard();
+        Piece white = new Piece(Piece.Type.SINGLE, Piece.Color.WHITE);
+        b.getRow(4).getSpace(1).setPiece(white);
+
+        Move expected = new Move(new Position(5, 2), new Position(3, 0), Move.MoveType.JUMP);
+        assertEquals(expected.toString(), CuT.findRandomJumpMove().toString());
+    }
+
+    /**
+     * Tests {@link Game#findRandomSimpleMove()}
+     */
+    @Test
+    public void testFindRandomSimpleMove() {
+        // clear board
+        BoardView b = CuT.redPlayerBoard();
+        for (Row row : b) {
+            for (Space space : row) {
+                space.setPiece(null);
+            }
+        }
+
+        Piece red = new Piece(Piece.Type.SINGLE, Piece.Color.RED);
+        b.getRow(7).getSpace(0).setPiece(red);
+        Move expected = new Move(new Position(7, 0), new Position(6, 1), Move.MoveType.SIMPLE);
+        assertEquals(expected.toString(), CuT.findRandomSimpleMove().toString());
     }
 }
