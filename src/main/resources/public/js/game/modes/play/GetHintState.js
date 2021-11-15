@@ -36,7 +36,7 @@ define(function(require){
     }
 
     GetHintState.prototype.onEntry = function onEntry() {
-        this._controller.disableButton(PlayModeConstants.HELP_BUTTON_ID);
+        this._controller.disableButton(PlayModeConstants.HINT_BUTTON_ID);
         this._controller.disableButton(PlayModeConstants.BACKUP_BUTTON_ID);
         this._controller.disableButton(PlayModeConstants.SUBMIT_BUTTON_ID);
         this._controller.disableButton(PlayModeConstants.RESIGN_BUTTON_ID);

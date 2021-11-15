@@ -43,7 +43,7 @@ define(function(require){
     // enable all UI controls
     this._controller.enableButton(PlayModeConstants.BACKUP_BUTTON_ID);
     this._controller.enableButton(PlayModeConstants.SUBMIT_BUTTON_ID);
-    this._controller.enableButton(PlayModeConstants.HELP_BUTTON_ID);
+    this._controller.enableButton(PlayModeConstants.HINT_BUTTON_ID);
     // re-enable active Piece
     this._controller.enableActivePiece();
   };

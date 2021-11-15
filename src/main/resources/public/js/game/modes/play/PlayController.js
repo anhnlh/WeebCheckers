@@ -96,8 +96,8 @@ define(function(require){
     if(this._gameState.isMyTurn()) {
       console.log(this._gameState.getCurrentUser())
       console.log(this._gameState.getActivePlayer())
-      this.addButton(PlayModeConstants.HELP_BUTTON_ID, "Hint", true,
-      PlayModeConstants.HELP_BUTTON_TOOLTIP, this.getHint);
+      this.addButton(PlayModeConstants.HINT_BUTTON_ID, "Hint", true,
+      PlayModeConstants.HINT_BUTTON_TOOLTIP, this.getHint);
     }
     
 
