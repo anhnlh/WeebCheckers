@@ -12,6 +12,10 @@ import spark.Session;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+/**
+ * The UI Controller to process the POST request made to the
+ * /checkTurn route.
+ */
 public class PostCheckTurnRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 

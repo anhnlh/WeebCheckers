@@ -163,8 +163,7 @@ define(function(require){
    */
   BoardController.prototype.getPiece$ = function getPiece$(position) {
     var $space = this.getSpace$(position);
-    var $piece = $space.find('div.Piece');
-    return $piece.length === 0 ? null : $piece;
+    return $space.find('div.Piece'); // bandage solution for uncaught error
   }
 
   /**

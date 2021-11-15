@@ -31,12 +31,24 @@ public class Game {
      */
     private final int ID;
 
+    /**
+     * Player whose turn it is
+     */
     private Player playerInTurn;
 
+    /**
+     * Double-ended queue of pending moves
+     */
     private final Deque<Move> moveDeque;
 
+    /**
+     * Boolean to check if the game is over
+     */
     private boolean gameOver;
 
+    /**
+     * Message to be displayed when the game is over
+     */
     private String gameOverMessage;
 
     /**
@@ -110,14 +122,26 @@ public class Game {
         return ID;
     }
 
+    /**
+     * Sets the turn to a player
+     * @param playerInTurn player in turn
+     */
     public void setPlayerInTurn(Player playerInTurn) {
         this.playerInTurn = playerInTurn;
     }
 
+    /**
+     * Checks if the given player is the red player
+     * @return true if given player is the red player
+     */
     public boolean isRedPlayerTurn() {
         return playerInTurn.equals(redPlayer);
     }
 
+    /**
+     * Returns the player's color
+     * @return player's color
+     */
     private Piece.Color playerColor() {
         Piece.Color color;
         if (isRedPlayer(playerInTurn)) {
@@ -260,7 +284,7 @@ public class Game {
      * Checks if there is a jump move available from any piece
      * @return true if there is a jump move available
      */
-    private boolean allPossibleJumpMoves() {
+    private boolean allPossibleJumpMovesCheck() {
         for (Row row : board) {
             for (Space space : row) {
                 Piece piece = space.getPiece();
@@ -288,7 +312,7 @@ public class Game {
      * @param move given move
      * @return true if there is a jump move available
      */
-    private boolean singlePossibleJumpMove(Move move) {
+    private boolean singlePossibleJumpMoveCheck(Move move) {
         Position start = move.getStart();
         Position end = move.getEnd();
         for (int r = -2; r <= 2; r += 4) {
@@ -306,10 +330,15 @@ public class Game {
         return false;
     }
 
+    /**
+     * Validates a given move and returns a message depending on the result
+     * @param move given move
+     * @return message
+     */
     public Message validateMove(Move move) {
         Message message = Message.error("Invalid move.");
         if (isSimpleMove(move)) {
-            if (allPossibleJumpMoves()) {
+            if (allPossibleJumpMovesCheck()) {
                 message = Message.error("Jump move available. Must make jump moves.");
             } else {
                 move.setMoveType(Move.MoveType.SIMPLE);
@@ -335,7 +364,7 @@ public class Game {
         boolean movesMade = false;
 
         // if a jump move is still possible with the latest move
-        if (!moveDeque.isEmpty() && moveDeque.getLast().getMoveType().equals(Move.MoveType.JUMP) && singlePossibleJumpMove(moveDeque.getLast())) {
+        if (!moveDeque.isEmpty() && moveDeque.getLast().getMoveType().equals(Move.MoveType.JUMP) && singlePossibleJumpMoveCheck(moveDeque.getLast())) {
             return false;
         }
 
@@ -397,5 +426,69 @@ public class Game {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Finds all possible jump moves for the current player
+     * and returns a random one
+     * @return a random jump move
+     */
+    public Move findRandomJumpMove() {
+        List<Move> jumpMoves = new ArrayList<>();
+        for (Row row : board) {
+            for (Space space : row) {
+                Piece piece = space.getPiece();
+                if (piece != null && piece.getColor().equals(playerColor())) {
+                    Position start = new Position(row.getIndex(), space.getCellIdx());
+                    for (int r = -2; r <= 2; r += 4) {      // -2 and +2 to rowIndex
+                        for (int c = -2; c <= 2; c += 4) {  // -2 and +2 to cellIdx
+                            Position end = new Position(start.getRow() + r, start.getCell() + c);
+                            if (Position.isInBounds(end)) {
+                                Move move = new Move(start, end, Move.MoveType.JUMP);
+                                if (isJumpMove(move)) {
+                                    jumpMoves.add(move);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (jumpMoves.isEmpty()) {
+            return null;
+        }
+        return jumpMoves.get(new Random().nextInt(jumpMoves.size()));
+    }
+
+    /**
+     * Finds all possible simple moves for the current player
+     * and returns a random one
+     * @return a random simple move
+     */
+    public Move findRandomSimpleMove() {
+        List<Move> simpleMoves = new ArrayList<>();
+        for (Row row : board) {
+            for (Space space : row) {
+                Piece piece = space.getPiece();
+                if (piece != null && piece.getColor().equals(playerColor())) {
+                    Position start = new Position(row.getIndex(), space.getCellIdx());
+                    for (int r = -1; r <= 1; r += 2) {      // -1 and +1 to rowIndex
+                        for (int c = -1; c <= 1; c += 2) {  // -1 and +1 to cellIdx
+                            Position end = new Position(start.getRow() + r, start.getCell() + c);
+                            if (Position.isInBounds(end)) {
+                                Move move = new Move(start, end, Move.MoveType.SIMPLE);
+                                if (isSimpleMove(move)) {
+                                    simpleMoves.add(move);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (simpleMoves.isEmpty()) {
+            return null;
+        }
+        return simpleMoves.get(new Random().nextInt(simpleMoves.size()));
     }
 }

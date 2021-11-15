@@ -1,4 +1,5 @@
  <div class="navigation">
+    <a href="/help" target="_blank">help</a> | 
   <#if currentUser??>
     <a href="/">my home</a> |
     <a href='/' onclick="location.reload()">Reload</a> | 

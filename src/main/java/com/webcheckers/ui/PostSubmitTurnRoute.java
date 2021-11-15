@@ -10,6 +10,9 @@ import spark.Route;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+/**
+ * The UI Controller to POST /submitTurn
+ */
 public class PostSubmitTurnRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
@@ -33,7 +36,8 @@ public class PostSubmitTurnRoute implements Route {
         if (game.makeMove()) {
             message = Message.info("Turn submitted.");
         } else {
-            message = Message.info("Possible jump move detected. You must play all jump moves.");
+            // oops, should be an error instead of info
+            message = Message.error("Possible jump move detected. You must play all jump moves.");
         }
 
         // switch turns

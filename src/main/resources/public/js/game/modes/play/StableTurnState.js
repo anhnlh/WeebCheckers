@@ -43,6 +43,7 @@ define(function(require){
     // enable all UI controls
     this._controller.enableButton(PlayModeConstants.BACKUP_BUTTON_ID);
     this._controller.enableButton(PlayModeConstants.SUBMIT_BUTTON_ID);
+    this._controller.enableButton(PlayModeConstants.HINT_BUTTON_ID);
     // re-enable active Piece
     this._controller.enableActivePiece();
   };
@@ -70,6 +71,13 @@ define(function(require){
   StableTurnState.prototype.submitTurn = function submitTurn() {
     this._controller.setState(PlayModeConstants.WAITING_FOR_TURN_VALIDATION);
   };
+
+  /**
+   * Requests a hint.
+   */
+  StableTurnState.prototype.getHint = function getHint() {
+    this._controller.setState(PlayModeConstants.HELP);
+  }
 
   // export class constructor
   return StableTurnState;
