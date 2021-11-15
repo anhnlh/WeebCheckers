@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
 import org.junit.platform.commons.annotation.Testable;
 
 import spark.*;
+import spark.http.matching.Halt;
 
 /**
  * Test class for {@link PostSignOutRoute}
@@ -78,7 +79,10 @@ public class TestPostSignOutRoute {
 
         assertEquals(expected, actual);
 
-        CuT.handle(request, response);
+        // method will fail because the route halts
+        try {
+            CuT.handle(request, response);
+        } catch (HaltException ignored) {}
 
         // player is not in lobby after logout
         expected = 0;
@@ -86,12 +90,8 @@ public class TestPostSignOutRoute {
 
         assertEquals(expected, actual);
 
-        testHelper.assertViewModelExists();
-        testHelper.assertViewModelIsaMap();
-
-        testHelper.assertViewModelAttribute(GetHomeRoute.TITLE_ATTR, "Welcome!");
-        testHelper.assertViewModelAttribute(GetHomeRoute.ACTIVE_PLAYER_COUNT_ATTR, playerLobby.activePlayersMessage());
-        testHelper.assertViewName(GetHomeRoute.VIEW_NAME);
+        // verify redirect to home page
+        verify(response).redirect(WebServer.HOME_URL);
     }
 
     

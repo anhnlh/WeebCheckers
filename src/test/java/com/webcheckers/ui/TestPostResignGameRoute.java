@@ -71,7 +71,7 @@ public class TestPostResignGameRoute {
         Object value = CuT.handle(request, response);
 
         assertTrue(game.isGameOver());
-        assertEquals(game.getGameOverMessage(), p1 + " has resigned.");
+        assertEquals(game.getGameOverMessage(), "You won! " + p1 + " has resigned.");
         assertEquals(value, gson.toJson(Message.info("Resignation successful")));
     }
 }

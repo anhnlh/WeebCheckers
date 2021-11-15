@@ -114,11 +114,12 @@ public class TestGetHomeRoute {
     public void playerIsPlayingHandleTest() {
         // When the player is signed in
         when(session.attribute(GetHomeRoute.CURRENT_USER_ATTR)).thenReturn(player);
-        player.setPlaying(true);
 
         // user is the white player and gets redirected to the game
         Player opponent = new Player("player2");
         Game game = new Game(opponent, player);
+        opponent.setPlaying(true);
+        player.setPlaying(true);
         gameMap.put(String.valueOf(game.getID()), game);
 
         // redirects and halts
