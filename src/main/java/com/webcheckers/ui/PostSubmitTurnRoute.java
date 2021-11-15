@@ -35,17 +35,18 @@ public class PostSubmitTurnRoute implements Route {
         // returns false when there is still a jump move possible
         if (game.makeMove()) {
             message = Message.info("Turn submitted.");
+            // switch turns
+            // OOPS only switch turns when the turn is submitted!!!
+            if (game.isRedPlayerTurn()) {
+                game.setPlayerInTurn(game.getWhitePlayer());
+            } else {
+                game.setPlayerInTurn(game.getRedPlayer());
+            }
         } else {
             // oops, should be an error instead of info
             message = Message.error("Possible jump move detected. You must play all jump moves.");
         }
 
-        // switch turns
-        if (game.isRedPlayerTurn()) {
-            game.setPlayerInTurn(game.getWhitePlayer());
-        } else {
-            game.setPlayerInTurn(game.getRedPlayer());
-        }
 
         return gson.toJson(message);
     }

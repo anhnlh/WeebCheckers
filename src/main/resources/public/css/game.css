@@ -114,7 +114,7 @@ table#game-board td > div[data-type="SINGLE"][data-color="RED"] {
   background-image: url("../img/red-haired-anime-girl.jpg");
 }
 table#game-board td > div[data-type="KING"][data-color="RED"] {
-  background-image: url("../img/king-piece-red.svg");
+  background-image: url("../img/red-haired-anime-girl-queen.png");
 }
 /* table#game-board td > div[data-type="SINGLE"][data-color="WHITE"] {
   background-image: url("../img/single-piece-white.svg");
@@ -123,7 +123,7 @@ table#game-board td > div[data-type="SINGLE"][data-color="WHITE"] {
   background-image: url("../img/white-haired-anime-girl.jpg");
 }
 table#game-board td > div[data-type="KING"][data-color="WHITE"] {
-  background-image: url("../img/king-piece-white.svg");
+  background-image: url("../img/white-haired-anime-girl-queen.png");
 }
 table#game-board td.pending {
   animation: background-fades;

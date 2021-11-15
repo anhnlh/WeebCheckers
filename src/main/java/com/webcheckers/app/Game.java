@@ -321,7 +321,6 @@ public class Game {
                 if (!newEnd.equals(start) && Position.isInBounds(newEnd)) {
                     Move m = new Move(end, newEnd, Move.MoveType.JUMP);
                     if (isJumpMove(m)) {
-                        System.out.println("singlePossibleJumpMove reached");
                         return true;
                     }
                 }

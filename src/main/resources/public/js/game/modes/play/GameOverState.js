@@ -43,6 +43,7 @@ define(function(require){
     this._controller.hideButton(PlayModeConstants.BACKUP_BUTTON_ID);
     this._controller.hideButton(PlayModeConstants.SUBMIT_BUTTON_ID);
     this._controller.hideButton(PlayModeConstants.RESIGN_BUTTON_ID);
+    this._controller.hideButton(PlayModeConstants.HINT_BUTTON_ID);
   };
 
   // export class constructor
