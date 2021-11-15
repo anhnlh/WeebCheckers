@@ -107,17 +107,23 @@ table#game-board td > div {
   background-repeat: no-repeat;
   background-size: contain;
 }
+/* table#game-board td > div[data-type="SINGLE"][data-color="RED"] {
+  background-image: url("../img/single-piece-red.svg");
+} */
 table#game-board td > div[data-type="SINGLE"][data-color="RED"] {
-  background-image: url("../img/single-piece-red.png");
+  background-image: url("../img/red-haired-anime-girl.jpg");
 }
 table#game-board td > div[data-type="KING"][data-color="RED"] {
-  background-image: url("../img/king-piece-red.png");
+  background-image: url("../img/king-piece-red.svg");
 }
+/* table#game-board td > div[data-type="SINGLE"][data-color="WHITE"] {
+  background-image: url("../img/single-piece-white.svg");
+} */
 table#game-board td > div[data-type="SINGLE"][data-color="WHITE"] {
-  background-image: url("../img/single-piece-white.png");
+  background-image: url("../img/white-haired-anime-girl.jpg");
 }
 table#game-board td > div[data-type="KING"][data-color="WHITE"] {
-  background-image: url("../img/king-piece-white.png");
+  background-image: url("../img/king-piece-white.svg");
 }
 table#game-board td.pending {
   animation: background-fades;

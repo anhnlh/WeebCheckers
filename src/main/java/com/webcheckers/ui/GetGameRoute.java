@@ -107,8 +107,8 @@ public class GetGameRoute implements Route {
                         Game game = new Game(player, opponent);
                         player.setPlaying(true);
                         opponent.setPlaying(true);
-                        playerLobby.removePlayer(player.getName());
-                        playerLobby.removePlayer(opponent.getName());
+//                        playerLobby.removePlayer(player.getName());
+//                        playerLobby.removePlayer(opponent.getName());
                         gameID = String.valueOf(game.getID());
                         gameMap.put(gameID, game);
                         response.redirect(WebServer.GAME_URL + "?gameID=" + gameID);
