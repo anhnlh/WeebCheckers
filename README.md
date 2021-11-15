@@ -3,7 +3,6 @@
 An online Checkers game system built in Java 8=>11 and Spark,
 a web micro-framework.
 
-
 ## Team
 
 - Phil Ganem
@@ -12,12 +11,10 @@ a web micro-framework.
 - Sierra Tran
 - Rhamsez Thevenin
 
-
 ## Prerequisites
 
-- Java 8=>11 (Make sure to have correct JAVA_HOME setup in your environment)
+- Java 8 => 11 (Make sure to have correct JAVA_HOME setup in your environment)
 - Maven
-
 
 ## How to run it
 
@@ -27,6 +24,7 @@ a web micro-framework.
 4. Start a game and begin playing.
 
 ## Known bugs and disclaimers
+
 (It may be the case that your implementation is not perfect.)
 
 Document any known bug or nuisance.
@@ -54,15 +52,13 @@ To run tests on all the tiers in isolation do this:
 3. To view the Application tier tests open in your browser the file at `PROJECT_HOME/target/site/jacoco/appl/index.html`
 4. To view the UI tier tests open in your browser the file at `PROJECT_HOME/target/site/jacoco/ui/index.html`
 
-
 ## How to generate the Design documentation PDF
 
 1. Execute `mvn exec:exec@docs`
 2. Note: this command will fail on a clean project without a `/target`
-directory. Create the directory first if running after a `clean` operation
-without any intervening commands that create the directory, such as compile.
+   directory. Create the directory first if running after a `clean` operation
+   without any intervening commands that create the directory, such as compile.
 3. The generated PDF will be in `PROJECT_HOME/target/` directory
-
 
 ## How to create a zipfile distribution of the source for the project
 
