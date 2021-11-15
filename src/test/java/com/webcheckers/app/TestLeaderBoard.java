@@ -23,7 +23,6 @@ public class TestLeaderBoard {
      */
     private LeaderBoard CuT;
 
-    private int lobbyNum;
     private String player1Name;
     private String player2Name;
     private String player3Name;
@@ -34,7 +33,7 @@ public class TestLeaderBoard {
      */
     @BeforeEach
     public void setup() {
-        CuT = new PlayerLobby();
+        CuT = new LeaderBoard();
 
         player1Name = "Hi";
         player2Name = "Hello";

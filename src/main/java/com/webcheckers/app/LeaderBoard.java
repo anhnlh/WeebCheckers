@@ -52,7 +52,7 @@ public class LeaderBoard {
         return playerWinMap.size();
     }
 
-    public HashMap getMap (){
+    public HashMap<String, Integer> getMap (){
         return playerWinMap;
     }
 
