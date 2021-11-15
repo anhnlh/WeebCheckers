@@ -31,12 +31,24 @@ public class Game {
      */
     private final int ID;
 
+    /**
+     * Player whose turn it is
+     */
     private Player playerInTurn;
 
+    /**
+     * Double-ended queue of pending moves
+     */
     private final Deque<Move> moveDeque;
 
+    /**
+     * Boolean to check if the game is over
+     */
     private boolean gameOver;
 
+    /**
+     * Message to be displayed when the game is over
+     */
     private String gameOverMessage;
 
     /**
@@ -110,14 +122,26 @@ public class Game {
         return ID;
     }
 
+    /**
+     * Sets the turn to a player
+     * @param playerInTurn player in turn
+     */
     public void setPlayerInTurn(Player playerInTurn) {
         this.playerInTurn = playerInTurn;
     }
 
+    /**
+     * Checks if the given player is the red player
+     * @return true if given player is the red player
+     */
     public boolean isRedPlayerTurn() {
         return playerInTurn.equals(redPlayer);
     }
 
+    /**
+     * Returns the player's color
+     * @return player's color
+     */
     private Piece.Color playerColor() {
         Piece.Color color;
         if (isRedPlayer(playerInTurn)) {
@@ -306,6 +330,11 @@ public class Game {
         return false;
     }
 
+    /**
+     * Validates a given move and returns a message depending on the result
+     * @param move given move
+     * @return message
+     */
     public Message validateMove(Move move) {
         Message message = Message.error("Invalid move.");
         if (isSimpleMove(move)) {
@@ -399,6 +428,11 @@ public class Game {
         return false;
     }
 
+    /**
+     * Finds all possible jump moves for the current player
+     * and returns a random one
+     * @return a random jump move
+     */
     public Move findRandomJumpMove() {
         List<Move> jumpMoves = new ArrayList<>();
         for (Row row : board) {
@@ -426,6 +460,11 @@ public class Game {
         return jumpMoves.get(new Random().nextInt(jumpMoves.size()));
     }
 
+    /**
+     * Finds all possible simple moves for the current player
+     * and returns a random one
+     * @return a random simple move
+     */
     public Move findRandomSimpleMove() {
         List<Move> simpleMoves = new ArrayList<>();
         for (Row row : board) {
