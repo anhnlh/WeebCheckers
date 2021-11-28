@@ -281,8 +281,8 @@ public class Game {
     }
 
     /**
-     * Checks if there is a jump move available from any piece
-     * @return true if there is a jump move available
+     * Checks if there is a move in bound from any start to end
+     * @return true if there is a mvoe is in bounds
      */
     private boolean checkIfEndPosiionInBounds(Position start, Position end) {
         if (Position.isInBounds(end)) {
@@ -294,6 +294,10 @@ public class Game {
         return false;
     }
 
+    /**
+     * Takes a stqrt position as a parameter, and creates an array based of sqaures the checker may move
+     * @return an array of Position type, for all possible moves.
+     */
     private ArrayList<Position> makeAllEndPositions(Position start){
         Position endBottomLeft = new Position(start.getRow() - 2, start.getCell() - 2);
         Position endTopLeft = new Position(start.getRow() - 2, start.getCell() + 2);
@@ -308,6 +312,7 @@ public class Game {
 
         return endPositions;
     }
+
     /**
      * Checks if there is a jump move available from any piece
      * @return true if there is a jump move available
