@@ -1,10 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.example</groupId>
-  <artifactId>guessing-game</artifactId>
-  <version>2.0</version>
-  <name>Number Guessing Game</name>
-  <description>A simple number guessing game using the Spark web framework.</description>
+  <groupId>com.webcheckers</groupId>
+  <artifactId>checkers-app</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>Web Checkers</name>
+  <description>Checkers game with a Spark and Java 11 architecture. </description>
   <properties>
     <!--  General build properties  -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -169,7 +170,7 @@
               <descriptors>
                 <descriptor>src/assembly/zip.xml</descriptor>
               </descriptors>
-              <finalName>guessing-game</finalName>
+              <finalName>web-checkers</finalName>
               <appendAssemblyId>false</appendAssemblyId>
             </configuration>
             <goals>
@@ -182,7 +183,7 @@
               <descriptors>
                 <descriptor>src/assembly/zip-with-tests.xml</descriptor>
               </descriptors>
-              <finalName>guessing-game-with-tests</finalName>
+              <finalName>web-checkers-with-tests</finalName>
               <appendAssemblyId>false</appendAssemblyId>
             </configuration>
             <goals>
@@ -258,7 +259,7 @@
             <id>ui</id>
             <configuration>
               <footer>UI Tier</footer>
-              <title>Guessing Game UI Tier Test Coverage</title>
+              <title>WebCheckers UI Tier Test Coverage</title>
               <outputDirectory>target/site/jacoco/ui</outputDirectory>
             </configuration>
             <goals>
@@ -269,7 +270,7 @@
             <id>appl</id>
             <configuration>
               <footer>Application Tier</footer>
-              <title>Guessing Game Application Tier Test Coverage</title>
+              <title>WebCheckers Application Tier Test Coverage</title>
               <outputDirectory>target/site/jacoco/appl</outputDirectory>
             </configuration>
             <goals>
@@ -280,7 +281,7 @@
             <id>model</id>
             <configuration>
               <footer>Model Tier</footer>
-              <title>Guessing Game Model Tier Test Coverage</title>
+              <title>Web Checkers Model Tier Test Coverage</title>
               <outputDirectory>target/site/jacoco/model</outputDirectory>
             </configuration>
             <goals>
