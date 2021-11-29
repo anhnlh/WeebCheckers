@@ -281,6 +281,39 @@ public class Game {
     }
 
     /**
+     * Checks if there is a move in bound from any start to end
+     * @return true if there is a mvoe is in bounds
+     */
+    private boolean checkIfEndPosiionInBounds(Position start, Position end) {
+        if (Position.isInBounds(end)) {
+            Move move = new Move(start, end, Move.MoveType.JUMP);
+            if (isJumpMove(move)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Takes a stqrt position as a parameter, and creates an array based of sqaures the checker may move
+     * @return an array of Position type, for all possible moves.
+     */
+    private ArrayList<Position> makeAllEndPositions(Position start){
+        Position endBottomLeft = new Position(start.getRow() - 2, start.getCell() - 2);
+        Position endTopLeft = new Position(start.getRow() - 2, start.getCell() + 2);
+        Position endBottomRight = new Position(start.getRow() + 2, start.getCell() - 2);
+        Position endTopRight = new Position(start.getRow() + 2, start.getCell() + 2);
+
+        ArrayList<Position> endPositions = new ArrayList<>();
+        endPositions.add(endBottomLeft);
+        endPositions.add(endTopLeft);
+        endPositions.add(endBottomRight);
+        endPositions.add(endTopRight);
+
+        return endPositions;
+    }
+
+    /**
      * Checks if there is a jump move available from any piece
      * @return true if there is a jump move available
      */
@@ -290,15 +323,25 @@ public class Game {
                 Piece piece = space.getPiece();
                 if (piece != null && piece.getColor().equals(playerColor())) {
                     Position start = new Position(row.getIndex(), space.getCellIdx());
-                    for (int r = -2; r <= 2; r += 4) {      // -2 and +2 to rowIndex
-                        for (int c = -2; c <= 2; c += 4) {  // -2 and +2 to cellIdx
-                            Position end = new Position(start.getRow() + r, start.getCell() + c);
-                            if (Position.isInBounds(end)) {
-                                Move move = new Move(start, end, Move.MoveType.JUMP);
-                                if (isJumpMove(move)) {
-                                    return true;
-                                }
-                            }
+                    //Old Code Metrics
+//                    for (int r = -2; r <= 2; r += 4) {      // -2 and +2 to rowIndex
+//                        for (int c = -2; c <= 2; c += 4) {  // -2 and +2 to cellIdx
+//                            Position end = new Position(start.getRow() + r, start.getCell() + c);
+//                            if (Position.isInBounds(end)) {
+//                                Move move = new Move(start, end, Move.MoveType.JUMP);
+//                                if (isJumpMove(move)) {
+//                                    return true;
+//                                }
+//                            }
+//                        }
+//                    }
+
+                    //New Code Metrics
+                    ArrayList<Position> endPositions = makeAllEndPositions(start);
+
+                    for (Position p : endPositions){
+                        if(checkIfEndPosiionInBounds(start,p)){
+                            return true;
                         }
                     }
                 }
@@ -387,7 +430,7 @@ public class Game {
                     end.setPiece(start.getPiece());
                     start.setPiece(null);
                     Space capture = board.getRow((startRow + endRow) / 2).
-                                        getSpace((startCell + endCell) / 2);
+                            getSpace((startCell + endCell) / 2);
                     capture.setPiece(null);
                     if (isRedPlayerTurn()) {
                         board.decreaseNumWhitePieces();
@@ -397,7 +440,7 @@ public class Game {
                     break;
             }
             if ((isRedPlayerTurn() && endRow == 0) ||                             // red
-                (!isRedPlayerTurn() && endRow == BoardView.BOARD_LENGTH - 1)) {   // white
+                    (!isRedPlayerTurn() && endRow == BoardView.BOARD_LENGTH - 1)) {   // white
                 end.getPiece().setType(Piece.Type.KING);
             }
             if (board.getNumRedPieces() == 0) {
