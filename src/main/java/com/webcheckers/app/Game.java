@@ -282,20 +282,18 @@ public class Game {
 
     /**
      * Checks if there is a move in bound from any start to end
-     * @return true if there is a mvoe is in bounds
+     * @return true if there is a move is in bounds
      */
     private boolean checkIfEndPosiionInBounds(Position start, Position end) {
         if (Position.isInBounds(end)) {
             Move move = new Move(start, end, Move.MoveType.JUMP);
-            if (isJumpMove(move)) {
-                return true;
-            }
+            return isJumpMove(move);
         }
         return false;
     }
 
     /**
-     * Takes a stqrt position as a parameter, and creates an array based of sqaures the checker may move
+     * Takes a start position as a parameter, and creates an array based of squares the checker may move
      * @return an array of Position type, for all possible moves.
      */
     private ArrayList<Position> makeAllEndPositions(Position start){
